@@ -1,0 +1,11 @@
+command /credits [<text>]:
+	trigger:
+		send "&f&lDupe&3&lRPG &bCredits"
+		send "&7Hover over items in chat to view the credits!"
+		send ""
+		send formatted "<tooltip:&b- Lynxdeer%nl%&7&o(Just me)>&3- Skript Development<reset>"
+		send formatted "<tooltip:&b- Pupupapa%nl%&b- Lynxdeer%nl%&b- goldmalexen>&3- Building<reset>"
+		send ""
+		send formatted "<tooltip:&b- Starting Theme: Wynncraft - Epic Wynn (Ragni Outskirts) %nl%&7&o[Starting Theme will be Alundra Title Screen in the future]%nl%&b- Dungeons Boss Theme: Wynncraft - The Great Race>&3- Music<reset>"
+		send formatted "<tooltip:&b- Wynncraft%nl%&b- Team Fortress 2>&3- Inspiration<reset>"
+		send formatted "<tooltip:&b- s_uny &7(Contributed $6 at the start of the server to get the first server plan)%nl%&b- muyao &7(Informed me of SkBee particles)>&3- Honorable Mentions<reset>"

@@ -1,0 +1,213 @@
+on left click with wooden shovel:
+
+#			OAK STAFF
+
+	player's tool's lore starts with "&7Shoots multiple beams with low range."
+	cancel event
+
+	if {mana::%player%} is less than 2:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		remove 1 from {mana::%player%}
+		if {combatlog::%player%} is set:
+			send action bar "&6[Combat: %{combatlog::%player%}% &6seconds] &b[Mana | %{mana::%player%}%/25⸎]" to player
+		else:
+			send action bar "&b[Mana | %{mana::%player%}%/25⸎]" to player
+
+	set {_loc} to location 1.6 meters above location of player
+	play sound "minecraft:entity.player.attack.sweep" with volume 2 and pitch 0.75 at {_loc} for all players
+	play sound "minecraft:entity.blaze.shoot" with volume 0.5 and pitch 1.5 at {_loc} for all players
+
+	set {_loc2} to location 1.2 meters left of {_loc} ~ {_v}
+	set {_loc3} to location 1.2 meters right of {_loc} ~ {_v}
+	loop 10 times:
+		if {_dontshoot} is set:
+			stop
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			if loop-entity is a player:
+				player's time played is less than 5 minutes
+				stop
+			calculateArmor(4, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc2}:
+			loop-entity is not the player
+			if loop-entity is a player:
+				player's time played is less than 5 minutes
+				stop
+			calculateArmor(4, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc3}:
+			loop-entity is not the player
+			if loop-entity is a player:
+				player's time played is less than 5 minutes
+				stop
+			calculateArmor(4, loop-entity, player)
+			loop-entity is a player
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc2}, visibleRange 50, keepFor 0 tick
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc3}, visibleRange 50, keepFor 0 tick
+
+		set {_loc} to location 1 meters in front of {_loc}
+		set {_loc2} to location 1 meters in front of {_loc2}
+		set {_loc3} to location 1 meters in front of {_loc3}
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+
+
+
+
+
+
+#			STONE STAFF
+on leftclick with stone shovel:
+	line 1 of player's tool's lore starts with "&7New and improved!"
+	cancel event
+	if lvl(player) is less than 8:
+		send "&cYou must have at least combat 8 to use this item!"
+		stop
+	if {mana::%player%} is less than 2:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		remove 2 from {mana::%player%}
+		if {combatlog::%player%} is set:
+			send action bar "&e[God Apple: %( {gapcd::%player%} + 0)%&e] &6[Combat: %{combatlog::%player%}% &6seconds] &b[Mana | %{mana::%player%}%/25⸎]" to player
+
+		else:
+			send action bar "&b[Mana | %{mana::%player%}%/25⸎]" to player
+
+	set {_loc} to location 1.6 meters above location of player
+	play sound "minecraft:entity.player.attack.sweep" with volume 2 and pitch 0.6 at {_loc} for all players
+	play sound "minecraft:entity.blaze.shoot" with volume 0.5 and pitch 1.5 at {_loc} for all players
+
+	set {_loc2} to location 1.2 meters left of {_loc} ~ {_v}
+	set {_loc3} to location 1.2 meters right of {_loc} ~ {_v}
+	loop 10 times:
+		if {_dontshoot} is set:
+			stop
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			calculateArmor(5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc2}:
+			loop-entity is not the player
+			calculateArmor(5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc3}:
+			loop-entity is not the player
+			calculateArmor(5, loop-entity, player)
+			loop-entity is a player
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc2}, visibleRange 50, keepFor 0 tick
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc3}, visibleRange 50, keepFor 0 tick
+
+		set {_loc} to location 1 meters in front of {_loc}
+		set {_loc2} to location 1 meters in front of {_loc2}
+		set {_loc3} to location 1 meters in front of {_loc3}
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+
+
+
+
+
+
+# SHADOW STAFF
+on leftclick with netherite shovel:
+	line 1 of player's tool's lore starts with "&7Draws energy from the shadow realm!"
+	cancel event
+	if lvl(player) is less than 25:
+		send "&cYou must have at least combat 25 to use this item!"
+		stop
+	if {mana::%player%} is less than 3:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		remove 3 from {mana::%player%}
+		if {combatlog::%player%} is set:
+			send action bar "&e[God Apple: %( {gapcd::%player%} + 0)%&e] &6[Combat: %{combatlog::%player%}% &6seconds] &b[Mana | %{mana::%player%}%/25⸎]" to player
+		else:
+			send action bar "&b[Mana | %{mana::%player%}%/25⸎]" to player
+
+	set {_loc} to location 1.6 meters above location of player
+	play sound "minecraft:entity.evoker.cast_spell" with volume 2 and pitch 2 at {_loc} for all players
+	play sound "minecraft:entity.blaze.shoot" with volume 0.5 and pitch 1.5 at {_loc} for all players
+
+	set {_loc2} to location 1.2 meters left of {_loc} ~ {_v}
+	set {_loc3} to location 1.2 meters right of {_loc} ~ {_v}
+	loop 10 times:
+		if {_dontshoot} is set:
+			stop
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			calculateArmor(6.5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc2}:
+			loop-entity is not the player
+			calculateArmor(6.5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc3}:
+			loop-entity is not the player
+			calculateArmor(6.5, loop-entity, player)
+			loop-entity is a player
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc2}, visibleRange 50, keepFor 0 tick
+
+		drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc3}, visibleRange 50, keepFor 0 tick
+
+		set {_loc} to location 1 meters in front of {_loc}
+		set {_loc2} to location 1 meters in front of {_loc2}
+		set {_loc3} to location 1 meters in front of {_loc3}
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+
+
+
+
+
+
+# SNOW SPRAY STAFF
+on leftclick with iron shovel:
+	line 1 of player's tool's lore starts with "&7It's snow-time."
+	cancel event
+	if lvl(player) is less than 75:
+		send "&cYou must have at least combat 75 to use this item!"
+		stop
+	if {mana::%player%} is less than 6:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		remove 6 from {mana::%player%}
+		if {combatlog::%player%} is set:
+			send action bar "&e[God Apple: %( {gapcd::%player%} + 0)%&e] &6[Combat: %{combatlog::%player%}% &6seconds] &b[Mana | %{mana::%player%}%/25⸎]" to player
+		else:
+			send action bar "&b[Mana | %{mana::%player%}%/25⸎]" to player
+
+	make the player shoot an snowball with velocity 2
+	loop 20 times:
+		last shot snowball is alive
+		drawDot count 1, particle snowball, XYZ 0, 0, 0, center last shot snowball, visibleRange 50, keepFor 0 tick
+		wait 1 tick
+	delete the last shot snowball

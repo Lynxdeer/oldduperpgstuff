@@ -1,0 +1,45 @@
+on rightclick:
+	player's tool's lore contains "&3Class: "
+	if {cl::%player%} is 1:
+		set {_class} to "Wizard"
+	if {cl::%player%} is 2:
+		set {_class} to "Warlock"
+	if {cl::%player%} is 3:
+		set {_class} to "Knight"
+	if {cl::%player%} is 4:
+		set {_class} to "Archer"
+	player's tool's lore contains "&3Class: &b%{_class}%"
+	if {ab::%player%} is 1:
+		if {cl::%player%} is 1 or 2:
+			cancel event
+		# abc = ability cooldown
+			if difference between {-abc::%player%} and now is less than 0.75 seconds:
+				if {-abc::%player%} is not set:
+					exit 2 sections
+				stop
+			
+		if {mana::%player%} is less than 7:
+			send action bar "&cNot enough Mana!" to player
+			stop
+		if player's gamemode is not creative:
+			modifyMana(player, 7)
+		play sound "minecraft:entity.ender_eye.death" with pitch 2 to all players at player's location
+		play sound "minecraft:entity.silverfish.death" with pitch 2 to all players at player's location
+		set {_h} to 0
+		set {-hecd::%player%} to now
+		set {_a} to 15
+		set player's health to (player's health + 2)
+		if player's health is more than player's max health:
+			set player's health to player's max health
+		loop 5 times:
+			add 1 to {_h}
+			set {_hd} to {_h} / 3
+			add 15 to {_a}
+			set {_loc} to location 0.2 meters above the player
+			set {_loc}'s world to player's world
+			#drawDot count {_a}, particle crit, XYZ {_h} / 3, 1, {_h} / 3, center {_c}, visibleRange 50, keepFor 0 tick
+			particle(crit, {_a}, {_hd}, 0.25, {_hd}, {_loc})
+			
+			wait 2 tick
+		wait 5 ticks
+		delete {-hecd::%player%}

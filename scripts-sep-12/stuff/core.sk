@@ -1,0 +1,191 @@
+command /trash [<text>]:
+	trigger:
+		set {_gui} to chest inventory with 6 rows named "Trash"
+		open {_gui} to player
+		
+on command:
+	if complete command ends with "*":
+		send "&cYou cannot use commands with asterisks in them due to a bug!"
+		cancel event
+		stop
+	if complete command contains "*":
+		send "&cYou cannot use commands with asterisks in them due to a bug!"
+		cancel event
+		
+on command:
+	command is  "me" or "say" or "minecraft:me" or "minecraft:say"
+	cancel event
+	send "&cno"
+
+command /rpg [<text>]:
+	trigger:
+		send "&eUse the forest warp at the middle of the dropdown spawn to go to the rpg!"
+		
+
+on damage:
+	victim is a player
+	damager is a player
+	victim's time played is less than 5 minutes
+	cancel event
+	send "&cYou cannot hurt this player as they have less than 5 minutes of playtime!" to damager
+
+on damage:
+	victim is a player
+	damager is a player
+	damager's time played is less than 5 minutes
+	cancel event
+	send "&cYou cannot hurt this player as you have less than 5 minutes of playtime!" to damager
+
+command /buy [<text>]:
+	aliases: /store, /shop
+	trigger:
+		send "&cWe don't have a buycraft yet! If you're looking for a place to spend in-game money do /whatdoidowithmoney!"
+
+on consume of milk:
+	"%region at player%" contains "shadow"
+	cancel event
+	send "&cYou cannot drink milk here! Good try though!"
+
+command /dupe [<integer>]:
+	usage: &cInvalid Usage!
+	aliases: /d
+	trigger:
+		if arg-1 is more than 64:
+			send "&cYou can't dupe this much!"
+			stop
+		if arg-1 is not set:
+			give player's tool to player
+			stop
+		else:
+			loop arg-1 times:
+				give player's tool to player
+
+command /stats [<offline player>] [<text>]:
+	trigger:
+		arg-1 is not "*"
+		if arg-1 is set:
+			send ""
+			send "&6&l%arg-1%&6&l's STATS"
+			send ""
+			if arg-1 is offline:
+				send "&e%arg-1%&e's playtime: &cCannot get while offline"
+			else:
+				send "&e%arg-1%&e's playtime: %arg-1's time played%"
+			send "&e%arg-1%&e's balance: %{bal::%arg-1's uuid%} + 0%"
+			send "&e%arg-1%&e's levels: Level %{lvl::%arg-1's uuid%} + 0% &7(%({xp::%arg-1's uuid%} + 0)%&7/%({lvl::%arg-1's uuid%} * 1000)%&7)"
+			send "&eFirst Joined: %arg-1's first login%"
+			stop
+		send ""
+		send "&3&lSTATS"
+		send ""
+		send "&3Playtime: %player's time played%"
+		send "&3Balance: %bal(arg-1) + 0%"
+		send "&3Levels: Level %lvl(player)%&7 (%xp(player)%&7/%(lvl(player) * 1000)%&7)"
+		send "&3First Joined: %player's first login%"
+		send ""
+
+command /playtime [<offline player>] [<text>]:
+	trigger:
+		arg-1 is not "*"
+		if arg-1 is set:
+			if arg-1 is offline:
+				send "&cThis player is offline."
+				stop
+			send "&e%arg-1%&e's playtime: %arg-1's time played%"
+			stop
+		send "&eYour playtime: %player's time played%"
+
+on command:
+	command is "plugins" or "pl" or "bukkit:plugins" or "bukkit:pl"
+	wait 1 tick
+	send "&elol why do server owners hide their plugins"
+
+command /discord [<text>]:
+	trigger:
+		send formatted "<tooltip:&3Click to join!><link:https://discord.gg/x8QVzhxmwj>&9Click to join the discord!<reset>"
+
+command /apply [<text>]:
+	trigger:
+		send formatted "<tooltip:&6Click to apply!><link:https://forms.gle/n62Qo2QLXfaPJeWY8>&eClick to apply for staff!<reset>"
+
+on damage:
+	damage cause is void
+	victim is a player
+	cancel event
+	teleport victim to {place.spawn}
+	heal the victim
+	feed the victim
+	send "&7You fell in the void!" to victim
+	set {mana::%victim%} to 25
+	send action bar "&3[Mana | %{mana::%victim%}%/25⸎]" to victim
+
+command /enderchest [<offline player>] [<text>]:
+	aliases: /ec, /echest
+	trigger:
+		arg-1 is not "*"
+		if arg-1 is not set:
+			play sound "block.chest.open" with pitch 0.6 to player
+			open player's ender chest to player
+			stop
+		if player is not op:
+			play sound "block.chest.open" with pitch 0.6 to player
+			open player's ender chest to player
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		open arg-1's enderchest to player
+
+on leftclick with ender chest:
+	cancel event
+	play sound "block.chest.open" with pitch 0.6 to player
+	open player's enderchest to player
+
+command /spawn [<offline player>] [<text>]:
+	trigger:
+		arg-1 is not "*"
+		if {combatlog::%player%} is set:
+			send "&cYou are currently in combat!"
+			stop
+		if arg-1 is set:
+			if player is not op:
+				teleport player to {place.spawn}
+				send "&aTeleported to spawn."
+				stop
+			if arg-1 is offline:
+				send "&cThis player is not online!"
+				stop
+			send "&aSent %arg-1% &ato spawn"
+			teleport arg-1 to {place.spawn}
+			stop
+		send "&aTeleported to spawn."
+		teleport player to {place.spawn}
+
+command /fixtab:
+	trigger:
+		set player's tab list name to "&r%player's display name%"
+
+command /starve:
+	trigger:
+		send "&aYou have been starved."
+		remove 5 from player's hunger
+		set player's saturation to 0
+
+command /toggleitems [<text>]:
+	aliases: /toggle, /items, /ti
+	trigger:
+		if {items::%player%} is not false:
+			send "&cDisabled Random Items."
+			set {items::%player%} to false
+			stop
+		send "&aEnabled Random Items."
+		delete {items::%player%}
+
+every 15 seconds:
+	loop all players:
+		{items::%loop-player%} is not set
+		give random item out of all items to loop-player 
+
+on leftclick:
+	player's tool is a crafting table
+	open crafting table to player

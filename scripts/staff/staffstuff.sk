@@ -1,0 +1,178 @@
+command /gotostaffbase [<text>]:
+	permission: staff.base
+	permission message: &cStaff only!
+	trigger:
+		send "&aTeleported you to the staff base."
+		teleport player to location(-2, 72, 7, world "ul_rpg")
+		
+command /playeractivity [<text>]:
+	cooldown: 30 seconds
+	cooldown message: &cPlease slow down!
+	cooldown bypass: op
+	aliases: /serveractivity
+	trigger:
+		set {_a} to 0
+		loop {servact::*}:
+			add loop-value parsed as number to {_a}
+		send "%{_a}%"
+		set {_a} to ({_a} / 24)
+		send "%{_a}%"
+		send "&3Server activity from the past 25 hours:"
+		send "&3Average player count: %{_a}%"
+		loop {servact::*}:
+			loop-value is set
+			send "&3- %loop-index%&3h ago: &b%loop-value% &3players online"
+		
+every hour:
+	loop 24 times:
+		set {_s::%loop-number%} to {servact::%loop-number%}
+	loop 24 times:
+		set {servact::%loop-number + 1%} to {_s::%loop-number%}
+	set {servact::1} to real online player count
+		
+command /buildertp [<text>]:
+	permission: builder.gm
+	permission message: &cBuilders only!
+	trigger:
+		if arg-1 is not set:
+			send "Specify a place to warp! Example: /buildertp newrpg, shadowdungeon"
+			stop
+		if arg-1 is "newrpg":
+			send "&aTeleporting to the new rpg."
+			teleport player to location at 1000, 105, and 1000 in world "ul_newrpg"
+			stop
+		if arg-1 is "shadowdungeon":
+			send "&aTeleporting to the shadow dungeon."
+			teleport player to location at 3000, 101, and 250 in world "ul_rpg"
+			stop
+		send "&cInvalid teleport location! Valid locations: newrpg, shadowdungeon"
+
+command /irename <text>:
+	aliases: /itemrename, /rename
+	permission: op
+	trigger:
+		send "&aRenamed your held item to ""%colored arg-1%"" "
+		set player's tool's name to colored arg-1
+		
+command /consolechat [<text>]:
+	permission: *
+	permission message: &cConsole only!
+	executable by: console
+	trigger:
+		if executor is not console:
+			send "&cConsole only!"
+			stop
+		if arg-1 is not set:
+			send "&cPlease supply argument."
+			stop
+		if arg-1 is "on" or "true":
+			set {consolechat} to true
+			send "&eTurned on console chat."
+			stop
+		if arg-1 is "off" or "false":
+			set {consolechat} to false
+			send "&eTurned off console chat."
+			stop
+
+
+on command:
+	executor is console
+	if {-consolenocmd} is true:
+		stop
+	if command starts with "/":
+		set {_cmd} to complete command
+		replace first "/" in {_cmd} with ""
+		cancel event
+		set {-consolenocmd} to true
+		execute console command "%{_cmd}%"
+		wait 1 tick
+		set {-consolenocmd} to false
+		stop
+	{consolechat} is true
+	cancel event
+	broadcast "&d[Console] %complete command%"
+		
+command /givedebugstick:
+	permission: builder.gm
+	permission message: &cno
+	trigger:
+		give debug stick named "&dLe stick of debugging" to player
+		send "&aGiven you a debug stick."
+
+command /banforhacking [<offline player>]:
+	permission: staff.ban
+	permission message: &cno
+	trigger:
+		execute player command "/ban %arg-1% 5 days Hacking | Appeal this decision at https://discord.gg/CVWjt5f645"
+
+command /relore <integer> <text>:
+	aliases: /itemrelore, /irelore, /setlore
+	permission: op
+	trigger:
+		send "&aRelored line %arg-1% &aof your held item to ""%colored arg-2%"" "
+		set line arg-1 of player's tool's lore to colored arg-2
+
+command /mutechat [<text>]:
+	permission: staff.mutechat
+	permission message: &cno
+	trigger:
+		if {mutechat} is not true:
+			set {mutechat} to true
+			loop 5 times:
+				broadcast ""
+			broadcast "&e%player% &emuted chat."
+			stop
+		set {mutechat} to false
+		broadcast "&e%player% &eunmuted chat."
+
+command /clearchat:
+	permission: staff.mutechat
+	permission message: &cno
+	trigger:
+		loop 200 times:
+			broadcast ""
+		broadcast "&e%player% &ecleared chat."
+
+
+command /heal [<offline player>]:
+	permission: op
+	permission message: &cno
+	trigger:
+		if arg-1 is not set:
+			send "&aHealed yourself."
+			heal the player
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		heal arg-1
+		send "&aHealed %arg-1%&a."
+
+command /feed [<offline player>]:
+	permission: op
+	permission message: &cno
+	trigger:
+		if arg-1 is not set:
+			send "&aFed yourself."
+			feed the player
+			set player's saturation to 20
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		feed arg-1
+		set arg-1's saturation to 20
+		send "&aFed %arg-1%&a."
+
+command /invsee [<offline player>]:
+	permission: staff.invsee
+	permission message: &cno
+	trigger:
+		if arg-1 is "Lynxdeer":
+			send "&cno you suck"
+			strike lightning effect at player
+			damage the player by 1
+			ignite the player for 3 second
+			stop
+		open arg-1's inventory to player
+		send "&eOpened %arg-1%&e's inventory to you."

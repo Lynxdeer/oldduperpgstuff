@@ -1,0 +1,238 @@
+on rightclick:
+	if distance between {dungeon.forestwarp} and clicked block is less than 2:
+		cancel event
+		{-cutsc::%player%} is not true
+		set {-cutsc::%player%} to true
+		send "&7A weird sensation sets upon you, as if every molecule was being disassembled and reassembled again..."
+		apply nausea 15 without particles to player for 6 seconds
+		apply blindness 5 without particles to player for 6 seconds
+		apply slowness 5 without particles to player for 6 seconds
+		play sound "minecraft:block.portal.travel" with pitch 0.5 to player
+		play sound "minecraft:block.portal.travel" with pitch 1 to player
+		play sound "minecraft:block.portal.travel" with pitch 2 to player
+		wait 4 seconds
+		teleport player to {dungeon.forest}
+		send title "&2Forest Dungeon" to player for 3 seconds with fadein 1 second and fadeout 1 second
+		play sound "minecraft:block.portal.trigger" with pitch 1 to player
+		delete {-cutsc::%player%}
+		
+	if distance between {dungeon.forestkeeper} and clicked block is less than 2:
+		cancel event
+		#send "&aDungeon Keeper: Let me see if you qualify to enter the dungeon."
+		#send "&7(Requires a key at /dungeonshop)"
+		if {-forestisopened} is true:
+			send "&aDungeon Keeper: The door is already open! What are you doing???"
+			stop
+		if {-forestdungeon} is true:
+			send "&aDungeon Keeper: The dungeon is already being done! Please wait till the current party finishes."
+			stop
+		if line 1 of player's tool's lore contains "&7Opens the &2Forest Dungeon&7.":
+			remove 1 of player's tool from player's tool
+			set {-forestisopened} to true
+			
+		loop items in player's inventory:
+			{-forestisopened} is not true
+			line 1 of loop-item's lore contains "&7Opens the &2Forest Dungeon&7."
+			send "&aDungeon Keeper: Hmm... It looks like you have a key, but you need to hold it in your hand!"
+			stop
+		if {-forestisopened} is not true:
+			send "&aDungeon Keeper: You need a key to open this dungeon, buy one at the dungeon shop!"
+			stop
+		apply slowness 1 without particles to player for 1 second
+		set {-fdzamboeskilled} to 0
+		set {_loc} to {dungeon.forestkeeper}
+		set {_loc} to location 4 meters in front of {_loc}
+		set {_loc} to location 2 meters left of {_loc}
+		set {_loc2} to location 1 meter right of {_loc}
+		set {_loc3} to location 1 meter below {_loc}
+		set {_loc4} to location 1 meter below {_loc2}
+		
+		loop all entities where [input's display name is "&4Zamboe"]:
+			delete the loop-entity
+		wait 1 tick
+		
+		# 1 2
+		# 3 4
+		
+		play sound "minecraft:block.lava.extinguish" with pitch 1 to player
+		loop 24 times:
+			#drawDot count 10, particle witchspell, XYZ 1, 1, 1, center {_loc}, visibleRange 50, keepFor 0 tick
+			particleWitch(10, 1, 1, 1, {_loc})
+			wait 1 tick
+		play sound "minecraft:entity.wither.break_block" with volume 1 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.2 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.5 and pitch 1.5 at {_loc} for all players
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc})
+		
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc2})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc2})
+		
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc3})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc3})
+		
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc4})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc4})
+		
+		set block at {_loc} to air
+		set block at {_loc2} to air
+		set block at {_loc3} to air
+		set block at {_loc4} to air
+		
+		send "&aDungeon Keeper: I have opened the door. It will remain open for another 10 seconds. Now go."
+		
+		wait 10 seconds
+		
+		set block at {_loc} to cracked stone bricks
+		set block at {_loc2} to cracked stone bricks
+		set block at {_loc3} to cracked stone bricks
+		set block at {_loc4} to cracked stone bricks
+		set {-fdisopened} to false
+		set {-forestisopened} to false
+		play sound "block.anvil.destroy" with volume 2 and pitch 0.5 at {_loc} for all players
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc})
+		
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc2})
+		
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc3})
+		
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc4})
+		
+		
+		
+		
+		
+		
+		
+		
+	if distance between {dungeon.castlewarp} and clicked block is less than 2:
+		cancel event
+		{-cutsc::%player%} is not true
+		set {-cutsc::%player%} to true
+		send "&7A weird sensation sets upon you, as if every molecule was being disassembled and reassembled again..."
+		apply nausea 15 without particles to player for 6 seconds
+		apply blindness 5 without particles to player for 6 seconds
+		apply slowness 5 without particles to player for 6 seconds
+		play sound "minecraft:block.portal.travel" with pitch 0.5 to player
+		play sound "minecraft:block.portal.travel" with pitch 1 to player
+		play sound "minecraft:block.portal.travel" with pitch 2 to player
+		wait 4 seconds
+		teleport player to {dungeon.castle}
+		send title "&7Castle Dungeon" to player for 3 seconds with fadein 1 second and fadeout 1 second
+		play sound "minecraft:block.portal.trigger" with pitch 1 to player
+		delete {-cutsc::%player%}
+		
+		
+	
+	
+	
+	
+	
+	if distance between {dungeon.castlekeeper} and clicked block is less than 2:
+		cancel event
+		#send "&aDungeon Keeper: Let me see if you qualify to enter the dungeon."
+		#send "&7(Requires a key at /dungeonshop)"
+		if {-castleisopened} is true:
+			send "&aDungeon Keeper: The door is already open! What are you doing???"
+			stop
+		if {-castledungeon} is true:
+			send "&aDungeon Keeper: The dungeon is already being done! Please wait till the current party finishes."
+			stop
+		if line 1 of player's tool's lore contains "&7Opens the &7Castle Dungeon&7.":
+			remove 1 of player's tool from player's tool
+			set {-castleisopened} to true
+			
+		loop items in player's inventory:
+			{-castleisopened} is not true
+			line 1 of loop-item's lore contains "&7Opens the &7Castle Dungeon&7."
+			send "&aDungeon Keeper: Hmm... It looks like you have a key, but you need to hold it in your hand!"
+			stop
+		if {-castleisopened} is not true:
+			send "&aDungeon Keeper: You need a key to open this dungeon, buy one at the dungeon shop!"
+			stop
+		apply slowness 1 without particles to player for 1 second
+		set {-fdzamboeskilled} to 0
+		set {_loc} to {dungeon.castlekeeper}
+		set {_loc} to location 2 meters in front of {_loc}
+		set {_loc} to location 1 meter right of {_loc}
+		set {_loc2} to location 1 meter right of {_loc}
+		set {_loc3} to location 1 meter below {_loc}
+		set {_loc4} to location 1 meter below {_loc2}
+		
+		loop all entities where [input's display name is "&4Skeleton Warrior"]:
+			delete the loop-entity
+		wait 1 tick
+		
+		# 1 2
+		# 3 4
+		
+		play sound "minecraft:block.lava.extinguish" with pitch 1 to player
+		loop 24 times:
+			#drawDot count 10, particle witchspell, XYZ 1, 1, 1, center {_loc}, visibleRange 50, keepFor 0 tick
+			particleWitch(10, 1, 1, 1, {_loc})
+			wait 1 tick
+		play sound "minecraft:entity.wither.break_block" with volume 1 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.2 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.5 and pitch 1.5 at {_loc} for all players
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc})
+		
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc2})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc2})
+		
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc3})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc3})
+		
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc4})
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc4})
+		
+		set block at {_loc} to air
+		set block at {_loc2} to air
+		set block at {_loc3} to air
+		set block at {_loc4} to air
+		
+		send "&aDungeon Keeper: I have opened the door. It will remain open for another 10 seconds. Now go."
+		
+		wait 10 seconds
+		
+			
+		set block at {_loc} to cracked stone bricks
+		set block at {_loc2} to cracked stone bricks
+		set block at {_loc3} to cracked stone bricks
+		set block at {_loc4} to cracked stone bricks
+		set {-cdisopened} to false
+		set {-castleisopened} to false
+		play sound "block.anvil.destroy" with volume 2 and pitch 0.5 at {_loc} for all players
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc})
+		
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc2})
+		
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc3})
+		
+		#drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		particleWitch(5, 0.2, 0.2, 0.2, {_loc4})
+		
+		

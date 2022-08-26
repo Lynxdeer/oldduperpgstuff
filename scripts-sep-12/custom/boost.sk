@@ -1,0 +1,8 @@
+command /boosters [<text>]:
+	aliases: /boost
+	trigger:
+		if player is not "Lynxdeer":
+			send "&cCurrently in development!"
+			stop
+		send "&eOpened the boosters menu."
+		

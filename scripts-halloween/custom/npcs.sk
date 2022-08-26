@@ -1,0 +1,69 @@
+on load:
+	set {npc.bob} to location(69, 119, -11, world "ul_rpg")
+	
+
+on skript start:
+	reload script "custom/npcs"
+
+on rightclick:
+	{-bobcd} is not set
+	if distance between {npc.bob} and clicked block is less than 2:
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use npcs in combat!"
+			stop
+		cancel event
+		send "%nl%%nl%%nl%"
+		send "&aBob: its halloween, whats up"
+		send "&7Click a dialogue option."
+		send ""
+		
+		send "<tooltip:Click to select ""TRICK OR TREAT""><cmd:/npcresp id001 ptot>&3✦ TRICK OR TREAT<reset>"
+		set {-bobcd} to true
+		wait 1 second
+		delete {-bobcd}
+		#send "<tooltip:Click to select ""the sky""><cmd:/npcresp id001 p21>&3✦ the sky<reset>"
+		#send "<tooltip:Click to select ""the barriers""><cmd:/npcresp id001 p22>&3✦ the barriers<reset>"
+		
+on command "npcresp id001 p21":
+	cancel event
+	play sound "block.lava.pop" with pitch 2 to player
+	send "%nl%%nl%%nl%"
+	wait 5 ticks
+	send "&aBob: incorrect, you suck"
+	send ""
+	send "<tooltip:Click to select "":(""><cmd:/npcresp id001 p31>&3✦ :(<reset>"
+	send "<tooltip:Click to select ""no u""><cmd:/npcresp id001 p32>&3✦ no u<reset>"
+	
+on command "npcresp id001 ptot":
+	cancel event
+	play sound "block.lava.pop" with pitch 2 to player
+	send "%nl%%nl%%nl%"
+	wait 5 ticks
+	set {_chance} to random integer between 1 and 3
+	if {_chance} is 1:
+		send "&cBob: TRICK!"
+		execute player command "diceroll"
+	else:
+		send "&6Bob: TREAT!"
+		give player dye named "&3candy" with lore "&7bob gave you it," and "&7it has a weird smell..." and "&eOwner: &f%player%" #with nbt "{givenbt}"
+	
+on command "npcresp id001 p22":
+	cancel event
+	send "%nl%%nl%%nl%"
+	play sound "block.lava.pop" with pitch 2 to player
+	wait 5 ticks
+	send "&aBob: thats correct, ok bye"
+	
+on command "npcresp id001 p31":
+	cancel event
+	send "%nl%%nl%%nl%"
+	play sound "block.lava.pop" with pitch 2 to player
+	wait 5 ticks
+	send "&aBob: ok bye"
+
+on command "npcresp id001 p32":
+	cancel event
+	send "%nl%%nl%%nl%"
+	play sound "block.lava.pop" with pitch 2 to player
+	wait 5 ticks
+	send "&aBob: :("

@@ -1,0 +1,44 @@
+on target:
+
+	entity's target is a player
+	event-world is "ul_rpg"
+	event-entity's display name contains "&6Alien"
+	push event-entity upwards with force 1
+	set {_loc} to event-entity's target's location
+	while event-entity is alive:
+		if event-entity's target is not alive:
+			stop
+		set {_loc} to event-entity's target's location
+		if distance between event-entity and event-entity's target is more than 5:
+			push event-entity vector from event-entity to {_loc} with force 2
+			charge the event-entity
+		else:
+			set {_v} to vector 0, 0, 0
+			set event-entity's velocity to {_v}
+			uncharge the event-entity
+		wait 10 ticks
+		apply slowness 1 to the event-entity's target for 1 second
+		set {_loc} to event-entity's target's location
+		if distance between event-entity and event-entity's target is more than 5:
+			push event-entity vector from event-entity to {_loc} with force 2
+			charge the event-entity
+		else:
+			set {_v} to vector 0, 0, 0
+			set event-entity's velocity to {_v}
+			uncharge the event-entity
+		wait 10 ticks
+	
+on explosion prime:
+	event-world is "ul_rpg"
+	event-entity is a creeper
+	event-entity's display name contains "&6Alien"
+	cancel event
+	delete the event-entity
+	drawDot count 1, particle explosionhuge, XYZ 0.1, 0.1, 0.1, center event-entity, visibleRange 100, keepFor 1 tick
+	loop entities in radius 5 around event-entity:
+		damage the loop-entity by (15 / distance between loop-entity and event-entity)
+		play sound "minecraft:entity.generic.explode" with volume 20 and pitch 1 at event-entity for loop-entity
+		calculateArmor(5, loop-entity, event-entity)
+		set {ralien} to true
+		wait 1 tick
+		delete {ralien}

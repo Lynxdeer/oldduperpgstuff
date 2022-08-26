@@ -1,0 +1,251 @@
+on load:
+	set {givenbt} to "{HideFlags:126,Unbreakable:1,CustomModelData:1,AttributeModifiers:[{AttributeName:""generic.attack_speed"",Amount:100,Slot:mainhand,Name:""generic.attack_speed"",UUID:[I;-121620,21630,111310,-43260]}]}"
+	set {opennbt} to "{HideFlags:126,Unbreakable:1,CustomModelData:1,AttributeModifiers:[{AttributeName:""generic.attack_speed"",Amount:100,Slot:mainhand,Name:""generic.attack_speed"",UUID:[I;-121620,21630,111310,-43260]}],CustomModelData:"
+	set {armornbt} to "{HideFlags:126,Unbreakable:1,CustomModelData:3}"
+
+command /cgive <text>:
+	usage: &cInvalid Usage! Usage: /cgive (item | list)
+	permission: *
+	permission message: &cNo.
+	trigger:
+
+		if player is not "Lynxdeer":
+			send "&cno you suck"
+			strike lightning effect at player
+			damage the player by 1
+			ignite the player for 3 second
+			stop
+		give player getItem(arg-1)
+
+function getItem(i: text) :: item:
+	if {_i} is "fireworkwand":
+		return diamond shovel named "&9Firework Wand" with lore "&7Shoots Fireworks. &3[2 Mana]" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "sniper": #SPECIAL
+		return stick named "&3Sniper" with lore "&7sniper gaming" and "&7| &3Level Requirement: &b50" and "&7| &3Damage: &b30" and "&7| &3Attack Speed: &bSnail" and "&7| &3Range: &b50" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "eggcannon": #SPECIAL
+		return stick named "&3Egg Cannon" with lore "&7egg go brr" and "&7| &3Level Requirement: &b40" and "&7| &3Damage: &b30" and "&7| &3Attack Speed: &bSnail" and "&7| &3Range: &b50" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "shoveshaft": #SPECIAL
+		return wooden shovel named "&aShove Shaft" with lore "&7hippity hoppity you are now off my property" with nbt "%{givenbt}%" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "flamethrower": #SPECIAL
+		return flint and steel named "&6Flamethrower" with lore "&7Left click to shoot a flare," and "&7Right click to shoot a stream of fire! " and "&3[L: 5 Mana &8| &3R: 1 Mana]" and "&7| &3Level Requirement: &b35" with nbt "%{givenbt}%"
+		stop
+		
+		
+		
+		
+		
+	if {_i} is "newoakwand": #OAK
+		return stick named "&3Oak Wand" with lore "&7A fairly weak wand made out of an oak tree." and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b0" and "&7| &3Damage: &b3" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b25" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "newoakstaff": #OAK
+		return wooden shovel named "&3Oak Staff" with lore "&7A fairly weak staff made out of an oak tree." and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b0" and "&7| &3Damage: &b4" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b10" with nbt "%{givenbt}%"
+		stop
+		
+		
+		
+	if {_i} is "newbonewand": #BONE
+		return bone named "&3Bone Wand" with lore "&7A warrior's bone infused with magic." and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b3" and "&7| &3Damage: &b4" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b25" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "newbonestaff": #BONE
+		return iron shovel named "&3Bone Staff" with lore "&7A warrior's bone infused with magic." and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b3" and "&7| &3Damage: &b5" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b10" with nbt "%{givenbt}%"
+		stop
+
+
+
+	if {_i} is "newstonewand": #STONE
+		return stick named "&3Stone Wand" with lore "&7A much boulder wand." and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b8" and "&7| &3Damage: &b5" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b25" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "newstonestaff": #STONE
+		return stone shovel named "&3Stone Staff" with lore "&7A much boulder staff." and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b8" and "&7| &3Damage: &b6" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b10" with nbt "%{givenbt}%"
+		stop
+		
+		
+		
+	if {_i} is "flurrywand": #FLURRY
+		return white candle named "&3Flurry Wand" with lore "&7A winterful weapon." and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b12" and "&7| &3Damage: &b6" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b20" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "flurrystaff": #FLURRY
+		return iron shovel named "&3Flurry Staff" with lore "&7A winterful weapon." and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b12" and "&7| &3Damage: &b7" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b10" with nbt "%{givenbt}%"
+		stop
+		
+		
+		
+	if {_i} is "blizzardwand": #BLIZZARD
+		return white candle named "&3Blizzard Wand" with lore "&7It's snow-time." and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b20" and "&7| &3Damage: &b9" and "&7| &3Attack Speed: &bNormal" and "&7| &3Range: &b30" and "" and "&b+ Freezing:" and "&b| Victims have slowness for 3 seconds" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "blizzardstaff": #BLIZZARD
+		return iron shovel named "&3Blizzard Staff" with lore "&7It's snow-time." and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b20" and "&7| &3Damage: &b10" and "&7| &3Attack Speed: &bNormal" and "&7| &3Range: &b15" and "" and "&b+ Freezing:" and "&b| Victims have slowness for 3 seconds" with nbt "%{givenbt}%"
+		stop
+		
+		
+		
+	if {_i} is "vinewand": #Vine
+		return sea pickle named "&3Vine Wand" with lore "&7It's covered in mud and vines." and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b35" and "&7| &3Damage: &b18" and "&7| &3Attack Speed: &bSlow" and "&7| &3Range: &b15" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "vinestaff": #Vine
+		return wooden shovel named "&3Vine Staff" with lore "&7It's covered in mud and vines." and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b35" and "&7| &3Damage: &b19" and "&7| &3Attack Speed: &bSlow" and "&7| &3Range: &b10" with nbt "%{givenbt}%"
+		stop
+		
+		
+		
+	if {_i} is "newblazewand": #BLAZE
+		return blaze rod named "&3Blaze Wand" with lore "&7oh noes im on fire" and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b35" and "&7| &3Damage: &b7" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b20" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "newblazestaff": #BLAZE
+		return golden shovel named "&3Blaze Staff" with lore "&7oh noes im on fire" and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b35" and "&7| &3Damage: &b8" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b10" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "newphantomwand": #PHANTOM
+		return blaze rod named "&3Phantom Wand" with lore "&7ea sports its in the game" and "&7| &3Class: &bWizard" and "&7| &3Level Requirement: &b35" and "&7| &3Damage: &b7" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b20" with nbt "%{givenbt}%"
+		stop
+	if {_i} is "newphantomstaff": #PHANTOM
+		return golden shovel named "&3Phantom Staff" with lore "&7ea sports its in the game" and "&7| &3Class: &bWarlock" and "&7| &3Level Requirement: &b35" and "&7| &3Damage: &b8" and "&7| &3Attack Speed: &bFast" and "&7| &3Range: &b10" with nbt "%{givenbt}%"
+		stop
+
+		
+		
+		
+		
+	if {_i} is "oakwand":
+		return stick named "&6Oak Wand" with lore "&7Shoots 1 beam with high range. &3[1 Mana]" with nbt "%{givenbt}%"
+		stop
+	
+	if {_i} is "blazewand":
+		return blaze rod named "&6Blaze Wand" with lore "&7oh crap im on fire &3[2 Mana]" and "&cRequires Combat 12" with nbt "%{givenbt}%"
+		stop
+
+	if {_i} is "oakstaff":
+		return wooden shovel named "&6Oak Staff" with lore "&7Shoots multiple beams with low range. &3[1 Mana]" with nbt "%{givenbt}%"
+		stop
+
+	if {_i} is "stonestaff":
+		return stone shovel named "&6Stone Staff" with lore "&7New and improved! &3[2 Mana]" and "&cRequires Combat 8" with nbt "%{givenbt}%"
+		stop
+
+	if {_i} is "shadowstaff":
+		return netherite shovel named "&8Shadow Staff" with lore "&7Draws energy from the shadow realm! &3[3 Mana]" and "&cRequires Combat 25" with nbt "%{givenbt}%"
+		stop
+	
+	if {_i} is "snowspraystaff":
+		return iron shovel named "&f&lSnow Spray Staff" with lore "&7It's snow-time. &3[6 Mana]" and "&b+ Freezing:" and "&b| Victims have slowness for 3 seconds" and "&cRequires Combat 75" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "explosivewand":
+		return tripwire hook named "&6Explosive Wand" with lore "&7Demoman 2.0 &3[5 Mana]" and "&cRequires Combat 50" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "explosivewanddrop":
+		return tripwire hook named "&6Explosive Wand" with lore "&7Demoman 2.0 &3[5 Mana]" and "&cRequires Combat 50" and "ownerpickup" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_forest":
+		return tripwire hook named "&2Forest Dungeon Key" with lore "&7Opens the &2Forest Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_castle":
+		return tripwire hook named "&7Castle Dungeon Key" with lore "&7Opens the &7Castle Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_shadow":
+		return tripwire hook named "&8Shadow Dungeon Key" with lore "&7Opens the &8Shadow Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_moon":
+		return tripwire hook named "&6Moon Dungeon Key" with lore "&7Opens the &6Moon Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "oldshadowchestplate":
+		return netherite chestplate named "&8Shadow Chestplate" with lore "&7Slinking through the shadows..." and "&e+ 40%% Damage" and "&e+ 20%% Damage Resistance" and "&e+ Slowness While Wearing" with nbt "%{armornbt}%"
+		stop
+	
+	if {_i} is "beer":
+		set {_i1} to potion named "&6Beer" with lore "&7burp"
+		return {_i1}
+		
+	if {_i} is "speedboots":
+		set {_i1} to leather boots named "&9Speed Boots" with lore "&7&oGOTTA GO FAST" and "&9+ 80%% &9Movement Speed" and "&c- 20%% &cDamage Resistance" with nbt "%{givenbt}%"
+		dye {_i1} blue
+		return {_i1}
+		
+	if {_i} is "treehelm":
+		set {_i1} to leather helmet named "&2Helmet of the Trees" with lore "&7Provides some basic protection." with nbt "%{armornbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+	if {_i} is "treechest":
+		set {_i1} to leather chestplate named "&2Tunic of the Trees" with lore "&7Provides some basic protection." with nbt "%{armornbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+	if {_i} is "treelegs":
+		set {_i1} to leather leggings named "&2Leggings of the Trees" with lore "&7Provides some basic protection." with nbt "%{givenbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+	if {_i} is "treeboots":
+		set {_i1} to leather boots named "&2Shoes of the Trees" with lore "&7Provides some basic protection." with nbt "%{armornbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+	
+	
+	if {_i} is "skelhelm":
+		set {_i1} to chainmail helmet named "&7Warrior's Helmet" with lore "&7An old, battered piece of armor a skeleton was wearing in the castle." with nbt "%{armornbt}%"
+		return {_i1}
+		
+	if {_i} is "skelchest":
+		set {_i1} to iron chestplate named "&7Warrior's Tunic" with lore "&7An old, battered piece of armor a skeleton was wearing in the castle." with nbt "%{armornbt}%"
+		return {_i1}
+		
+	if {_i} is "skellegs":
+		set {_i1} to iron leggings named "&7Warrior's Trousers" with lore "&7An old, battered piece of armor a skeleton was wearing in the castle." with nbt "%{armornbt}%"
+		return {_i1}
+		
+	if {_i} is "skelboots":
+		set {_i1} to iron boots named "&7Warrior's Boots" with lore "&7An old, battered piece of armor a skeleton was wearing in the castle." with nbt "%{armornbt}%"
+		return {_i1}
+			
+	
+	
+	if {_i} is "molthelm":
+		set {_i1} to golden helmet of fire protection 3 and protection 3 named "&6Molten Cap" with lore "&7Did someone turn up the heat in here?" and "&6Piece Bonus: You cannot burn while wearing!" with nbt "%{armornbt}%"
+		return {_i1}
+		
+	if {_i} is "moltchest":
+		set {_i1} to golden chestplate of fire protection 3 and protection 3 named "&6Molten Cuirass" with lore "&7Did someone turn up the heat in here?" and "&6Piece Bonus: You cannot burn while wearing!" with nbt "%{armornbt}%"
+		return {_i1}
+		
+	if {_i} is "moltlegs":
+		set {_i1} to golden leggings of fire protection 3 and protection 3 named "&6Molten Greaves" with lore "&7Did someone turn up the heat in here?" and "&6Piece Bonus: You cannot burn while wearing!" with nbt "%{armornbt}%"
+		return {_i1}
+		
+	if {_i} is "moltboots":
+		set {_i1} to golden boots of fire protection 3 and protection 3 named "&6Molten Slippers" with lore "&7Did someone turn up the heat in here?" and "&6Piece Bonus: You cannot burn while wearing!" with nbt "%{armornbt}%"
+		return {_i1}
+		
+	if {_i} is "shadowchestplate" or "shadowchest":
+		set {_i1} to unbreakable netherite chestplate named "&8Shadow Chestplate" with lore "&7Slinking through the shadows..." and "&7- - - - - - - - -" and "&7| &a+ Strength 4" and "&7| &c+ Blindness" and "&7| &c+ Slowness 1" and "&7- - - - - - - - -" and "&cUndupable"
+		return {_i1}
+		
+	if {_i} is "knightsdagger":
+		set {_i1} to iron sword named "&fKnight's Dagger" with lore "&7Dusty, but sharp." and "&7| &3Level Requirement: &b5" and "&7| &3Damage: &b5" and "&7| &3Attack Speed: &bNormal" and "&7| &3Range: &b3" and "&cUndupable" with nbt "%{givenbt}%"
+		return {_i1}
+		
+	if {_i} is "knightsaxe" or "knightsbattleaxe":
+		set {_i1} to iron axe named "&fKnight's Battleaxe" with lore "&7Time to cause some axe-idents!" and "&7| &3Level Requirement: &b7" and "&7| &3Damage: &b8" and "&7| &3Attack Speed: &bSlow" and "&7| &3Range: &b3" and "&cUndupable" with nbt "%{givenbt}%"
+		return {_i1}
+		
+	if {_i} is "brokenknightsdagger":
+		set {_i1} to stone sword named "&fBroken Knight's Dagger" with lore "&7Needs to be repaired at the forgery!" and "&7| &3Damage: &b0" and "&cUndupable" with nbt "%{givenbt}%"
+		return {_i1}
+		
+	if {_i} is "brokenknightsaxe":
+		set {_i1} to stone axe named "&fBroken Knight's Axe" with lore "&7Needs to be repaired at the forgery!" and "&7| &3Damage: &b0" and "&cUndupable" with nbt "%{givenbt}%"
+		return {_i1}
+
+	return bedrock named "&cInvalid Id" with lore "&7Id returned was ""%{_i}%&7"" " and "&7Not a bug, you may throw this item away," and "&7no need to pester lynx"
+	

@@ -1,0 +1,17 @@
+command /store [<text>]:
+	aliases: /buy, /shop
+	trigger:
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Store (UNFINISHED)"
+		loop 36 times:
+			set slot {_slot} of {_gui} to yellow stained glass pane named "&0"
+			add 1 to {_slot}
+		set slot 11 of {_gui} to gold ingot named "&6Donator Rank &7($5.00 USD)" with lore "&ePERKS" and "&e- &6[Donator] &eprefix" and "&e- 5 server boosters on purchase (/boost)" and "&e- 1 Daily Claimable Booster" and "&e- White colored chat and bukkit color codes in chat" and "&e- Access to <rainbow> before your message" and "&e- Change your weapon particles &7(in the future)"
+		set slot 13 of {_gui} to gold nugget named "&6Small Donation &7($You choose!)" with lore "&eJust to help keep the server running :)"
+		set slot 15 of {_gui} to emerald named "&a25 Server Boosters &7($1.00 USD)" with lore "&e(/boost) Doubles the XP gained for the ENTIRE SERVER!" and "&7(Yes, this complies with the eula)"
+		open {_gui} to player
+		
+on inventory click:
+	name of player's current inventory starts with "Store"
+	cancel event
+	send "&cThe store is unfinished!"

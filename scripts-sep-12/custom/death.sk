@@ -1,0 +1,10 @@
+on death:
+	victim is a player
+	victim's world is "ul_rpg"
+	send "&7You died!"
+	wait 5 ticks
+	if bed of victim exists:
+		teleport victim to player's bed
+		stop
+	teleport victim to {place.spawn}
+	clear player's potion effects

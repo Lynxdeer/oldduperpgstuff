@@ -1,0 +1,31 @@
+on rightclick:
+	player's tool's lore starts with "&7Casts things into the shadow realm."
+	cancel event
+	if {mana::%player%} is less than 4:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	shoot an arrow from the player
+	set the name of the last shot arrow to "shadow"
+	set the nbt of the last shot arrow to "{Silent:1}"
+	play sound "minecraft:entity.evoker.cast_spell" with volume 2 and pitch 2 at player's location for all players
+	player's gamemode is not creative
+	remove 4 from {mana::%player%}
+	if {combatlog::%player%} is set:
+		send action bar "&6[Combat: %{combatlog::%player%}% &6seconds] &b[Mana | %{mana::%player%}%/25⸎]" to player
+	else:
+		send action bar "&b[Mana | %{mana::%player%}%/25⸎]" to player
+
+on projectile hit:
+	name of the event-projectile contains "shadow"
+	delete the event-projectile
+	launch burst coloured black, black and black fading to dark gray and black at event-projectile's location
+	loop firework rockets in radius 2 around event-projectile:
+		set the nbt of the loop-entity to "{LifeTime:1,ShotAtAngle:90b,Silent:1}"
+	play sound "minecraft:entity.elder_guardian.flop" with volume 2 and pitch 0.5 at event-projectile's location for all players
+	loop entities in radius 4 around event-projectile:
+		loop-entity is not an arrow
+		set {_loc} to location 1.6 meters above location of loop-entity
+		stop sound "minecraft:entity.firework_rocket.blast" for loop-entity
+		stop sound "minecraft:entity.firework_rocket.blast_far" for loop-entity
+		damage loop-entity by 2 / distance between loop-entity and event-projectile
+

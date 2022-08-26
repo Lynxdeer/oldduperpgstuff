@@ -1,0 +1,23 @@
+command /scprefix <text>:
+	permission: staff.staffchat
+	permission message: &cInsufficient permissions!
+	usage: &cInvalid Usage! Usage: /scprefix (Prefix)
+	trigger:
+		send "&aSet your staff chat prefix to %arg-1%&a."
+		set {scpre::%player%} to arg-1
+
+command /staffchat <text>:
+	permission: staff.staffchat
+	permission message: &cInsufficient permissions!
+	aliases: /sc
+	usage: &cInvalid Usage! Usage: /staffchat (message)
+	trigger:
+		loop all players where [input has permission "staff.staffchat"]:
+			send "&3[Staff] %player's display name%&f: %colored arg-1%" to loop-player
+
+on chat:
+	message starts with {scpre::%player%}
+	cancel event
+	replace first {scpre::%player%} in message with ""
+	loop all players where [input has permission "staff.staffchat"]:
+		send "&3[Staff] %player's display name%&f: %message%" to loop-player

@@ -1,0 +1,12 @@
+command /tphere [<offline player>]:
+	permission: staff.tp
+	permission message: &cno
+	trigger:
+		if arg-1 is not set:
+			send "&cPlease specify someone to teleport to you!"
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		send "&aTeleported %arg-1% &ato you."
+		teleport arg-1 to player

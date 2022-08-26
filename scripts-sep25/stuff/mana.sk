@@ -1,0 +1,68 @@
+command /setmana [<player>] [<integer>]:
+	permission: *
+	permission message: &cno
+	trigger:
+		send "&aSet %arg-1%&a's mana to %arg-2%&a."
+		set {mana::%player%} to arg-2
+		
+
+on quit:
+	delete {mana::%player%}
+
+on skript stop:
+	delete {mana::*}
+
+on join:
+	if real online player count is more than {mostplayers}:
+		set {mostplayers} to real online player count
+	set title of player's scoreboard to "&f&lDupe&3&lRPG &6&lBETA"
+	set line 8 of player's scoreboard to "&7duperpg.minehut.gg"
+	set line 4 of player's scoreboard to "&8------------------"
+
+	wait 1 tick
+	set {mana::%player%} to 8
+	send action bar "&b[Mana | 8/25⸎]" to player
+	while player is online:
+		set line 9 of player's scoreboard to "&7duperpg.minehut.gg"
+		if {boost} is not more than 1 second:
+			set line 8 of player's scoreboard to ""
+		if {boost} is more than 1 second:
+			set {_formboost} to "%{boost}%"
+			replace all " seconds" or " second" with "s" in {_formboost}
+			replace all " minutes" or " minute" with "m" in {_formboost}
+			replace all " hours" or " hour" with "h" in {_formboost}
+			replace all " and " or "and " or " and" with " " in {_formboost}
+			set line 8 of player's scoreboard to "&f| &dBoost: %{_formboost}%"
+		set line 7 of player's scoreboard to "&f| &3Players: %real online player count%"
+		set line 6 of player's scoreboard to "&f| &3TPS: %tps from the last minute%"
+		set line 5 of player's scoreboard to "&f| &3Ping: %player's ping%"
+		set line 4 of player's scoreboard to "&f| &3Balance: %bal(player) + 0%"
+		set line 3 of player's scoreboard to "&f| &3Level %lvl(player) + 0%"
+		set line 2 of player's scoreboard to "&f| &3(%xp(player) + 0%&3/%(lvl(player) * 1000)%&3)"
+		
+		if {magmaboss} is true:
+			set line 1 of player's scoreboard to "&f| &6Magma Boss Health: &f%round({-magmaent}'s health)%"
+		else:
+			set line 1 of player's scoreboard to "&f| &7---------------"
+			
+		if {gapcd::%player%} is set:
+			remove 1 from {gapcd::%player%}
+		if {gapcd::%player%} is less than 1:
+			delete {gapcd::%player%}
+			
+		if {mana::%player%} is less than 25:
+			add 1 to {mana::%player%}
+			if {combatlog::%player%} is set:
+				send action bar "&e[God Apple: %( {gapcd::%player%} + 0)%&e] &6[Combat: %{combatlog::%player%}% &6seconds] &b[Mana | %{mana::%player%}%/25⸎]" to player
+			else:
+				send action bar "&b[Mana | %{mana::%player%}%/25⸎]" to player
+		else:
+			if {combatlog::%player%} is set:
+				send action bar "&e[God Apple: %( {gapcd::%player%} + 0)%&e] &6[Combat: %{combatlog::%player%}% &6seconds] &3[Mana | %{mana::%player%}%/25⸎]" to player
+			else:
+				send action bar "&3[Mana | %{mana::%player%}%/25⸎]" to player
+		wait 1 second
+
+on death:
+	set {mana::%player%} to 25
+	send action bar "&3[Mana | %{mana::%player%}%/25⸎]" to player

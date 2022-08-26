@@ -1,0 +1,183 @@
+command /ah [<text>]:
+	cooldown: 3 seconds
+	cooldown message: &cPlease don't spam this command!
+	permission: op
+	permission message: &cUnder Maintenance!
+	aliases: /auctionhouse, /auction
+	trigger:
+		set {_slot} to 0
+		set {_gui} to chest inventory with 6 rows named "Auction"
+		loop 46 times:
+			set {_slot} to 0
+			set {_gui} to chest inventory with 6 rows named "Auction"
+			{_slot} is less than 45
+			#send "%{_i}% | %{_slot}% | %{_slotp}% %slot {_slot} of player's current inventory%"
+			set {_item} to {ah::%{_slot}%}
+		
+			if line 1 of {_item}'s lore is not set:
+				{_hi} is not true
+				set line 1 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+					
+			if line 5 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 6 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+			
+			if line 4 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 5 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+				
+			if line 3 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 4 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+				
+			if line 2 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 3 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+				
+			if line 1 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 2 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+				
+			set slot ({_slot} - 1) of {_gui} to {_item}
+			add 1 to {_slot}
+			delete {_hi}
+			delete {_item}
+			open {_gui} to player
+			stop
+			
+		set slot 53 of {_gui} to arrow named "&ePage 1"
+		open {_gui} to player
+		
+command /ahsell [<integer>]:
+	permission: op
+	permission message: &cUnder Maintenance!
+	trigger:
+		if arg-1 is not set:
+			send "&cbro you gotta like set a price and stuff"
+			stop
+		add player's tool to {ah::*}
+		add arg-1 to {ahp::*}
+		send "%last element of {ah::*}% &8| %last element of {ahp::*}%"
+		
+command /paginateauction [<text>]:
+	permission: op
+	permission message: &cDebugging purposes only!
+	trigger:
+		send "&ePaginating auction."
+		execute player command "/ah"
+		set {ah::*} to paginate({ah::*}, 1, 460)
+		set {ahp::*} to paginate({ahp::*}, 1, 460)
+		wait 4 seconds
+		send "&ePaginated."
+		execute player command "/ah"
+		
+command /fillauction:
+	permission: op
+	permission message: &cno
+	trigger:
+		loop 44 times:
+			execute player command "ahsell 20"
+		execute player command "irename &apog"
+		execute player command "ahsell 15"
+			
+command /chatauction:
+	trigger:
+		loop {ah::*}:
+			send "&3%loop-value% &7for &3%{ahp::%loop-index%}%"
+		
+		
+		
+on inventory click:
+	name of player's current inventory is "Auction"
+	cancel event
+	if name of event-item starts with "&ePage ":
+		set {_i} to name of event-item
+		replace first "&ePage " in {_i} with ""
+		send "&epage of next &f(%{_i}%) %({_i} parsed as integer + 1)%"
+		set slot 53 of player's current inventory to arrow named "&ePage %({_i} parsed as integer + 1)%"
+			
+		set {_slot} to 0
+		set {_gui} to chest inventory with 6 rows named "Auction"
+		loop 46 times:
+			{_slot} is less than 45
+			set {_slotp} to ({_i} + 1) * 44 + {_slot}
+			#send "%{_i}% | %{_slot}% | %{_slotp}% %slot {_slot} of player's current inventory%"
+			set {_item} to {ah::%{_slotp}%}
+			
+			if line 1 of {_item}'s lore is not set:
+				{_hi} is not true
+				set line 1 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+		
+			if line 5 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 6 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+			
+			if line 4 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 5 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+				
+			if line 3 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 4 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+				
+			if line 2 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 3 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+				
+			if line 1 of {_item}'s lore is set:
+				{_hi} is not true
+				set line 2 of {_item}'s lore to "&3Price: &f%{ahp::%{_slot}%}%"
+				set {_hi} to true
+			set slot ({_slot} - 1) of {_gui} to {_item}
+			add 1 to {_slot}
+			delete {_hi}
+			delete {_item}
+		open {_gui} to player
+		stop
+	delete {_item}
+	set {_item} to event-item
+	set {_lore} to "%{_item}'s lore%"
+	set {_lore::*} to {_lore} split at "and"
+	send "%size of {_lore::*}% %{_lore::*}%"
+	loop {_lore::*}:
+		send "%loop-value%"
+		loop-value contains "&3Price:"
+		send "index found."
+		set {_index} to loop-index
+	delete line {_index} of lore of {_item}
+	send "%{_index}% %{_item}'s lore%"
+	give {_item} to player
+	#Leftoff
+
+	
+command /clearauction:
+	permission: op
+	trigger:
+		send "&eCleared Auction."
+		delete {ah::*}
+		delete {ahp::*}
+	
+	
+# @param obj list of items
+# @param pg what page to start off on, 1 based
+# @param lines number of lines per page
+# @returns segment of paginated list
+function paginate(obj: objects, pg: number=1, lines: number=36) :: objects:
+	set {_n} to 0
+	loop {_obj::*}:
+		add 1 to {_n}
+		if {_n} <= {_pg}*{_lines}:
+			if {_n} > ({_pg}-1)*{_lines}:
+				set {_ret::%loop-index%} to loop-value
+	return {_ret::*}

@@ -1,0 +1,217 @@
+import:
+    org.bukkit.entity.LivingEntity
+
+on rightclick:
+	if "%player's tool's lore%" contains "&7[Ability: Heal]":
+		cancel event
+		
+		if difference between {-hecd::%player%} and now is less than 0.75 seconds:
+			if {-hecd::%player%} is not set:
+				exit 2 sections
+			stop
+			
+		if {mana::%player%} is less than 7:
+			send action bar "&cNot enough Mana!" to player
+			stop
+		if player's gamemode is not creative:
+			modifyMana(player, 7)
+		play sound "minecraft:entity.ender_eye.death" with pitch 2 to all players where [input's world is player's world] at player's location
+		play sound "minecraft:entity.silverfish.death" with pitch 2 to all players where [input's world is player's world] at player's location
+		set {_h} to 0
+		set {-hecd::%player%} to now
+		set {_a} to 15
+		set player's health to (player's health + 2)
+		if player's health is more than player's max health:
+			set player's health to player's max health
+		loop 5 times:
+			add 1 to {_h}
+			set {_hd} to {_h} / 3
+			add 15 to {_a}
+			set {_loc} to location 0.2 meters above the player
+			set {_loc}'s world to player's world
+			#drawDot count {_a}, particle crit, XYZ {_h} / 3, 1, {_h} / 3, center {_c}, visibleRange 50, keepFor 0 tick
+			particle(crit, {_a}, {_hd}, 0.25, {_hd}, {_loc})
+			
+			wait 2 tick
+		wait 5 ticks
+		delete {-hecd::%player%}
+		
+		
+	if "%player's tool's lore%" contains "&7[Ability: Leap]":
+		if "%region at player%" contains "dungeon":
+			send "&cYou cannot use leap in dungeons!"
+			stop
+		cancel event
+		if {lvl::%player%} is less than 12:
+			send "&cYou need level 12 to use this ability!"
+			stop
+		{lvl::%player%} is set
+		if {mana::%player%} is less than 2:
+			send action bar "&cNot enough Mana!" to player
+			stop
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use this in combat!"
+			stop
+		if player's gamemode is not creative:
+			modifyMana(player, 2)
+		set {_v} to vector 0, 0, 0
+		set player's velocity to {_v}
+		#drawDot count 15, particle endrod, XYZ 1, 0, 1, center player, visibleRange 50, keepFor 1 tick
+		particle(end_rod, 15, 1, 0, 1, player)
+		push player vector from yaw player's yaw and pitch 0 with force 1
+		push player upwards with force 0.6
+		play sound "minecraft:entity.bat.takeoff" to all players where [input's world is player's world] at player's location
+		
+		
+		
+		
+	if "%player's tool's lore%" contains "&7[Ability: Soul Trade]":
+		cancel event
+		if {lvl::%player%} is less than 50:
+			send "&cYou need level 50 to use this ability!"
+			stop
+		{lvl::%player%} is set
+		if player's health is less than 3:
+			send action bar "&cNot enough health!" to player
+			stop
+		if "%region at player%" contains "spawn":
+			send "&cYou cannot use soul trade at spawn!"
+			stop
+		if player's gamemode is survival:
+			set player's health to (player's health - 2)
+			cancelDmgTicks(player)
+			send "&eYou traded your soul for mana!" to player
+			set {_l} to block 0.5 meters below player's head location
+			particleWitch(25, 0.5, 2.5, 0.5, player)
+			#drawDot count 25, particle witchspell, XYZ 0.5, 2.5, 0.5, center player, visibleRange 50, keepFor 1 tick
+			
+			remove absorption from the player
+			play sound "entity.player.burp" to player
+			play sound "minecraft:entity.evoker_fangs.attack" with pitch 2 to player
+			add 5 to {mana::%player%}
+			if {mana::%player%} is more than 100:
+				set {mana::%player%} to 100
+			if {combatlog::%player%} is set:
+				send action bar "&e[God Apple: %( {gapcd::%player%} + 0)%&e] &6[Combat: %{combatlog::%player%}% &6seconds] &b[Mana | %{mana::%player%}%/25⸎]" to player
+			else:
+				send action bar "&3[Mana | %{mana::%player%}%/25⸎]" to player
+		else:
+			add 5 to {mana::%player%}
+			
+	if "%player's tool's lore%" contains "&7[Ability: Charge]":
+		cancel event
+		if {lvl::%player%} is less than 50:
+			send "&cYou need level 50 to use this ability!"
+			stop
+		if {mana::%player%} is less than 15:
+			send action bar "&cNot enough Mana!" to player
+			stop
+		if difference between {-chcd::%player%} and now is less than 0.6 seconds:
+			if {-chcd::%player%} is not set:
+				exit 2 sections
+			send "&cPlease wait!"
+			stop
+		if player's gamemode is not creative:
+			modifyMana(player, 15)
+		set {_v} to vector 0, 0, 0
+		set player's velocity to {_v}
+		push player upwards with force 0.2
+		set {-chcd::%player%} to now
+		set {_ch} to player's tool
+		loop 10 times:
+			if player's tool is not {_ch}:
+				set player's velocity to vector from 0, 0.5, 0
+				push player vector from yaw player's yaw and pitch 0 with force 0.3
+				stop loop
+			#drawDot count 8, particle flame, XYZ 0.8, 0.8, 0.8, center player, visibleRange 50, keepFor 1 tick
+			#drawDot count 8, particle smoke, XYZ 0.8, 0.8, 0.8, center player, visibleRange 50, keepFor 1 tick
+			
+			particle(flame, 8, 0.8, 0.8, 0.8, player)
+			particle(smoke, 8, 0.8, 0.8, 0.8, player)
+			
+			#drawDot count 8, particle explosion, XYZ 0.8, 0.8, 0.8, center player, visibleRange 50, keepFor 1 tick
+			play sound "minecraft:entity.blaze.shoot" to player
+			push player vector from yaw player's yaw and pitch 0 with force 0.5
+			set player's velocity to vector x component of player's velocity, 0.1, vector z component of player's velocity
+			loop entities in radius 4 around player:
+				loop-entity is not the player
+				loop-entity is not a painting or boat or regular minecart or item frame or dropped item or end crystal or fireball or small fireball or dragon fireball or arrow or armor stand
+				loop-entity is not a boat or experience bottle or egg or snowball
+				loop-entity.getNoDamageTicks() is not more than 0
+				"%loop-entity%" does not contain "dropped"
+				set player's velocity to vector 0, 0, 0
+				set {_v} to vector from loop-entity to player
+				calculateArmor(12, loop-entity, player)
+				loop entities in radius 4 around loop-entity:
+					loop-entity-1 is not loop-entity-2
+					loop-entity-2 is not player
+					loop-entity-2 is not a painting or boat or regular minecart or item frame or dropped item or end crystal or fireball or small fireball or dragon fireball or arrow or armor stand
+					loop-entity-2 is not a boat or experience bottle or egg or snowball
+					calculateArmor(12, loop-entity-2, player)
+				push player {_v} with force 1
+				#drawDot count 6, particle explosionlarge, XYZ 1, 1, 1, center player, visibleRange 50, keepFor 1 tick
+				particle(explosion, 6, 1, 1, 1, player)
+				set {_stop} to true
+				stop loop
+			if {_stop} is true:
+				stop loop
+			wait 1 tick
+		if {_stop} is true:
+			set player's velocity to vector x component of player's velocity, 0.5, vector z component of player's velocity
+			play sound "minecraft:entity.bee.sting" to player
+		else:
+			set player's velocity to vector from 0, 0.5, 0
+		if {_stop} is not true:
+			push player vector from yaw player's yaw and pitch 0 with force 0.3
+			play sound "minecraft:entity.bat.takeoff" to player
+		delete {-chcd::%player%}
+		
+	if "%player's tool's lore%" contains "&7[Ability: Laser]":
+		cancel event
+		send "&cThis item is unreleased how tf did you get this"
+		send "&canyways, please remove this item as soon as possible if you have any extra copies or you may be banned"
+		add player to {illegalstash::*}
+		set player's tool to air
+		stop
+		
+	if "%player's tool's lore%" contains "&7[Ability: Teleport]":
+		cancel event
+		if {lvl::%player%} is less than 50:
+			send "&cYou need level 50 to use this ability!"
+			stop
+		if {mana::%player%} is less than 2:
+			send action bar "&cNot enough Mana!" to player
+			stop
+		if player's gamemode is not creative:
+			modifyMana(player, 2)
+		set {_v} to vector 0, 0, 0
+		set player's velocity to {_v}
+		#drawDot count 8, particle explosion, XYZ 0.8, 0.8, 0.8, center player, visibleRange 50, keepFor 1 tick
+		play sound "minecraft:entity.enderman.teleport" to player
+		set {_loc} to player's head location
+		#send "%{_loc}'s pitch% | %{_loc}'s yaw%"
+		#send "%player's pitch% | %player's yaw%"
+		loop 5 times:
+			set {_loc}'s world to player's world
+			if {_dontshoot} is true:
+				stop loop
+			#drawDot count 8, particle critmagic, XYZ 0.5, 0.8, 0.5, center player, visibleRange 50, keepFor 1 tick
+			particle(enchanted_hit, 8, 0.5, 0.8, 0.5, {_loc})
+			loop blocks in radius 2 around {_loc}:
+				loop-block is solid
+				loop-block's y-position  > {_loc}'s y-position
+				#send "%floor(loop-block's y-position)% < %{_loc}'s y-position%"
+				set {_dontshoot} to true
+				stop
+			set {_loc} to location 1 meter in front of {_loc}
+		#send "%{_loc}'s pitch% | %{_loc}'s yaw%"
+		#teleport player to {_loc}
+		#set {_x} to {_loc}'s x-position
+		#set {_y} to player's y-position
+		#set {_z} to {_loc}'s z-position
+		#set {_aloc} to location at x-position of {_loc}, player's y-position, z-position of {_loc} in world "%player's world%" with pitch player's pitch and yaw player's yaw
+		if block at {_loc} is solid:
+			#send "&cYou were teleported to your original location to prevent you being stuck in a block and suffocating!"
+			stop
+		teleport player to {_loc}
+		# location(x-position of {_loc}, player's y-position, z-position of {_loc}, world "%player's world%", {_loc}'s pitch, {_loc}'s yaw)

@@ -1,0 +1,101 @@
+command /diceroll [<integer>]:
+	cooldown: 15 seconds
+	cooldown message: &cPlease wait %remaining time% &cto roll the dice again!
+	cooldown bypass: *
+	trigger:
+	
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use this in combat!"
+			stop
+		set {_befspeed} to player's walk speed
+		
+		set {_roll} to random integer between 1 and 11
+		
+		if arg-1 is set:
+			player is "Lynxdeer"
+			set {_roll} to arg-1
+		send "&fYou rolled a &9%{_roll}%"
+		
+		if {_roll} is 1:
+			send "&7You Rolled &4Explode."
+			play sound "minecraft:entity.generic.explode" with volume 5 and pitch 1 at player for all players
+			drawDot count 1, particle explosionhuge, XYZ 0.1, 0.1, 0.1, center player, visibleRange 100, keepFor 1 tick
+			kill player
+			
+		if {_roll} is 2:
+			send "&7You Rolled &cLife Drain."
+			loop 3 times:
+				remove 5 from player's health
+				wait 11 ticks
+				
+		if {_roll} is 3:
+			send "&7You Rolled &2Snail. &8(10 seconds)"
+			set player's walk speed to 0.05
+			apply jump boost 130 without particles to player for 10 seconds
+			wait 10 seconds
+			set player's walk speed to {_befspeed}
+			
+		if {_roll} is 4:
+			send "&7You Rolled &aJumpy. &8(10 seconds)"
+			apply jump boost 2 to player for 10 seconds
+		
+		if {_roll} is 5:
+			send "&7You Rolled &6Absorb. &8(1 minute)"
+			apply absorption 20 without particles to player for 60 seconds
+			
+		if {_roll} is 6:
+			send "&7You Rolled &8Blind. &8(20 seconds)"
+			apply blindness 20 without particles to player for 20 seconds
+			
+		if {_roll} is 7:
+			send "&7You Rolled &ePotatoed."
+			apply blindness 20 without particles to player for 2 seconds
+			loop blocks in radius 2 around player:
+				loop 3 times:
+					play sound "minecraft:entity.chicken.death" with volume 5 and pitch 1 at loop-block for player
+					drop 30 potato named "You got potatoed!" at the loop-block
+				wait 1 tick
+		if {_roll} is 8:
+			send "&7You Rolled &4BRACE YOUR EARS. &8(15 seconds)"
+			play sound "entity.experience_orb.pickup" to player
+			wait 1 second
+			play sound "music_disc.stal" with volume 10 and pitch (random number between 0.1 and 2) to player
+			loop 60 times:
+				play sound "entity.wolf.howl" with volume 10 and pitch (random number between 0.1 and 2) to player
+				#play sound "minecraft:entity.bat.death" with volume 10 and pitch (random number between 0.1 and 2) to player
+				play sound "minecraft:entity.elder_guardian.curse" with volume 10 and pitch (random number between 0.1 and 2) to player
+				play sound "entity.wither.death" with volume 10 and pitch (random number between 0.1 and 2) to player
+				play sound "ambient.basalt_deltas.mood" with volume 10 and pitch (random number between 0.1 and 2) to player
+				play sound "entity.ender_dragon.death" with volume 10 and pitch (random number between 0.1 and 2) to player
+				wait 5 ticks
+			stop sound "music_disc.stal" for the player
+			stop sound "minecraft:entity.elder_guardian.curse" for the player
+			stop sound "ambient.basalt_deltas.mood" for the player
+			stop sound "entity.wither.death" for the player
+			stop sound "entity.ender_dragon.death" for the player
+			wait 1 second
+			send ""
+			send "&3Not sorry."
+			send ""
+			
+		if {_roll} is 9:
+			send "&7You Rolled &eZeus."
+			strike lightning effect at the player
+			damage player by 2
+			
+		if {_roll} is 10:
+			send "&7You Rolled &aFirework."
+			push player upwards with speed 3
+			play sound "minecraft:entity.firework_rocket.shoot" with volume 5 and pitch 1 at player for all players
+			wait 1 seconds
+			launch large ball coloured white, red and blue fading to white and black at player's location
+			loop firework rockets in radius 2 around player:
+				set the nbt of the loop-entity to "{LifeTime:1,ShotAtAngle:90b,Silent:1}"
+			kill the player
+			
+		if {_roll} is 11:
+			set {_previousm} to {mana::%player%}
+			send "&7You Rolled &9M A N A. &8(10 seconds)"
+			set {mana::%player%} to 99999999
+			wait 10 seconds
+			set {mana::%player%} to {_previousm}

@@ -1,0 +1,30 @@
+on leftclick:
+	line 1 of player's tool's lore starts with "&7burstin blaster"
+	cancel event
+	if {mana::%player%} is less than 3:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	play sound "minecraft:entity.firework_rocket.launch" with volume 2 and pitch 2 at player's location for all players
+	play sound "minecraft:item.crossbow.shoot" with volume 2 and pitch 0.5 at player's location for all players
+	modifyMana(player, 3)
+	set {_loc} to location 1.5 meters above player
+	loop 20 times:
+		if {_dontshoot} is set:
+			stop loop
+		set {_loc} to location 1 meter in front of {_loc}
+		particle(end_rod, 8, 0.5, 0.5, 0.5, {_loc})
+		#drawDot count 8, particle endrod, XYZ 0.5, 0.5, 0.5, center {_loc}, visibleRange 50, keepFor 1 tick
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			if loop-entity is a player:
+				player's time played is less than 5 minutes
+				stop
+			calculateArmor(6, loop-entity, player)
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop loop
+	launch ball large coloured black, black and black fading to dark gray and black at {_loc}
+	loop firework rockets in radius 2 around {_loc}:
+		set the nbt of the loop-entity to "{LifeTime:1,ShotAtAngle:90b,Silent:1}"
+	play sound "minecraft:entity.elder_guardian.flop" with volume 2 and pitch 0.5 at {_loc} for all players

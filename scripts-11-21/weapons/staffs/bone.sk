@@ -1,0 +1,47 @@
+on left click with iron shovel:
+	#wcd = weapon cooldown
+	line 1 of player's tool's lore starts with "&7A warrior's bone infused with magic."
+	if difference between {-wcd::%player%} and now is less than 0.3 seconds:
+		if {-wcd::%player%} is not set:
+			exit 2 sections
+		stop
+	set {-wcd::%player%} to now
+	cancel event
+
+	#set {_loc} to location 1.5 meters above location of player
+	set {_loc::1} to location 1.5 meters above location of player
+	set {_loc::2} to location 0.05 meters left of {_loc::1}
+	set {_loc::3} to location 0.05 meters right of {_loc::1}
+	
+	play sound "minecraft:entity.player.attack.sweep" with volume 2 and pitch 0.75 at {_loc::1} for all players
+	play sound "minecraft:entity.blaze.shoot" with volume 0.5 and pitch 1.5 at {_loc::1} for all players
+	play sound "minecraft:entity.skeleton.ambient" with volume 0.5 and pitch 1.5 at {_loc::1} for all players
+	play sound "minecraft:entity.skeleton.death" with volume 2 and pitch 1.5 at {_loc::1} for all players
+	play sound "minecraft:entity.skeleton.hurt" with volume 2 and pitch 1.5 at {_loc::1} for all players
+	loop 10 times:
+		loop {_loc::*}:
+		
+			set {_loc::%loop-index%}'s world to player's world
+			{_dontshoot::%loop-index%} is not set
+			
+			loop blocks in radius 0.8 around {_loc::%loop-index%}:
+				loop-block is solid
+				set {_dontshoot::%loop-index%} to true
+			{_dontshoot::%loop-index%} is not set
+			
+			set {_ent::*} to hitbox(player, {_loc::%loop-index%})
+			if size of {_ent::*} is more than 0:
+				loop all entities where [{_ent::*} contains input]:
+					loop-entity is not the player
+					calculateArmor(4.5, loop-entity, player)
+			
+			set {_r} to random number between 0.9 and 1
+			set {_loc::%loop-index%} to location {_r} meters in front of {_loc::%loop-index%}
+			particle(end_rod, 1, 0, 0, 0, {_loc::%loop-index%})
+			
+			
+			
+		set {_loc::2} to location 0.5 meters left of {_loc::2}
+		set {_loc::3} to location 0.5 meters right of {_loc::3}
+		set {_loc} to location 1 meter in front of {_loc}
+		

@@ -1,0 +1,48 @@
+command /forestdungeonmusic [<text>]:
+	trigger:
+		note(player, "bass", 5) #Green
+		#note(player, "snare", 17) # Yellow
+		#note(player, "snare", 22) # Yellow
+		note(player, "basedrum", 6) # Red
+		note(player, "harp", 5) # Blue
+		wait 3 ticks
+		
+		note(player, "bass", 5) #Green
+		#note(player, "snare", 22) # Yellow
+		note(player, "harp", 5) # Blue
+		wait 3 ticks
+		
+		#note(player, "snare", 18) # Yellow
+		wait 3 ticks
+		
+		note(player, "bass", 8) #Green
+		#note(player, "snare", 22) # Yellow 6
+		#note(player, "basedrum", 6) # Red
+		note(player, "harp", 8) # Blue
+		wait 3 ticks 
+		
+		#note(player, "snare", 22) # Yellow, 8
+		wait 3 ticks
+		
+		#note(player, "snare", 22) # Yellow, 10
+		note(player, "basedrum", 6) # Red
+		wait 3 ticks
+		
+		#note(player, "snare", 18) # Yellow, 12
+		wait 3 ticks
+		
+		#note(player, "snare", 22) # Yellow, 14
+		note(player, "bass", 3)
+		note(player, "harp", 3)
+		wait 3 ticks
+		
+		#note(player, "snare", 22) # Yellow, 16
+		note(player, "basedrum", 6) # Red
+		note(player, "bass", 5)
+		note(player, "harp", 5)
+		wait 3 ticks
+		
+		note(player, "basedrum", 6) # Red
+		note(player, "bass", 5)
+		note(player, "harp", 5)
+		wait 3 ticks

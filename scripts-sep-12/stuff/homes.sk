@@ -1,0 +1,56 @@
+command /sethome [<text>]:
+	trigger:
+		if player's world is "ul_rpg":
+			send "&cYou cannot set a home here!"
+			stop
+		if {home::%player's uuid%} is set:
+			send formatted "&cAre you sure you want to set your home? Your current home will be overwritten! Setting multiple homes is coming soon! <tooltip:&eClick to set your home.><run command:/confirmsethome>&4[Confirm]<reset>"
+			stop
+		if {combatlog::%player%} is set:
+			send "&cYou cannot do this in combat!"
+			stop
+		if arg-1 is set:
+			send "&aNote: Multiple homes do not exist yet!"
+		send "&aSet your home at your location."
+		set {home::%player's uuid%} to player's location
+		
+
+command /home [<offline player>]:
+	aliases: /h
+	trigger:
+		if {home::%player's uuid%}'s world is "ul_rpg":
+			send "&cYou cannot go to a home in the rpg area! Your home will now be deleted."
+			delete {home::%player's uuid%}
+			stop
+		if arg-1 is set:
+			if player does not have the permission "staff.homes":
+				exit 2 sections
+			send "&aTeleported you to %arg-1%&a's home."
+			teleport player to {home::%arg-1's uuid%}
+			stop
+		if {combatlog::%player%} is set:
+			send "&cYou cannot do this in combat!"
+			stop
+		if {home::%player's uuid%} is not set:
+			send "&cYou do not have a home set! Set one with /sethome."
+			stop
+		send "&aTeleported you to your home."
+		teleport player to {home::%player's uuid%}
+
+command /delhome [<text>]:
+	aliases: /deletehome
+	trigger:
+		send formatted "&cAre you sure you want to delete your home? <tooltip:&eClick to delete.><run command:/confirmdelhome>&4[Delete]<reset>"
+
+on command "confirmdelhome":
+	cancel event
+	if {home::%player's uuid%} is not set:
+		send "&cYou do not have a home to delete!"
+		stop
+	send "&eDeleted your home."
+	delete {home::%player's uuid%}
+	
+on command "confirmsethome":
+	cancel event
+	send "&eSet your home at your location."
+	set {home::%player's uuid%} to player's location

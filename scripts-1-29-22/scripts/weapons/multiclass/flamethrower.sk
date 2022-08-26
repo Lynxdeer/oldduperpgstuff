@@ -1,0 +1,114 @@
+on damage:
+	line 1 of damager's tool's lore contains "&Left click to shoot a flare,"	
+	cancel event
+
+on left click with flint and steel:
+
+	cooldown of player's tool for player <= 0 seconds
+	set the cooldown of player's tool for player to 0.5 seconds
+	
+	line 1 of player's tool's lore starts with "&7Left click to shoot a flare,"
+	cancel event
+	
+	
+	
+	if "%event-item's lore%" does not contain "&eOwner:":
+		send "&cThis item is not ownership tagged and cannot be used!"
+		stop
+	if "%event-item's lore%" does not contain "&f%player%":
+		send "&cYou do not own this item! This is to prevent boosting of this item."
+		stop
+		
+		
+		
+	if lvl(player) is less than 12:
+		send "&cYou must have at least combat 12 to use this item!"
+		stop
+	cancel event
+
+	if {mana::%player%} is less than 4:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		modifyMana(player, 4)
+	set {_loc} to location 1.6 meters above location of player
+	#drawDot count 1, particle soul, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	set {_loc} to location 1.5 meters above location of player
+	play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players where [input's world is player's world]
+	play sound "minecraft:block.lava.extinguish" with volume 1 and pitch 0.5 at {_loc} for all players where [input's world is player's world]
+	#drawDot count 5, particle totem, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	loop 40 times:
+		set {_loc}'s world to player's world
+		if {_dontshoot} is set:
+			stop
+		set {_loc} to location 1 meter in front of {_loc}
+		#drawDot count 1, particle flame, XYZ 0, 0.02, 0, center {_loc}, visibleRange 50, keepFor 1 tick
+		particle(flame, 1, 0, 0.02, 0, {_loc})
+		
+		set {_ent::*} to hitbox(player, {_loc})
+		if size of {_ent::*} is more than 0:
+			#send "%size of {_ent::*}%"
+			loop all entities where [{_ent::*} contains input]:
+				loop-entity is not the player
+				calculateArmor(7, loop-entity, player)
+				ignite loop-entity for 5 seconds
+			
+			
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+		wait 1 tick
+		
+on right click with flint and steel:
+
+	line 1 of player's tool's lore starts with "&7Left click to shoot a flare,"
+	"%player's tool's lore%" does not contain "&7[Ability"
+	cancel event
+
+	cooldown of player's tool for player <= 0 seconds
+	set the cooldown of player's tool for player to 0.15 seconds
+
+	if "%event-item's lore%" does not contain "&eOwner:":
+		send "&cThis item is not ownership tagged and cannot be used!"
+		stop
+	if "%event-item's lore%" does not contain "&f%player%":
+		send "&cYou do not own this item! This is to prevent boosting of this item."
+		stop
+		
+		
+	if lvl(player) is less than 12:
+		send "&cYou must have at least combat 12 to use this item!"
+		stop
+	cancel event
+
+	if {mana::%player%} is less than 1:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		modifyMana(player, 1)
+	set {_loc} to location 1.6 meters above location of player
+	#drawDot count 1, particle soul, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	set {_loc} to location 1.5 meters above location of player
+	#play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players
+	play sound "minecraft:block.lava.extinguish" with volume 3 and pitch 2 at {_loc} for all players where [input's world is player's world]
+	#drawDot count 5, particle totem, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	loop 7 times:
+		set {_loc}'s world to player's world
+		if {_dontshoot} is set:
+			stop
+		set {_loc} to location 1 meter in front of {_loc}
+		#drawDot count 5, particle flame, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		particle(flame, 5, 0.2, 0.2, 0.2, {_loc})
+		set {_ent::*} to hitbox(player, {_loc})
+		if size of {_ent::*} is more than 0:
+			loop all entities where [{_ent::*} contains input]:
+				loop-entity is not the player
+				calculateArmor(4, loop-entity, player)
+				ignite loop-entity for 5 seconds
+				
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+		

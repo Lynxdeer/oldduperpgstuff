@@ -1,0 +1,15 @@
+command /russianroulette:
+	aliases: /rr
+	cooldown: 3 seconds	
+	cooldown message: &cPlease wait 3 seconds before doing this again!
+	trigger:
+		broadcast "&e%player%&e is spinning the barrel..."
+		loop 40 times:
+			play sound "block.note_block.bass" to all players at player's location
+			wait 1 tick
+		set {chance} to random integer between 1 and 3
+		if {chance} is 1:
+			broadcast "&4ITS A DEADLY SHOT!"
+			kill the player
+			stop
+		broadcast "&eThe gun fails to fire and a life is spared!"

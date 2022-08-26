@@ -1,0 +1,99 @@
+on consume of enchanted golden apple:
+
+	{combatlog::%player%} is set
+	if {gapcd::%player%} is set:
+		send "&cGod Apples have a 15 second cooldown!"
+		cancel event
+		stop
+	set {gapcd::%player%} to 15
+
+on damage:
+	damager is end crystal
+	victim is a player
+	{rcrystal} is not victim
+	if victim's time played is less than 5 minutes:
+		cancel event
+	set {combatlog::%victim%} to 15
+	
+on rightclick with end crystal:
+	"%region at player%" contains "dropdown"
+	cancel event
+	send "&cYou cannot place crystals inside spawn!"
+
+
+on rightclick with ender pearl:
+	{combatlog::%player%} is set
+	send "&cYou cannot use pearls in combat!"
+	cancel event
+
+on rightclick:
+	{combatlog::%player%} is set
+	"%player's chestplate%" contains "elytra"
+	if "%player's tool%" contains "flight 0 firework rocket":
+		#send "(debug) %{_i}%"
+		send "&cYou cannot use fireworks in combat!"
+		{combatlog::%player%} is set
+		cancel event
+	if "%player's offhand tool%" contains "flight 0 firework rocket":
+		"%player's tool%" does not start with "crossbow"
+		#send "(debug) %{_i}%"
+		{combatlog::%player%} is set
+		send "&cYou cannot use fireworks in combat!"
+		cancel event
+	
+
+on damage:
+	damager is a player
+	victim is a player
+	#victim is not the damager
+	event is not canceled
+	if {combatlog::%damager%} is not set:
+		send "&cYou are now in combat! Do not log out!" to damager
+	if {combatlog::%victim%} is not set:
+		send "&cYou are now in combat! Do not log out!" to victim
+	if {combatlog::%damager%} is not 10:
+		set {combatlog::%damager%} to 10
+		set the cooldown of ender pearl for damager to 10 seconds
+	if {combatlog::%victim%} is not 10:
+		set {combatlog::%victim%} to 10
+		set the cooldown of ender pearl for victim to 10 seconds
+
+#      vvvv Hey look its a broken combat system
+
+	#while {combatlog::%damager%} is set:
+		#remove 1 from {combatlog::%damager%}
+		#wait 1 second
+		#if {combatlog::%damager%} is less than 1:
+			#send "&aYou are out of combat!" to damager
+			#delete {combatlog::%damager%}
+	#while {combatlog::%victim%} is set:
+		#remove 1 from {combatlog::%victim%}
+		#wait 1 second
+		#if {combatlog::%victim%} is less than 1:
+			#send "&aYou are out of combat!" to victim
+			#delete {combatlog::%victim%}
+
+every second:
+	loop all players:
+		{combatlog::%loop-player%} is set
+		remove 1 from {combatlog::%loop-player%}
+		wait 1 second
+		if {combatlog::%loop-player%} is less than 1:
+			send "&aYou are out of combat!" to loop-player
+			delete {combatlog::%loop-player%}
+
+on skript stop:
+	delete {combatlog::*}
+
+on quit:
+	{combatlog::%player%} is set
+	kill the player
+	kill the player
+	delete {combatlog::%player%}
+	broadcast "&e%player% &ecombat logged."
+
+
+on death:
+	victim is a player
+	delete {combatlog::%victim%}
+

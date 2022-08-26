@@ -1,0 +1,33 @@
+command /debugplaces:
+	trigger:
+		send "Spawn: %{place.spawn}%"
+		send "Forest: %{place.forest}%"
+		send "Forestwarp: %{place.forestwarp}%"
+		send "Castle: %{place.castle}%"
+		send "Castlewarp: %{place.castlewarp}%"
+		send "Cave: %{place.cave}%"
+		send "Cavewarp: %{place.cavewarp}%"
+		send "Cave: %{place.cave}%"
+		send "Cavewarp: %{place.cavewarp}%"
+		send "Shadow: %{place.shadow}%"
+		send "Shadowwarp: %{place.shadowwarp}%"
+		
+command /debugworlds:
+	trigger:
+		send "&3Worlds"
+		loop all worlds:
+			send "&b%loop-world%"
+
+command /debuglevels:
+	trigger:
+		send "&3Level: %lvl(player)% %nl%&3XP: %xp(player)%"
+		if lvl(player) is not set:
+			send "&cNo levels!"
+		if xp(player) is not set:
+			send "&cNo xp!"
+
+
+command /testparticles:
+	trigger:
+		set {_v} to vector from 0, 0, 0
+		play 50 of witch at player's location offset by {_v} to all players

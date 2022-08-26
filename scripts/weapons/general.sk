@@ -1,0 +1,4 @@
+on damage:
+	damager is a player
+	"%damager's tool's lore%" contains "&3Damage:"
+	cancel event

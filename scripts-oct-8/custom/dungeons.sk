@@ -1,0 +1,851 @@
+import:
+	org.bukkit.entity.HumanEntity
+
+on load:
+	set {dungeon.shop} to location(484, 100, 266, world "ul_rpg")
+	set {dungeon.forestwarp} to location(500, 102, 283, world "ul_rpg")
+	set {dungeon.forest} to location(1000, 100, 250, world "ul_rpg")
+	set {dungeon.forestkeeper} to location(998, 105, 301, world "ul_rpg")
+	set {dungeon.forestspawner} to location(1000, 104, 316, world "ul_rpg")
+	set {dungeon.forestdoor} to location(1004, 103, 365, world "ul_rpg")
+	set {dungeon.forestboss} to location(1001, 80, 423, world "ul_rpg")
+	
+	set {dungeon.castlewarp} to location(462, 95, 250, world "ul_rpg")
+	set {dungeon.castle} to location(2000, 101, 250, world "ul_rpg")
+	set {dungeon.castlekeeper} to location(1995, 97, 286, world "ul_rpg")
+	set {dungeon.castlespawner} to location(1993, 95, 296, world "ul_rpg")
+	set {dungeon.castledoor} to location(1993, 95, 296, world "ul_rpg")
+	set {dungeon.castleboss} to location(2017, 57, 426, world "ul_rpg")
+		
+on place:
+	if line 1 of player's tool's lore contains "&7Opens the &2Forest Dungeon&7.":
+		cancel event
+	if line 1 of player's offhand tool's lore contains "&7Opens the &2Forest Dungeon&7.":
+		cancel event
+
+on skript start:
+	reload script "custom/dungeons"
+	
+function dungeonTeleportBack(p: player):
+	wait 15 seconds
+	teleport {_p} to {place.dungeon}
+	send "&aYou have been teleported back to the dungeon spawn!" to {_p}
+
+on rightclick:
+	if distance between {dungeon.forestwarp} and clicked block is less than 2:
+		cancel event
+		{-cutsc::%player%} is not true
+		set {-cutsc::%player%} to true
+		send "&7A weird sensation sets upon you, as if every molecule was being disassembled and reassembled again..."
+		apply nausea 15 without particles to player for 6 seconds
+		apply blindness 5 without particles to player for 6 seconds
+		apply slowness 5 without particles to player for 6 seconds
+		play sound "minecraft:block.portal.travel" with pitch 0.5 to player
+		play sound "minecraft:block.portal.travel" with pitch 1 to player
+		play sound "minecraft:block.portal.travel" with pitch 2 to player
+		wait 4 seconds
+		teleport player to {dungeon.forest}
+		send title "&2Forest Dungeon" to player for 3 seconds with fadein 1 second and fadeout 1 second
+		play sound "minecraft:block.portal.trigger" with pitch 1 to player
+		delete {-cutsc::%player%}
+		
+	if distance between {dungeon.forestkeeper} and clicked block is less than 2:
+		cancel event
+		#send "&aDungeon Keeper: Let me see if you qualify to enter the dungeon."
+		#send "&7(Requires a key at /dungeonshop)"
+		if {-forestisopened} is true:
+			send "&aDungeon Keeper: The door is already open! What are you doing???"
+			stop
+		if {-forestdungeon} is true:
+			send "&aDungeon Keeper: The dungeon is already being done! Please wait till the current party finishes."
+			stop
+		if line 1 of player's tool's lore contains "&7Opens the &2Forest Dungeon&7.":
+			remove 1 of player's tool from player's tool
+			set {-forestisopened} to true
+			
+		loop items in player's inventory:
+			{-forestisopened} is not true
+			line 1 of loop-item's lore contains "&7Opens the &2Forest Dungeon&7."
+			send "&aDungeon Keeper: Hmm... It looks like you have a key, but you need to hold it in your hand!"
+			stop
+		if {-forestisopened} is not true:
+			send "&aDungeon Keeper: You need a key to open this dungeon, buy one at the dungeon shop!"
+			stop
+		apply slowness 1 without particles to player for 1 second
+		set {-fdzamboeskilled} to 0
+		set {_loc} to {dungeon.forestkeeper}
+		set {_loc} to location 4 meters in front of {_loc}
+		set {_loc} to location 2 meters left of {_loc}
+		set {_loc2} to location 1 meter right of {_loc}
+		set {_loc3} to location 1 meter below {_loc}
+		set {_loc4} to location 1 meter below {_loc2}
+		
+		loop all entities where [input's display name is "&4Zamboe"]:
+			delete the loop-entity
+		wait 1 tick
+		
+		# 1 2
+		# 3 4
+		
+		play sound "minecraft:block.lava.extinguish" with pitch 1 to player
+		loop 24 times:
+			drawDot count 10, particle witchspell, XYZ 1, 1, 1, center {_loc}, visibleRange 50, keepFor 0 tick
+			wait 1 tick
+		play sound "minecraft:entity.wither.break_block" with volume 1 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.2 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.5 and pitch 1.5 at {_loc} for all players
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		
+		set block at {_loc} to air
+		set block at {_loc2} to air
+		set block at {_loc3} to air
+		set block at {_loc4} to air
+		
+		send "&aDungeon Keeper: I have opened the door. It will remain open for another 10 seconds. Now go."
+		
+		wait 10 seconds
+		
+		set block at {_loc} to cracked stone bricks
+		set block at {_loc2} to cracked stone bricks
+		set block at {_loc3} to cracked stone bricks
+		set block at {_loc4} to cracked stone bricks
+		set {-fdisopened} to false
+		set {-forestisopened} to false
+		play sound "block.anvil.destroy" with volume 2 and pitch 0.5 at {_loc} for all players
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		
+		
+		
+		
+		
+		
+		
+		
+	if distance between {dungeon.castlewarp} and clicked block is less than 2:
+		cancel event
+		{-cutsc::%player%} is not true
+		set {-cutsc::%player%} to true
+		send "&7A weird sensation sets upon you, as if every molecule was being disassembled and reassembled again..."
+		apply nausea 15 without particles to player for 6 seconds
+		apply blindness 5 without particles to player for 6 seconds
+		apply slowness 5 without particles to player for 6 seconds
+		play sound "minecraft:block.portal.travel" with pitch 0.5 to player
+		play sound "minecraft:block.portal.travel" with pitch 1 to player
+		play sound "minecraft:block.portal.travel" with pitch 2 to player
+		wait 4 seconds
+		teleport player to {dungeon.castle}
+		send title "&7Castle Dungeon" to player for 3 seconds with fadein 1 second and fadeout 1 second
+		play sound "minecraft:block.portal.trigger" with pitch 1 to player
+		delete {-cutsc::%player%}
+		
+		
+	
+	
+	
+	
+	
+	if distance between {dungeon.castlekeeper} and clicked block is less than 2:
+		cancel event
+		#send "&aDungeon Keeper: Let me see if you qualify to enter the dungeon."
+		#send "&7(Requires a key at /dungeonshop)"
+		if {-castleisopened} is true:
+			send "&aDungeon Keeper: The door is already open! What are you doing???"
+			stop
+		if {-castledungeon} is true:
+			send "&aDungeon Keeper: The dungeon is already being done! Please wait till the current party finishes."
+			stop
+		if line 1 of player's tool's lore contains "&7Opens the &7Castle Dungeon&7.":
+			remove 1 of player's tool from player's tool
+			set {-castleisopened} to true
+			
+		loop items in player's inventory:
+			{-castleisopened} is not true
+			line 1 of loop-item's lore contains "&7Opens the &7Castle Dungeon&7."
+			send "&aDungeon Keeper: Hmm... It looks like you have a key, but you need to hold it in your hand!"
+			stop
+		if {-castleisopened} is not true:
+			send "&aDungeon Keeper: You need a key to open this dungeon, buy one at the dungeon shop!"
+			stop
+		apply slowness 1 without particles to player for 1 second
+		set {-fdzamboeskilled} to 0
+		set {_loc} to {dungeon.castlekeeper}
+		set {_loc} to location 2 meters in front of {_loc}
+		set {_loc} to location 1 meter right of {_loc}
+		set {_loc2} to location 1 meter right of {_loc}
+		set {_loc3} to location 1 meter below {_loc}
+		set {_loc4} to location 1 meter below {_loc2}
+		
+		loop all entities where [input's display name is "&4Skeleton Warrior"]:
+			delete the loop-entity
+		wait 1 tick
+		
+		# 1 2
+		# 3 4
+		
+		play sound "minecraft:block.lava.extinguish" with pitch 1 to player
+		loop 24 times:
+			drawDot count 10, particle witchspell, XYZ 1, 1, 1, center {_loc}, visibleRange 50, keepFor 0 tick
+			wait 1 tick
+		play sound "minecraft:entity.wither.break_block" with volume 1 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.2 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.5 and pitch 1.5 at {_loc} for all players
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		
+		set block at {_loc} to air
+		set block at {_loc2} to air
+		set block at {_loc3} to air
+		set block at {_loc4} to air
+		
+		send "&aDungeon Keeper: I have opened the door. It will remain open for another 10 seconds. Now go."
+		
+		wait 10 seconds
+		
+			
+		set block at {_loc} to cracked stone bricks
+		set block at {_loc2} to cracked stone bricks
+		set block at {_loc3} to cracked stone bricks
+		set block at {_loc4} to cracked stone bricks
+		set {-cdisopened} to false
+		set {-castleisopened} to false
+		play sound "block.anvil.destroy" with volume 2 and pitch 0.5 at {_loc} for all players
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+on toggling gliding:
+	"%region at player%" contains "dungeon"
+	send "&cSorry, no elytras in dungeons"
+	cancel event
+
+
+
+on region enter:
+	#player is "Lynxdeer"
+	if "%event-region%" is "dungeonforestbossentry in world ul_rpg":
+		"%region at player%" is not "dungeonforestbossentry in world ul_rpg"
+		send "&aEntering the boss room."
+		apply blindness 5 without particles to player for 2 seconds
+		apply slowness 2 without particles to player for 2 seconds
+		teleport player to {dungeon.forestboss}
+		send title "&2Boss Room" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.wither.spawn" with pitch 1 to player
+		loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+			player is not the loop-player
+			stop
+		while block below player is not glass:
+			wait 10 ticks
+		wait 1 second
+		
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Yes! The cage worked!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		set block at location 14 meters below {dungeon.forestboss} to air
+		set {_loc} to location 14 meters below {dungeon.forestboss}
+		play sound "minecraft:entity.wither.break_block" with volume 3 and pitch 0.75 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 0.5 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 2 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 1 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Gah! I knew I shouldn't have made that cage out of glass!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		wait 3 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: It is no matter. You will be dead at my hand!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		wait 5 seconds
+		
+		set {_loc} to location 25 meters below {dungeon.forestboss}
+		loop 8 times:
+			drawDot count 30, particle witchspell, XYZ 0.1, 1, 0.5, center location above {_loc}, visibleRange 50, keepFor 0 tick
+			play sound "minecraft:block.lava.extinguish" with volume 1.5 and pitch 0.5 at {_loc} for all players
+			wait 5 ticks
+			set {_loc} to location 1 meter in front of {_loc}
+		spawn an adult zombie above {_loc}
+		set the display name of the last spawned zombie to "&6Helpless Zamboe"
+		set the helmet of the last spawned zombie to oak leaves
+		set the chestplate of the last spawned zombie to unbreakable chainmail chestplate
+		set the leggings of the last spawned zombie to unbreakable chainmail leggings
+		set the boots of the last spawned zombie to unbreakable chainmail boots
+		set the last spawned zombie's tool to air
+		set artificial intelligence of last spawned zombie to false
+		set {_pittp} to {_loc}
+		set pitch of {_pittp} to 179
+		teleport last spawned zombie to {_pittp}
+		set last spawned zombie's invulnerability ticks to 60
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: See this zamboe? It's soul is now MINE!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		wait 61 ticks
+		delete the last spawned zombie
+		loop 10 times:
+			drawDot count 30, particle witchspell, XYZ 3, 3, 3, center {_loc}, visibleRange 50, keepFor 0 tick
+			play sound "minecraft:block.lava.extinguish" with volume 1.5 and pitch 0.5 at {_loc} for all players
+			wait 5 ticks
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: YES! YES! YES!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+			add 1 to {_playercount}
+		
+		spawn a giant above {_loc}
+		set the display name of the last spawned giant to "&4Possessed Zamboe"
+		set the helmet of the last spawned giant to oak leaves
+		set the chestplate of the last spawned giant to unbreakable chainmail chestplate
+		set the leggings of the last spawned giant to unbreakable chainmail leggings
+		set the boots of the last spawned giant to unbreakable chainmail boots
+		set the last spawned giant's tool to air
+		set the last spawned giant's max health to (40 * {_playercount})
+		set the last spawned giant's health to (40 * {_playercount})
+		set artificial intelligence of last spawned giant to false
+		set last spawned giant's invulnerability ticks to 60
+		set {_pittp} to {_loc}
+		set pitch of {_pittp} to 179
+		teleport last spawned zombie to {_pittp}
+		send title "&4BOSS" with subtitle "&cPossessed Zamboe" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"] for 3 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.drowned.shoot" with volume 1.5 and pitch 0.5 at {_loc} for all players
+		play sound "minecraft:block.anvil.place" with volume 1.5 and pitch 0.5 at {_loc} for all players
+		play sound "minecraft:block.anvil.place" with volume 1.5 and pitch 2 at {_loc} for all players
+		play sound "minecraft:entity.cow.milk" with volume 5 and pitch 0.5 at {_loc} for all players
+		play sound "minecraft:entity.husk.converted_to_zombie" with volume 2 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.zombie.infect" with volume 1.5 and pitch 2 at {_loc} for all players
+		play sound "minecraft:entity.zombie.hurt" with volume 1.5 and pitch 0.5 at {_loc} for all players
+		apply night vision without particles to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"] for 10 minutes
+		wait 2 seconds
+		set artificial intelligence of last spawned giant to true
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: YOU WILL DIE!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+			"%region at loop-player%" is "dungeonforestbossroom in world ul_rpg"
+			make loop-player say "/thegreatrace"
+		set {_e} to the last spawned giant
+		while {_e} is alive:
+			loop players in radius 10 around {_e}:
+				damage loop-player by 4
+				drawDot count 30, particle witchspell, XYZ 1, 1, 1, center location above loop-player, visibleRange 50, keepFor 0 tick
+			wait 2 seconds
+		delete the last spawned giant
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: NO... WHAT... HOW.... I CALL HACKS!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		delete {-forestdungeon}
+		set block above {_loc} to chest
+		drawDot count 30, particle witchspell, XYZ 1, 1, 1, center location above {_loc}, visibleRange 50, keepFor 0 tick
+		play sound "entity.chicken.egg" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		
+		
+	if "%event-region%" is "dungeonforestentry in world ul_rpg":
+	
+		"%region at player%" is not "dungeonforestentry in world ul_rpg"
+		remove night vision from potion effects of player
+		apply slowness 1 without particles to player for 2 seconds
+		send "&aKill 5 Zamboes to progress! 1 extra spawned."
+		set {-forestdungeon} to true
+		set {_dszm::1} to {dungeon.forestspawner}
+		
+		set {_dszm::2} to location at block 10 meters in front of {_dszm::1}
+		set {_dszm::2} to location below {_dszm::2}
+		set {_dszm::2} to location 1 meter left of {_dszm::2}
+		
+		set {_dszm::3} to location at block 10 meters in front of {_dszm::2}
+		set {_dszm::3} to location 1 meters right of {_dszm::3}
+		
+		set {_dszm::4} to location at block 10 meters in front of {_dszm::3}
+		set {_dszm::4} to location 1 meters left of {_dszm::4}
+		
+		set {_dszm::5} to location at block 10 meters in front of {_dszm::4}
+		set {_dszm::5} to location 1 meters right of {_dszm::5}
+		set {_dszm::6} to location 2 meters above {_dszm::5}
+		send title "&2Kill Zamboes" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		set {-fdzamboeskilled} to 0
+		loop {_dszm::*}:
+			set {_loc} to {_dszm::%loop-index%}
+			set {_next} to (loop-index parsed as integer + 1)
+			drawDot count 25, particle witchspell, XYZ 0.6, 0.6, 0.6, center {_loc}, visibleRange 50, keepFor 0 tick
+			set {_num} to loop-index parsed as integer
+			set {_v} to vector from {_num} to {_next}
+			set yaw of {_loc} to vector yaw of {_v}
+			set pitch of {_loc} to vector pitch of {_v}
+			
+			spawn an adult zombie above {_loc}
+			set the display name of the last spawned zombie to "&4Zamboe"
+			set the helmet of the last spawned zombie to spruce leaves
+			set the chestplate of the last spawned zombie to unbreakable chainmail chestplate
+			set the leggings of the last spawned zombie to unbreakable chainmail leggings
+			set the boots of the last spawned zombie to unbreakable chainmail boots
+			set the last spawned zombie's tool to air
+			apply speed 2 without particles to the last spawned zombie for 999 days
+			apply strength 3 without particles to the last spawned zombie for 999 days
+			apply resistance 1 without particles to the last spawned zombie for 999 days
+			set the max health of the last spawned zombie to 24
+			set the health of the last spawned zombie to 24
+			
+			loop 10 times:
+				drawDot count 3, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+				drawDot count 1, particle critmagic, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+				set {_loc} to location 1 meter in front of {_loc}
+				wait 1 tick
+				
+				
+				
+				
+				
+				
+	if "%event-region%" is "dungeoncastleentry in world ul_rpg":
+	
+		"%region at player%" is not "dungeoncastleentry in world ul_rpg"
+		remove night vision from potion effects of player
+		apply slowness 1 without particles to player for 2 seconds
+		send "&aKill 5 Skeleton Warriors to progress! 1 extra spawned."
+		set {-castledungeon} to true
+		set {_dszm::1} to {dungeon.castlespawner}
+		
+		set {_dszm::2} to location at block 8 meters in front of {_dszm::1}
+		set {_dszm::2} to location 1 meter left of {_dszm::2}
+		
+		set {_dszm::3} to location at block 8 meters in front of {_dszm::2}
+		set {_dszm::3} to location 1 meters right of {_dszm::3}
+		
+		set {_dszm::4} to location at block 8 meters in front of {_dszm::3}
+		set {_dszm::4} to location below {_dszm::4}
+		set {_dszm::4} to location 1 meters left of {_dszm::4}
+		
+		set {_dszm::5} to location at block 8 meters in front of {_dszm::4}
+		set {_dszm::5} to location 1 meters right of {_dszm::5}
+		
+		set {_dszm::6} to location 8 meters in front of {_dszm::5}
+		set {_dszm::6} to location 1 meters right of {_dszm::6}
+		
+		send title "&7Kill Skeleton Warriors" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		set {-cdskeletonskilled} to 0
+		loop {_dszm::*}:
+			set {_loc} to {_dszm::%loop-index%}
+			set {_next} to (loop-index parsed as integer + 1)
+			drawDot count 25, particle witchspell, XYZ 0.6, 0.6, 0.6, center {_loc}, visibleRange 50, keepFor 0 tick
+			set {_num} to loop-index parsed as integer
+			set {_v} to vector from {_num} to {_next}
+			set yaw of {_loc} to vector yaw of {_v}
+			set pitch of {_loc} to vector pitch of {_v}
+			
+			spawn a skeleton above {_loc}
+			set the display name of the last spawned skeleton to "&4Skeleton Warrior"
+			set the helmet of the last spawned skeleton to chainmail helmet of protection 2
+			set the chestplate of the last spawned skeleton to unbreakable iron chestplate of protection 2
+			set the leggings of the last spawned skeleton to unbreakable iron leggings of protection 2
+			set the boots of the last spawned skeleton to unbreakable iron boots of protection 2
+			set the last spawned skeleton's tool to iron sword
+			set the max health of the last spawned skeleton to 36
+			set the health of the last spawned skeleton to 36
+			apply speed 3 without particles to the last spawned skeleton for 999 days
+			apply strength 4 without particles to the last spawned skeleton for 999 days
+			
+			
+			loop 8 times:
+				drawDot count 3, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+				drawDot count 1, particle critmagic, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+				set {_loc} to location 1 meter in front of {_loc}
+				wait 1 tick
+				
+	if "%event-region%" is "dungeoncastleparkourentrance in world ul_rpg":
+	
+		set {_betw1} to location at 1993, 93, and 348 in world "ul_rpg"
+		set {_betw2} to location at 1989, 93, and 344 in world "ul_rpg"
+		block at {_bet1} is not air
+	
+		"%region at player%" is not "dungeoncastleparkourentrance in world ul_rpg"
+		apply slowness 2 without particles to player for 2 seconds
+		loop all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]:
+			player is not the loop-player
+			stop
+		
+		send "&7The floor feels wobbly, as if the bricks were falling apart..."
+		wait 25 ticks
+		remove night vision from potion effects of player
+		loop all blocks within {_betw1} and {_betw2}:
+			add loop-block's location to {_loc::*}
+		play sound "minecraft:entity.wither.break_block" with volume 3 and pitch 0.75 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 0.5 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 2 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 1 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		loop {_loc::*}:
+			set block at loop-value to air
+			drawDot count 3, particle critmagic, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			drawDot count 3, particle witchspell, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+		wait 5 seconds
+		
+		loop {_loc::*}:
+			set block at loop-value to cracked stone bricks
+			drawDot count 3, particle critmagic, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			drawDot count 3, particle witchspell, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+		
+		
+		
+		
+		
+		
+	if "%event-region%" is "dungeoncastlebossentry in world ul_rpg":
+	
+		"%region at player%" is not "dungeoncastlebossentry in world ul_rpg"
+		send "&aEntering the boss room."
+		apply blindness 5 without particles to player for 2 seconds
+		apply slowness 2 without particles to player for 2 seconds
+		loop all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]:
+			player is not the loop-player
+			stop
+		set {_loc} to location 40 meters in front of {dungeon.castleboss}
+		set {_loc2} to location at block 6 meters above {_loc}
+		set {_loc2}'s yaw to 179
+		send "%{_loc}% | %{_loc2}%"
+		
+		spawn a skeleton at {_loc2}
+		set the display name of the last spawned skeleton to "&4Skeleton King"
+		set the helmet of the last spawned skeleton to golden helmet
+		set the chestplate of the last spawned skeleton to unbreakable diamond chestplate
+		set the leggings of the last spawned skeleton to unbreakable diamond leggings
+		set the boots of the last spawned skeleton to unbreakable diamond boots
+		set the last spawned skeleton's tool to air
+		set artificial intelligence of last spawned skeleton to false
+		wait 2 ticks
+		teleport player to {dungeon.castleboss}
+		send title "&7Boss Room" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.wither.spawn" with pitch 1 to player
+		
+		wait 1 second
+		
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Ah! They finally showed up!" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Then the fight has started. RELEASE THE BEAST!" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+				
+				
+				
+				
+				
+on death:
+	victim's display name is "&4Zamboe"
+	cancel drops
+	add 1 to {-fdzamboeskilled}
+	loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+		send "&7%{-fdzamboeskilled}%&7/5" to loop-player
+	if {-fdzamboeskilled} is more than 4:
+		loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+			send "&aThe boss door is being opened! Good luck. The boss door will remain open until entered." to loop-player
+		loop all entities where [input's display name is "&4Zamboe"]:
+			delete the loop-entity
+		set {-fdzamboeskilled} to 0
+		set {_loc} to {dungeon.forestdoor}
+		set {_loc2} to block 1 meter left of {_loc}
+		
+		set block at {_loc} to air
+		set block at {_loc2} to air
+		
+		wait 10 ticks
+		
+		set block above {_loc} to air
+		set block above {_loc2} to air
+		
+		wait 10 ticks
+		
+		set block 2 meters above {_loc} to air
+		set block 2 meters above {_loc2} to air
+		
+		wait 10 seconds
+		set {_am} to 0
+		loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+			add 1 to {_am}
+		while {_am} is more than 0:
+			set {_am} to 0
+			loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+				add 1 to {_am}
+			send action bar "&cThe boss door is opened! Go already!" to all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]
+			wait 10 ticks
+		set block 2 meters above {_loc} to spruce wood
+		set block 2 meters above {_loc2} to spruce wood
+		
+		wait 10 ticks
+		
+		set block above {_loc} to spruce wood
+		set block above {_loc2} to spruce wood
+		
+		wait 10 ticks
+		
+		set block at {_loc} to spruce wood
+		set block at {_loc2} to spruce wood
+		
+		
+		
+		
+		
+		
+on rightclick on chest:
+	"%region at player%" is "dungeonforestbossroom in world ul_rpg"
+	set {_glass} to location 14 meters below {dungeon.forestboss}
+	set block at {_glass} to glass
+	set the event-block to air
+	loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+		send "&aThe chest is opening!" to the loop-player
+		wait 0.5 seconds
+		send "&aYou will be tped back to the dungeon lobby in 15 seconds." to loop-player
+		set {_amount} to random number between 2 and 5
+		set {_gui} to chest inventory with 3 rows named "Dungeon Chest (Drag Items Out)"
+		loop {_amount} times:
+			set {_rand} to random integer between 0 and 26
+			set {_chance} to random integer between 0 and 9
+			if {_chance} is 1:
+				set slot {_rand} of {_gui} to stick named "&6Strong Oak Wand" with lore "&7Shoots 1 beam with high range." and "&6Weapon Stats:" and "&e Damage: +20%%" and "&eOwner: &f%loop-player%" with nbt "%{givenbt}%"
+			if {_chance} is 2:
+				set slot {_rand} of {_gui} to wooden shovel named "&6Strong Oak Staff" with lore "&7Shoots multiple beams with low range." and "&6Weapon Stats:" and "&e Damage: +20%%" and "&eOwner: &f%loop-player%" with nbt "%{givenbt}%"
+			if {_chance} is 3:
+				set slot {_rand} of {_gui} to oak log named "&4Rottener Wood" with lore "&7Can be used to buy a forest key at the dungeon shop!"
+			if {_chance} is 4:
+				set slot {_rand} of {_gui} to getItem("dkey_forest") 
+			if {_chance} is 5:
+				set slot {_rand} of {_gui} to getItem("dkey_castle") 
+			if {_chance} is 6:
+				set slot {_rand} of {_gui} to gold ingot named "&a$1,000"
+			if {_chance} is 7:
+				set slot {_rand} of {_gui} to gold ingot named "&a$2,500"
+			if {_chance} is 8:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l15,000 XP"
+			if {_chance} is 9:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l20,000 XP"
+		
+		open {_gui} to loop-player
+		dungeonTeleportBack(loop-player)
+		
+on command:
+	"%region at player%" contains "dungeon"
+	command starts with "tpa" or "home" or "sethome" or "delhome" or "spawn" or "gotostaffbase"
+	send "&cPlease finish your dungeon before doing this!"
+	cancel event
+	
+		
+on rightclick:
+	if distance between {dungeon.shop} and clicked block is less than 2:
+		cancel event
+		send "&aShopkeeper: What can I do for ya?"
+		set {_gui} to chest inventory with 3 rows named "Dungeon Shop"
+		set {_slot} to 0
+		loop 36 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		set slot 10 of {_gui} to tripwire hook named "&2Forest Dungeon Key" with lore "&6Cost: " and "&e $5,000" and "&e 1 Rotten Wood"
+		set slot 12 of {_gui} to tripwire hook named "&7Castle Dungeon Key" with lore "&6Cost: " and "&e $10,000" and "&e 1 Skeleton Stone"
+		set slot 14 of {_gui} to tripwire hook named "&8Shadow Dungeon Key" with lore "&6Cost: " and "&e $25,000" and "&e 5 Shadow Essence"
+		set slot 16 of {_gui} to tripwire hook named "&6Moon Dungeon Key" with lore "&6Cost: " and "&e $50,000" and "&e 10 Alien Essence"
+		
+		open {_gui} to player
+	
+on inventory click:
+	if name of player's current inventory is "Dungeon Chest (Drag Items Out)":
+		if name of event-item is "&a$1,000":
+			set event-slot to air
+			add 1000 to {bal::%player%}
+			send "&a+ $1,000"
+		if name of event-item is "&a$2,500":
+			set event-slot to air
+			add 2500 to {bal::%player%}
+			send "&a+ $2,500"
+		if name of event-item is "&3&l15,000 XP":
+			set event-slot to air
+			xpAdd(player, 15000)
+			send "&3+ 15,000 XP"
+		if name of event-item is "&3&l20,000 XP":
+			set event-slot to air
+			xpAdd(player, 20000)
+			send "&3+ 20,000 XP"
+			
+	name of player's current inventory is "Dungeon Shop"
+	cancel event
+
+	if event-item's name is "&2Forest Dungeon Key":
+		if {bal::%player%} is less than 5:
+			send "&cYou must be level 5 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 5000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Ew.":
+				set {_hasitem} to loop-item
+			if line 1 of loop-item's lore is "&7Can be used to buy a forest key at the dungeon shop!":
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have rotten wood!"
+			stop
+		remove 5000 from {bal::%player%}
+		remove 1 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_forest")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+		
+		
+		
+		
+	if event-item's name is "&7Castle Dungeon Key":
+		if {bal::%player%} is less than 15:
+			send "&cYou must be level 15 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 10000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Can be used to buy a castle key at the dungeon shop!":
+				set {_hasitem} to loop-item
+			if loop-item's name is "&7Skeleton Stone":
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have skeleton stone!"
+			stop
+		remove 10000 from {bal::%player%}
+		remove 1 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_castle")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+	
+	
+	
+	
+	
+	if event-item's name is "&8Shadow Dungeon Key":
+		if {bal::%player%} is less than 40:
+			send "&cYou must be level 40 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 25000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Can be used to buy a shadow key at the dungeon shop!":
+				item amount of {_hasitem} is more than 4
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have 5 shadow essence!"
+			stop
+		remove 25000 from {bal::%player%}
+		remove 5 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_shadow")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+	
+	
+	
+	
+	if event-item's name is "&6Moon Dungeon Key":
+		if {bal::%player%} is less than 90:
+			send "&cYou must be level 90 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 50000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Can be used to buy a moon key at the dungeon shop!":
+				item amount of {_hasitem} is more than 9
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have 10 alien essence!"
+			stop
+		remove 50000 from {bal::%player%}
+		remove 10 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_moon")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+	
+	
+	
+	
+	
+	
+	
+		
+on death:
+	victim's display name is "&6Helpless Zamboe" or "&4Possessed Zamboe"
+	clear drops
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

@@ -1,0 +1,14 @@
+command /rules [<text>]:
+	trigger:
+		send "&f&lDupe&3&lRPG &bRules"
+		send formatted "<reset><tooltip:&cOver the rules, not this, dummy>&7Hover for more info!"
+		send ""
+		send formatted "<reset><tooltip:&7This means that if something is tECHniCalLY nOt aGAINsT tHe rUlES, it is,%newline%&7however this is rule not to be abused. >&f- Use Common Sense<reset>"
+		send formatted "<reset><tooltip:&7This rule is self explanitory, however mods like baritone/schematica are allowed%newline%&7&lAS LONG AS THEY ARE USED FOR BUILDING PURPOSES AND DON'T LAG THE SERVER %nl%&7Texturepacks and shaderpacks are allowed as long as they dont provide an unfair advantage (things like small shields are fine, shaders that remove blindness are not fine)>&f- Don't hack, exploit, or lag the server in any way<reset>"
+		send formatted "<reset><tooltip:&7This includes all items not normally obtainable by actually playing the game. >&f- No possession or use of unobtainable, admin-spawned items<reset>"
+		send formatted "<reset><tooltip:&7This includes things such as the n-word, homophobia, or nsfw. %newline%&7This rule is meant within reason, no ""omg he just said a slightly bad word"" bs. %newline%&7Swearing is allowed in moderation. %newline%&7This rule applies to everyone.>&f- No discrimination or offensive structures/objects<reset>"
+		send formatted "<reset><tooltip:&7Seriously, please stop spam advertising your crappy servers and discords in chat, legit no one cares>&f- No spamming messages or advertizing anything non-duperpg related<reset>"
+		send formatted "<reset><tooltip:&7oh my fricking god just dont do it its so fricking annoying >&f- Don't block spawn<reset>"
+		send formatted "<reset><tooltip:&7It ruins the game for everyone else that's grinding the game legitimately. Please don't do it.>&f- Don't boost, kill farm, spawnkill, or kill new players/players without sufficient armor (within reason)<reset>"
+		#if player is "GeneralPickaxe" or "CaptainDigger" or "Lynxdeer" or "Patrik_Harper":
+			#send formatted "<reset><tooltip:&7boi>&f- Don't call Lynxdeer ""short"", ""shortie"", or any other insulting names relating to height or age<reset>"

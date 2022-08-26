@@ -1,0 +1,115 @@
+on place:
+	if "%player's tool%" contains "player head item":
+		cancel event
+		send "&cYou can't place heads!"
+	if event-block is a barrier or jigsaw block or structure block or spawner:
+		player is not op
+		cancel event
+		send "&cYou can't place this. For obvious reasons."
+		note(player, "bass", 12)
+	if event-block is dragon egg:
+		distance between {place.forestwarp} and player is less than 80
+		cancel event
+		send "&cGo farther away from spawn to place this!."
+		note(player, "bass", 12)
+
+	if player's world is "ul_rpg":
+		if player's gamemode is not creative:
+			send "&cYou can't place blocks here!"
+			cancel event
+			note(player, "bass", 12)
+		player does not have the permission "builder.build"
+		send "&cYou can't place blocks here!"
+		cancel event
+		note(player, "bass", 12)
+		
+on place:
+	event-block is a sculk sensor
+	set {_scamount} to 0
+	loop blocks in radius 12 around event-block:
+		loop-block is sculk sensor
+		add 1 to {_scamount}
+	{_scamount} is more than 10
+	cancel event
+	send "&3There are too many sculk sensors nearby!"
+		
+on rightclick with bone meal:
+	player's world is "ul_rpg"
+	cancel event
+	
+on rightclick:
+	player's world is "ul_rpg"
+	"%player's offhand tool%" contains "bonemeal"
+	cancel event
+	
+on death:
+	clear all the potion effects of player
+	wait 1 tick
+	clear all the potion effects of player
+
+on block flow:
+	if "%event-world%" contains "ul_void":
+		cancel event
+
+on redstone current:
+	tps from the last minute is less than 15
+	drop the event-block at event-block
+	wait 1 tick
+	set the event-block to oak sign
+	set line 1 of event-block to "TPS"
+	set line 2 of event-block to "below"
+	set line 3 of event-block to "15"
+
+on break:
+	if player's world is "ul_rpg":
+		if player's gamemode is not creative:
+			send "&cYou can't break blocks here!"
+			cancel event
+			note(player, "bass", 12)
+		player does not have the permission "builder.build"
+		send "&cYou can't break blocks here!"
+		cancel event
+		note(player, "bass", 12)
+
+on leftclick on bedrock:
+	if player's gamemode is creative:
+		stop
+	if player's world is "ul_rpg":
+		stop
+	if player's inventory has space for bedrock:
+		give bedrock to player
+	else:
+		drop bedrock at the clicked block
+	set the clicked block to air
+
+on leftclick on end portal:
+	if player's gamemode is creative:
+		stop
+	if player's world is "ul_rpg":
+		stop
+	set the clicked block to air
+
+on leftclick on end portal frame:
+	if player's gamemode is creative:
+		stop
+	if player's world is "ul_rpg":
+		stop
+	if player's inventory has space for end portal frame:
+		give end portal frame to player
+	else:
+		drop end portal frame at the clicked block
+	set the clicked block to air
+
+on spawn:
+	event-entity is a wither
+	event-entity's world is not "ul_rpg"
+	create an explosion of force 4.5 at the event-entity
+	loop players in radius 5 around event-entity:
+		send "&cDid you seriously just try to spawn a wither?" to loop-player
+		note(loop-player, "bass", 12)
+	cancel event
+
+on explosion:
+	event-world is "ul_rpg"
+	cancel event
+	

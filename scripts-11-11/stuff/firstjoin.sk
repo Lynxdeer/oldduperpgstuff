@@ -1,0 +1,85 @@
+on first join:
+	add 1 to {joins}
+	set {_gui} to createGui("start")
+	open {_gui} to player
+	wait 2 tick
+	teleport player to {place.forest}
+	give player 64 cookie named "&dcookie :)"
+	broadcast "&6%player% joined for the first time! Say hi!"
+	if player's current language contains "es_":
+		send "&6El letrero se traduce en ingles como..."
+		send "&eEscribe /duplicar por doble tú ítem."
+		send "&eEscribe /toggle por dejar de recibir elementos aleatorios."
+		send "&eHaz clic izquierdo con tu arma para usarlo."
+		send "&6¡Lo siento si estas traducciones son incorrectas!"
+		send "&6No todo se traducirá, la mayoría de las cosas importantes."
+
+function executeStartSequence(p: player):
+	wait 1 second
+	send title "&7[  ]" with subtitle "&0" to {_p} for 0.5 second with fadein 0.1 second and fade out 0 second
+	play sound "block.piston.extend" to {_p}
+
+	wait 3 tick
+	send title "&7[ &8D &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+	play sound "block.piston.extend" to {_p}
+
+	wait 3 tick
+	send title "&7[ &8Du &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+	play sound "block.piston.extend" to {_p}
+
+	wait 3 tick
+	send title "&7[ &8Dup &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+	play sound "block.piston.extend" to {_p}
+
+	wait 3 tick
+	send title "&7[ &8Dupe &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+	play sound "block.piston.extend" to {_p}
+
+	wait 3 tick
+	send title "&7[ &8DupeR &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+	play sound "block.piston.extend" to {_p}
+
+	wait 3 tick
+	send title "&7[ &8DupeRP &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+	play sound "block.piston.extend" to {_p}
+
+	wait 3 tick
+	send title "&7[ &8DupeRPG &7]" with subtitle "&0" to {_p} for 1 second with fadein 0 second and fade out 0 second
+
+	wait 15 tick
+	send title "&7[ &fD&8upeRPG &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+
+	wait 2 tick
+	send title "&7[ &fDu&8peRPG &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+
+	wait 2 tick
+	send title "&7[ &fDup&8eRPG &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+
+	wait 2 tick
+	send title "&7[ &fDupe&8RPG &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+
+	wait 2 tick
+	send title "&7[ &fDupe&3R&8PG &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+
+	wait 2 tick
+	send title "&7[ &fDupe&3RP&8G &7]" with subtitle "&0" to {_p} for 0.5 second with fadein 0 second and fade out 0 second
+
+	wait 2 tick
+	send title "&7[ &fDupe&3RPG &7]" with subtitle "&0" to {_p} for 2 second with fadein 0 second and fade out 0 second
+
+	wait 10 tick
+	if {_p}'s current language contains "es_":
+		send title "&7[ &fDupe&3RPG &7]" with subtitle "&8El servidor que da soporte a los jugadores españoles" to {_p} for 2 second with fadein 0 second and fade out 1 second
+	else:
+		send title "&7[ &fDupe&3RPG &7]" with subtitle "&8That one RPG Dupe Server" to {_p} for 2 second with fadein 0 second and fade out 1 second
+
+	wait 5 tick
+	if {_p}'s current language contains "es_":
+		send title "&7[ &fDupe&3RPG &7]" with subtitle "&7El servidor que da soporte a los jugadores españoles" to {_p} for 2 second with fadein 0 second and fade out 1 second
+	else:
+		send title "&7[ &fDupe&3RPG &7]" with subtitle "&7That one RPG Dupe Server" to {_p} for 2 second with fadein 0 second and fade out 1 second
+	wait 5 tick
+	play sound "entity.player.levelup" with pitch 0.5 to {_p}
+	wait 2 seconds
+	{_p} is online
+	execute {_p} command "lestartmusic"

@@ -1,0 +1,17 @@
+function particleWitch(count: number, v1: number, v2: number, v3: number, loc: location):
+	set {_world} to {_loc}'s world
+	set {_loc}'s world to {_world}
+	set {_vec} to vector {_v1}, {_v2}, {_v3}
+	play {_count} of witch at {_loc} offset by {_vec} with extra 0 for all players
+	
+function particle(particle: particle, count: number, v1: number, v2: number, v3: number, loc: location):
+	set {_world} to {_loc}'s world
+	set {_loc}'s world to {_world}
+	set {_vec} to vector {_v1}, {_v2}, {_v3}
+	play {_count} of {_particle} at {_loc} offset by {_vec} with extra 0 for all players
+	
+function blockParticle(block: block, count: number, v1: number, v2: number, v3: number, loc: location):
+	set {_world} to {_loc}'s world
+	set {_loc}'s world to {_world}
+	set {_vec} to vector {_v1}, {_v2}, {_v3}
+	play {_count} of block using {_block} at {_loc} offset by {_vec} with extra 0 for all players

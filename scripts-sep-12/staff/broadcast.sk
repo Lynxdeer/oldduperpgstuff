@@ -1,0 +1,42 @@
+command /broadcast <text>:
+	usage: &cInvalid Usage! Usage: /broadcast (text)
+	permission: staff.broadcast
+	permission message: &cno
+	trigger:
+		broadcast ""
+		broadcast "&f%colored arg-1%"
+		broadcast ""
+		
+command /silbroadcast <text>:
+	usage: &cInvalid Usage! Usage: /silbroadcast (text)
+	permission: staff.broadcast
+	permission message: &cno
+	trigger:
+		broadcast "&f%colored arg-1%"
+
+every 3 minutes:
+	set {_num} to a random integer between 1 and 5
+	if {_num} is 1:
+		broadcast ""
+		broadcast " &aUse /report <player> if you believe someone is breaking the rules!"
+		broadcast ""
+		stop
+	if {_num} is 2:
+		broadcast ""
+		broadcast " &aJoin the discord with /discord for updates on the server!"
+		broadcast ""
+	if {_num} is 3:
+		broadcast ""
+		broadcast " &aApply for staff for /apply!"
+		broadcast ""
+		stop
+	if {_num} is 4:
+		broadcast ""
+		broadcast " &aThis server is not anarchy, look at the rules with /rules!"
+		broadcast ""
+		stop
+	if {_num} is 5:
+		broadcast ""
+		broadcast " &aThis server is still in beta, expect bugs!"
+		broadcast ""
+		stop

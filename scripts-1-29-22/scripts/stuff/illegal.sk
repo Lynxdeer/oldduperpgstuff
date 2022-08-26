@@ -1,0 +1,8 @@
+on join:
+	loop items in player's inventory:
+		if "%loop-item's lore%" contains "&7[Ability: Laser]":
+			set loop-item to air
+			send "&cYou had an illegal item in your inventory, so it was deleted!"
+		if "%loop-item's name%" is "&dCreative Mind":
+			set loop-item to air
+			send "&cYou had an illegal item in your inventory, so it was deleted!"

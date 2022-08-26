@@ -1,0 +1,38 @@
+on player pickup:
+	if "%event-item's lore%" contains "ownerpickup":
+		delete event-entity
+		set {_item} to event-item
+		cancel event
+		replace all "ownerpickup" in {_item}'s lore with "&eOwner: &f%player%"
+		drop {_item} at event-entity without velocity
+		stop
+	"%event-item's lore%" contains "&eOwner:"
+	"%event-item's lore%" does not contain "&f%player%"
+	player does not have the permission "ownership.bypass"
+	cancel event
+	
+on inventory click:
+	"%event-item's lore%" contains "&eOwner:"
+	"%event-item's lore%" does not contain "&f%player%"
+	player does not have the permission "ownership.bypass"
+	cancel event
+	set player's cursor slot to air
+	close inventory for player
+	send "&cYou cannot click this item since you don't own it!"
+
+on player pickup:
+	event-item's name is "_NOPICKUP[aaa]"
+	cancel event
+
+command /setownership [<offline player>]:
+	permission: staff.setownership
+	permission message: &cno sir (or maam)
+	trigger:
+		set {_a::*} to player's tool's lore
+		set {_l} to size of {_a::*}
+		if arg-1 is set:
+			set line ({_l} + 1) of player's tool's lore to "&eOwner: &f%arg-1%"
+			send "&eSet ownership tag on your hand for %arg-1%&e."
+			stop
+		send "&eSet own owership tag."
+		set line ({_l} + 1) of player's tool's lore to "&eOwner: &f%player%"

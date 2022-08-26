@@ -1,0 +1,143 @@
+on rightclick:
+	if distance between {dungeon.shop} and clicked block is less than 2:
+		cancel event
+		send "&aShopkeeper: What can I do for ya?"
+		set {_gui} to chest inventory with 5 rows named "Dungeon Shop"
+		set {_slot} to 0
+		loop 45 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		set slot 10 of {_gui} to tripwire hook named "&2Forest Dungeon Key" with lore "&6Cost: " and "&e $5,000" and "&e 1 Rotten Wood"
+		set slot 12 of {_gui} to tripwire hook named "&7Castle Dungeon Key" with lore "&6Cost: " and "&e $10,000" and "&e 1 Skeleton Stone"
+		set slot 14 of {_gui} to tripwire hook named "&8Shadow Dungeon Key" with lore "&6Cost: " and "&e $25,000" and "&e 5 Shadow Essence"
+		set slot 16 of {_gui} to tripwire hook named "&6Moon Dungeon Key" with lore "&6Cost: " and "&e $50,000" and "&e 10 Alien Essence"
+		
+		set {_speedboots} to leather boots named "&9Speed Boots" with lore "&6Cost: " and "&e $50,000" and "&e 60 Scrap" with nbt "%{givenbt}%"
+		dye {_speedboots} blue
+		set slot 28 of {_gui} to {_speedboots}
+		
+		open {_gui} to player
+
+
+on inventory click:
+	name of player's current inventory is "Dungeon Shop"
+	cancel event
+
+	if event-item's name is "&2Forest Dungeon Key":
+		if {lvl::%player%} is less than 5:
+			send "&cYou must be level 5 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 5000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Ew.":
+				set {_hasitem} to loop-item
+			if line 1 of loop-item's lore is "&7Can be used to buy a forest key at the dungeon shop!":
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have rotten wood!"
+			stop
+		remove 5000 from {bal::%player%}
+		remove 1 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_forest")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+		
+		
+		
+		
+	if event-item's name is "&7Castle Dungeon Key":
+		if {lvl::%player%} is less than 15:
+			send "&cYou must be level 15 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 10000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Can be used to buy a castle key at the dungeon shop!":
+				set {_hasitem} to loop-item
+			if loop-item's name is "&7Skeleton Stone":
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have skeleton stone!"
+			stop
+		remove 10000 from {bal::%player%}
+		remove 1 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_castle")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+	
+	
+	
+	
+	
+	if event-item's name is "&8Shadow Dungeon Key":
+		if {lvl::%player%} is less than 40:
+			send "&cYou must be level 40 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 25000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Can be used to buy a shadow key at the dungeon shop!":
+				item amount of loop-item is more than 4
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have 5 shadow essence!"
+			stop
+		remove 25000 from {bal::%player%}
+		remove 5 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_shadow")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+	
+	
+	
+	
+	if event-item's name is "&6Moon Dungeon Key":
+		if {lvl::%player%} is less than 90:
+			send "&cYou must be level 90 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 50000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Can be used to buy a moon key at the dungeon shop!":
+				item amount of loop-item is more than 9
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have 10 alien essence!"
+			stop
+		remove 50000 from {bal::%player%}
+		remove 10 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		give player getItem("dkey_moon")
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player
+		
+		
+		
+		
+		
+		
+	if event-item's name is "&9Speed Boots":
+		if {lvl::%player%} is less than 30:
+			send "&cYou must be level 30 or higher to buy this item!"
+			stop
+		if {bal::%player%} is less than 50000:
+			send "&cInsufficient funds!"
+			stop
+		loop items in player's inventory:
+			if line 1 of loop-item's lore is "&7Can be used to buy things at the dungeon shop.":
+				item amount of loop-item is more than 59
+				set {_hasitem} to loop-item
+		if {_hasitem} is not set:
+			send "&cYou do not have 60 scrap!"
+			stop
+		remove 50000 from {bal::%player%}
+		remove 60 of {_hasitem} from player's inventory
+		send "&aShopkeeper: Nice doin' business with ya."
+		set {_ite} to leather boots named "&9Speed Boots" with lore "&7&oGOTTA GO FAST" and "&eOwner: &f%player%" with nbt "%{givenbt}%"
+		dye {_ite} blue
+		give player {_ite}
+		play sound "minecraft:block.respawn_anchor.charge" with pitch 2 for player

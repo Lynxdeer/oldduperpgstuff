@@ -1,0 +1,122 @@
+function xpAdd(p: player, a: integer):
+	set {_uuid} to {_p}'s uuid
+	add {_a} to {xp::%{_uuid}%}
+	if {lvl::%{_uuid}%} is not set:
+		set {lvl::%{_uuid}%} to 1
+
+# Level Check
+
+	set {_max} to (lvl({_p}) * 1000)
+	while {_max} < xp({_p}) + 1:
+		if {_max} < xp({_p}) + 1:
+			send "You are supposed to level up here! (%{_max}%)" to {_p}
+			add 1 to {lvl::%{_uuid}%}
+			add (100 * {lvl::%{_uuid}%}) to {bal::%{_uuid}%}
+			remove {_max} from {xp::%{_uuid}%}
+			send "&8&m------------------------" to {_p}
+			send "&3&ko &3&lLEVEL UP! &3&ko" to {_p}
+			send "&fLevel %{lvl::%{_uuid}%}%" to {_p}
+			send "&7+ $%(100 * {lvl::%{_uuid}%})%" to {_p}
+			send "&8&m------------------------" to {_p}
+			play sound "entity.player.levelup" with pitch 0.5 to {_p}
+			set {_max} to (lvl({_p}) * 1000)
+		
+command /lvltop [<text>]:
+	cooldown: 15 seconds
+	cooldown message: &cThis command has a cooldown of 15 seconds!
+	cooldown bypass: *
+	aliases: /leveltop
+	trigger:
+		if arg-1 is "experimental":
+			send "&aSent you the experimental level top."
+			set {_slvl::*} to reversed sorted {lvl::*}
+			set {_max} to size of {lvl::*}
+			set {_position} to 1
+			send "&3Highest Levels:"
+			loop 10 times:
+				set {_mlvl} to {_slvl::%{_position}%}
+				set {_player} to index of {_slvl::%{_position}%}
+				send "&3%{_position}%&3: %{_player}%&f: &b%{_mlvl}% &7(%{lvl::%{_player}%} %&7)"
+				#send "%size of {_slvl::*}%"
+				add 1 to {_position}
+			send "&3Out of %{_max}%"
+			log "%{_slvl::*}% %size of {_slvl::*}%"
+			set {_tlvl::*} to reversed {_slvl::*}
+			loop {_tlvl::*}:
+				log "%loop-index% : %loop-value%"
+			stop
+			
+		set {_highest} to 0
+		send "&cThis command is under maintenance cause I have no fricking idea what im doing so theres only one person"
+		send "&3Highest Level:"
+		loop {lvl::*}:
+			loop-value is more than {_highest}
+			set {_highest} to loop-value
+			set {_player} to loop-index parsed as offline player
+		send "&3%{_player}%&f: &b%{_highest}% &7(%{xp::%{_player}%} %&7)"
+
+
+
+function lvl(p: player) :: integer:
+	set {_uuid} to {_p}'s uuid
+	if {lvl::%{_uuid}%} is not set:
+		return 1
+		stop
+	return {lvl::%{_uuid}%}
+
+function xp(p: player) :: integer:
+	set {_uuid} to {_p}'s uuid
+	if {lvl::%{_uuid}%} is not set:
+		return 1
+		stop
+	return {xp::%{_uuid}%}
+
+command /adminxp [<text>] [<offline player>] [<integer>] [<text>]:
+	permission: *
+	permission message: &cno
+	trigger:
+		if arg-1 is "set":
+			send "&eSet %arg-2%&e's xp to %arg-3% &efrom %{xp::%arg-2's uuid%}%"
+			set {xp::%arg-2's uuid%} to arg-3
+			stop
+		if arg-1 is "add":
+			send "&eAdded %arg-3%&e to %arg-2%&e's xp &efrom %{xp::%arg-2's uuid%}%"
+			add arg-3 to {xp::%arg-2's uuid%}
+			stop
+		if arg-1 is "remove":
+			send "&eRemoved %arg-3%&e from %arg-2%&e's xp &efrom %{xp::%arg-2's uuid%}%"
+			remove arg-3 from {xp::%arg-2's uuid%}
+			stop
+		if arg-1 is "reset":
+			send "&eReset %arg-2%&e's xp &efrom %{xp::%arg-2's uuid%}%"
+			delete {xp::%arg-2's uuid%}
+			stop
+
+command /adminlvl [<text>] [<offline player>] [<integer>] [<text>]:
+	permission: *
+	permission message: &cno
+	trigger:
+		if arg-1 is "set":
+			send "&eSet %arg-2%&e's lvl to %arg-3% &efrom %{lvl::%arg-2's uuid%}%"
+			set {lvl::%arg-2's uuid%} to arg-3
+			stop
+		if arg-1 is "add":
+			send "&eAdded %arg-3%&e to %arg-2%&e's lvl &efrom %{lvl::%arg-2's uuid%}%"
+			add arg-3 to {lvl::%arg-2's uuid%}
+			stop
+		if arg-1 is "remove":
+			send "&eRemoved %arg-3%&e from %arg-2%&e's lvl &efrom %{lvl::%arg-2's uuid%}%"
+			remove arg-3 from {lvl::%arg-2's uuid%}
+			stop
+		if arg-1 is "reset":
+			send "&eReset %arg-2%&e's lvl &efrom %{lvl::%arg-2's uuid%}%"
+			delete {lvl::%arg-2's uuid%}
+			stop
+
+on skbee tab complete:
+	event-string is "/adminxp"
+	set tab completions for position 1 to "set" and "add" and "remove" and "reset"
+
+on skbee tab complete:
+	event-string is "/adminlvl"
+	set tab completions for position 1 to "set" and "add" and "remove" and "reset"

@@ -1,0 +1,11 @@
+command /report <player> <text>:
+	usage: &cInvalid Usage! Usage: /report (player) (reason)
+	cooldown: 10 seconds
+	cooldown message: &cDon't spam reports please!
+	trigger:
+		send "&3Successfully reported %arg-1%&3 for %arg-2%&3. Staff will review your report shortly!"
+		loop all players where [input has the permission "staff.reports"]:
+			send "&3&lNew Report!" to loop-player
+			send "" to loop-player
+			send "&3%arg-1% &3was reported by %player% &3for reason %arg-2%&3." to loop-player
+			send "" to loop-player

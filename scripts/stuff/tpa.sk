@@ -1,0 +1,85 @@
+#
+# Variable format: {tpa::%sender%::%reviever%}
+#
+
+
+command /tpa [<offline player>] [<text>]:
+	cooldown: 10 seconds
+	cooldown message: &cPlease wait 10 seconds before using /tpa again!
+	trigger:
+		if arg-1 is "*":
+			send "&cGood try, but that bug's been patched. You cannot use asterisks in this command."
+			stop
+		if "%region at player%" contains "dungeon":
+			player's world is "ul_rpg"
+			send "&cPlease finish your dungeon before doing this!"
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		if {tpa::%player%::%arg-1%} is set:
+			send "&cYou already have a tp request to this person!"
+			stop
+		send "&3Teleport request sent to &b%arg-1%&3. This request will expire in 30 seconds."
+		set {tpa::%player%::%arg-1%} to 30
+		send "" to arg-1
+		send formatted "&3Teleport request from &b%player%&3! <tooltip:&aClick to accept!><cmd:/tpaccept %player%> &a[Accept] <tooltip:&cClick to deny.><cmd:/tpdeny %player%> &c[Deny] <reset>" to arg-1
+		send "" to arg-1
+		while {tpa::%player%::%arg-1%} is more than 0:
+			remove 1 from {tpa::%player%::%arg-1%}
+			wait 1 second
+		{tpa::%player%::%arg-1%} is set
+		delete {tpa::%player%::%arg-1%}
+		send "&cTpa request to %arg-1% &cexpired."
+		send "&cTpa request from %player% &cexpired." to arg-1
+		
+on quit:
+	delete {tpa::%player%::*}
+
+
+command /tpaccept [<offline player>] [<text>]:
+	trigger:
+		if arg-1 is "*":
+			send "&cGood try, but that bug's been patched. You cannot use asterisks in this command."
+			stop
+		if "%region at player%" contains "dungeon":
+			player's world is "ul_rpg"
+			send "&cPlease finish your dungeon before doing this!"
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		if {combatlog::%arg-1%} is set:
+			send "&cThis player is currently in combat!"
+
+		if {tpa::%arg-1%::%player%} is not set:
+			send "&cThis player has not sent you a teleport request!"
+			stop
+
+		if player's world is "ul_rpg":
+			send "&cYou cannot tpaccept because you are in the rpg area!"
+			stop
+
+		send "&3Accepted teleport request from %arg-1%&3."
+		send "&3Teleport request accepted by %player%&3." to arg-1
+		teleport arg-1 to player
+		delete {tpa::%arg-1%::%player%}
+
+command /tpdeny [<offline player>]:
+	trigger:
+		if arg-1 is "*":
+			send "&cGood try, but that bug's been patched. You cannot use asterisks in this command."
+			stop
+		if "%region at player%" contains "dungeon":
+			player's world is "ul_rpg"
+			send "&cPlease finish your dungeon before doing this!"
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		if {tpa::%arg-1%::%player%} is not set:
+			send "&cThis player has not sent you a teleport request!"
+			stop
+		send "&cDenied teleport request from %arg-1%&c."
+		send "&cTeleport request to %player% &cwas denied." to arg-1
+		delete {tpa::%arg-1%::%player%}

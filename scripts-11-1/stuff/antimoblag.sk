@@ -1,0 +1,191 @@
+on rightclick with spawn egg:
+	if distance between {place.forestwarp} and player is less than 50:
+		send "&cMove farther away from spawn!"
+		note(player, "bass", 12)	
+	if player's world is "ul_rpg":
+		cancel event
+		send "&cYou can't do this here!"
+		note(player, "bass", 12)
+		stop
+	if tps from the last minute is less than 15:
+		cancel event
+		send "&cSpawning things are temporarily disabled due the tps being less than 15!"
+		note(player, "bass", 12)
+		stop
+	set {entities} to 0
+	loop entities in radius 16 around event-entity:
+		loop-entity is not a player
+		loop-entity is not an item
+		add 1 to {entities}
+	if {entities} is more than 5:
+		cancel event
+		send "&cYou cannot spawn this due to there being too many entities nearby!"
+		note(player, "bass", 12)
+
+on spawn:
+	event-entity is tnt
+	set {tntamount} to 0
+	loop blocks in radius 8 around event-entity where [input is tnt]:
+		add 1 to {tntamount}
+	{tntamount} is more than 10
+	cancel event
+	wait 1 tick
+	set block at event-entity to oak sign
+	set line 1 of block at event-entity to "Too"
+	set line 2 of block at event-entity to "Much"
+	set line 3 of block at event-entity to "TNT"
+	set line 4 of block at event-entity to "Nearby"
+	
+on spawn:
+	event-entity is tnt
+	distance between event-entity and {place.forestwarp} is less than 50
+	set block at event-entity to oak sign
+	set line 1 of block at event-entity to "Move"
+	set line 2 of block at event-entity to "Away"
+	set line 3 of block at event-entity to "From"
+	set line 4 of block at event-entity to "Spawn"
+
+on spawn:
+	event-world is not "ul_rpg"
+	if event-entity is a ghast:
+		cancel event
+		drop gunpowder at the event-entity
+		drop ghast tear at the event-entity
+	if event-entity is a blaze:
+		cancel event
+		drop blaze rod at the event-entity
+	if event-entity is a vex:
+		cancel event
+	if event-entity is a elder guardian:
+		cancel event
+	if event-entity is a guardian:
+		cancel event
+	if event-entity is a shulker:
+		drop shulker shell at the event-entity
+		cancel event
+	if event-entity is a ravager:
+		drop saddle at the event-entity
+		cancel event
+	if event-entity is a falling block:
+		cancel event
+
+on dispense of spawn egg:
+	if tps from the last minute is less than 10:
+		cancel event
+		set the block above the event-block to sign
+		set line 1 of block above the event-block to "TPS is less"
+		set line 2 of block above the event-block to "than 15"
+		stop
+	loop entities in radius 16 around event-block:
+		add 1 to {entities}
+	if {entities} is more than 15:
+		cancel event
+
+on dispense of armor stand:
+	cancel event
+	block above the event-block is air
+	set the block above the event-block to oak sign
+	set line 1 of block above the event-block to "Armor Stands"
+	set line 2 of block above the event-block to "are disabled"
+
+on rightclick with armor stand:
+	cancel event
+	send "&cArmor stands are disabled due to lag!"
+	note(player, "bass", 12)
+
+function updateClearLag():
+	if {disableclearlag} is true:
+		stop
+	if {clearlag} is more than 0:
+		broadcast "&cEntities will be cleared in %{clearlag}% minutes!"
+		remove 1 from {clearlag}
+		stop
+	set {clearlag} to 5
+	wait 1 tick
+	loop all entities:
+		loop-entity is not a player
+		
+		if loop-entity's world is "ul_rpg":
+			"%region at loop-entity%" does not contain "dungeon"
+			loop-entity is not a magma cube
+			loop-entity is not a painting
+			loop-entity is not a boat
+			loop-entity is not a regular minecart
+			loop-entity is not an item frame
+			"%loop-entity%" does not contain "&6Explosive Wand"
+			"%loop-entity%" does not contain "&6&lFlamethrower"
+			delete the loop-entity
+			
+		loop-entity's nbt does not contain "CustomName:" or "Owner:"
+		loop-entity is not a painting
+		loop-entity is not a boat
+		loop-entity is not a regular minecart
+		loop-entity is not an item frame
+		loop-entity is not a villager
+		loop-entity is not a wolf
+		loop-entity is not a cat
+		loop-entity is not a fox
+		loop-entity is not a horse
+		loop-entity is not a parrot
+		loop-entity is not a skeleton horse
+		loop-entity is not a donkey
+		loop-entity is not a mule
+		loop-entity is not a llama
+		delete the loop-entity
+	wait 1 tick
+	broadcast "&cCleared entities."
+
+every minute:
+	updateClearLag()
+	
+command /clearentities [<text>]:
+	permission: op
+	permission message: &cno
+	trigger:
+		send "&eManually cleared entities."
+		set {clearlag} to 0
+		updateClearLag()
+
+command /toggleclearlag [<text>]:
+	permission: op
+	permission message: &cno
+	trigger:
+		if {disableclearlag} is not true:
+			set {disableclearlag} to true
+			send "&eDisabled clear lag."
+			stop
+		if {disableclearlag} is true:
+			set {disableclearlag} to false
+			send "&eEnabled clear lag."
+
+command /clearlagtimer [<text>]:
+	trigger:
+		send "&eNext clearlag is in %{clearlag}% &eminutes!"
+
+command /setclearlag <integer>:
+	usage: &cInvalid Usage! Usage: /setclearlag (number)
+	permission: op
+	permission message: &cno
+	trigger:
+		send "&eSet clearlag timer to %arg-1%"
+		set {clearlag} to arg-1
+
+#on chunk unload:
+	#wait 1 tick
+	#loop all entities in event-chunk:
+		#loop-entity's nbt does not contain "CustomName:" or "Owner:"
+		#loop-entity is not a painting
+		#loop-entity is not a boat
+		#loop-entity is not a regular minecart
+		#loop-entity is not an item frame
+		#loop-entity is not a villager
+		#loop-entity is not a wolf
+		#loop-entity is not a cat
+		#loop-entity is not a fox
+		#loop-entity is not a horse
+		#loop-entity is not a parrot
+		#loop-entity is not a skeleton horse
+		#loop-entity is not a donkey
+		#loop-entity is not a mule
+		#loop-entity is not a llama
+		#delete the loop-entity

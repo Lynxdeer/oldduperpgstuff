@@ -1,0 +1,121 @@
+on damage:
+	damage cause is hitting wall while flying
+	cancel event
+
+on death:
+	victim is a player
+	set death message to ""
+	damager is a player
+	damager is not victim
+	add 1000 to {bal::%damager's uuid%}
+	send "&aYou recieved $1000 for killing %victim%&a!" to damager
+	set {killmsg} to random integer between 1 and 6
+	if {killmsg} is 1:
+		broadcast "&c%victim% &fgot pwned by &c%damager%&f."
+	if {killmsg} is 2:
+		broadcast "&c%victim% &ftook an L to &c%damager%&f."
+	if {killmsg} is 3:
+		broadcast "&c%victim% &fgot rekt by &c%damager%&f."
+	if {killmsg} is 4:
+		broadcast "&c%victim% &fbit &c%damager%&f's dust."
+	if {killmsg} is 5:
+		broadcast "&c%victim% &fwas brutally stabbed by &c%damager%&f."
+	if {killmsg} is 6:
+		broadcast "&c%victim% &fwas deleted from existence by &c%damager%&f."
+
+on death:
+	wait 1 tick
+	victim is a player
+	damage cause is an entity explosion
+	if {rcrystal} is set:
+		{rcrystal} is not victim
+		set {rcrystaluuid} to {rcrystal}'s uuid
+		add 1000 to {bal::%{rcrystaluuid}%}
+		send "&aYou recieved $1000 for killing %victim%&a!" to {rcrystal}
+		broadcast "&c%victim% &fwas blown up by &c%{rcrystal}%&f's ender crystal."
+		stop
+
+command /debugkillers:
+	trigger:
+		send "Crystal: %{rcrystal}%"
+		send "DMG: %{rdmg}%"
+
+on death:
+	wait 1 tick
+	victim is a player
+	damage cause is a block explosion
+	if {ranchor} is set:
+		{ranchor} is not victim
+		set {ranchoruuid} to {ranchor}'s uuid
+		add 1000 to {bal::%{ranchoruuid}%}
+		send "&aYou recieved $1000 for killing %victim%&a!" to {ranchor}
+		broadcast "&c%victim% &fwas blown up by &c%{ranchor}%&f's respawn anchor."
+		stop
+	send "&c%victim% &fblew up." to all players
+
+on death:
+	victim is a player
+	damage cause is suffocation
+	send "&c%victim% &fsuffocated." to all players
+
+on death:
+	victim is a player
+	damage cause is fall
+	send "&c%victim% &ffell from a high place." to all players
+
+on death:
+	victim is a player
+	damage cause is burning or fire
+	send "&c%victim%&f turned to ash." to all players
+
+on death:
+	victim is a player
+	damage cause is lava
+	send "&c%victim%&f took a lava bath." to all players
+
+on death:
+	victim is a player
+	damage cause is drowning
+	send "&c%victim% &fdrowned." to all players
+
+on death:
+	victim is a player
+	damage cause is starvation
+	send "&c%victim% &fstarved." to all players
+
+on death:
+	victim is a player
+	damage cause is potion
+	send "&c%victim% &fdied to a potion." to all players
+
+on death:
+	victim is a player
+	damage cause is wither
+	send "&c%victim% &fwithered away." to all players
+
+on death:
+	victim is a player
+	damage cause is thorns
+	send "&c%victim% &ftried to hurt %damager%." to all players
+
+on death:
+	victim is a player
+	damage cause is unknown
+	if {ralien} is true:
+		send "&c%victim% &fwas blown up by an alien." to all players
+		stop
+
+on damage:
+	victim is an end crystal
+	damager is a player
+	set {rcrystal} to damager
+	wait 2 ticks
+	delete {rcrystal}
+	
+on right click on respawn anchor:
+	"%clicked block%" contains "level 1 respawn anchor" or "level 2 respawn anchor" or "level 3 respawn anchor" or "fully charged respawn anchor"
+	set {ranchor} to player
+	wait 2 ticks
+	delete {ranchor}
+
+#bow - noscoped, sniped, 

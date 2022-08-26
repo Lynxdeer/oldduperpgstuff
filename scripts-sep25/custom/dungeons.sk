@@ -1,0 +1,126 @@
+import:
+	org.bukkit.entity.HumanEntity
+
+on load:
+	set {dungeon.forestwarp} to location(500, 102, 283, world "ul_rpg")
+	set {dungeon.forest} to location(1000, 100, 250, world "ul_rpg")
+	set {dungeon.forestkeeper} to location(998, 105, 301, world "ul_rpg")
+	set {dungeon.forestspawner} to location(100, 104, 316, world "ul_rpg")
+	
+command /dungeonshop [<text>]:
+	permission: op
+	permission message: &cStill in Development!
+	trigger:
+		send "&eOpening the dungeon shop."
+		
+	
+
+on skript start:
+	reload script "custom/dungeons"
+
+on rightclick:
+	if distance between {dungeon.forestwarp} and clicked block is less than 2:
+		cancel event
+		send "&7A weird sensation sets upon you, as if every molecule was being disassembled and reassembled again..."
+		apply nausea 15 without particles to player for 6 seconds
+		apply blindness 5 without particles to player for 6 seconds
+		apply slowness 5 without particles to player for 6 seconds
+		play sound "minecraft:block.portal.travel" with pitch 0.5 to player
+		play sound "minecraft:block.portal.travel" with pitch 1 to player
+		play sound "minecraft:block.portal.travel" with pitch 2 to player
+		wait 4 seconds
+		teleport player to {dungeon.forest}
+		send title "&2Forest Dungeon" to player for 3 seconds with fadein 1 second and fadeout 1 second
+		play sound "minecraft:block.portal.trigger" with pitch 1 to player
+		
+	if distance between {dungeon.forestkeeper} and clicked block is less than 2:
+		cancel event
+		#send "&aDungeon Keeper: Let me see if you qualify to enter the dungeon."
+		#send "&7(Requires a key at /dungeonshop)"
+		if {-forestisopened} is true:
+			send "&aThe door is already open! What are you doing???"
+			stop
+		if line 1 of player's tool's lore contains "&7Opens the &2Forest Dungeon&7.":
+			remove 1 of player's tool from player's tool
+			set {-forestisopened} to true
+			
+		loop items in player's inventory:
+			{-forestisopened} is not true
+			line 1 of loop-item's lore contains "&7Opens the &2Forest Dungeon&7."
+			send "&aDungeon Keeper: Hmm... It looks like you have a key, but you need to hold it in your hand!"
+			stop
+		if {-forestisopened} is not true:
+			send "&aDungeon Keeper: You need a key to open this dungeon, buy one at the dungeon shop!"
+			stop
+		apply slowness 1 without particles to player for 1 second
+		set {_loc} to {dungeon.forestkeeper}
+		set {_loc} to location 4 meters in front of {_loc}
+		set {_loc} to location 2 meters left of {_loc}
+		set {_loc2} to location 1 meter right of {_loc}
+		set {_loc3} to location 1 meter below {_loc}
+		set {_loc4} to location 1 meter below {_loc2}
+		# 1 2
+		# 3 4
+		
+		play sound "minecraft:block.lava.extinguish" with pitch 1 to player
+		loop 24 times:
+			drawDot count 10, particle witchspell, XYZ 1, 1, 1, center {_loc}, visibleRange 50, keepFor 0 tick
+			wait 1 tick
+		play sound "minecraft:entity.wither.break_block" with volume 1 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.2 and pitch 1.5 at {_loc} for all players
+		play sound "minecraft:entity.wither.break_block" with volume 1.5 and pitch 1.5 at {_loc} for all players
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		
+		set block at {_loc} to air
+		set block at {_loc2} to air
+		set block at {_loc3} to air
+		set block at {_loc4} to air
+		send "&aDungeon Keeper: I have opened the door. It will remain open for another 10 seconds. Now go."
+		
+		wait 10 seconds
+		set {-forestisopened} to false
+		
+		set block at {_loc} to cracked stone bricks
+		set block at {_loc2} to cracked stone bricks
+		set block at {_loc3} to cracked stone bricks
+		set block at {_loc4} to cracked stone bricks
+		play sound "block.anvil.destroy" with volume 2 and pitch 0.5 at {_loc} for all players
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc2}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc3}, visibleRange 50, keepFor 0 tick
+		
+		drawDot count 5, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc4}, visibleRange 50, keepFor 0 tick
+		
+on region enter:
+	player is "Lynxdeer"
+	if "%event-region%" is "dungeonforestbossentry in world ul_rpg":
+		"%region at player%" is not "dungeonforestbossentry in world ul_rpg"
+		send "&aEntering the boss room."
+		apply nausea 15 without particles to player for 2 seconds
+		apply blindness 5 without particles to player for 2 seconds
+		apply slowness 5 without particles to player for 2 seconds
+		teleport player to {dungeon.forestboss}
+		send title "&2Ghost of the Trees" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.wither.spawn" with pitch 1 to player
+		
+	if "%event-region%" is "dungeonforestentry in world ul_rpg":
+	
+		"%region at player%" is not "dungeonforestentry in world ul_rpg"
+		apply slowness 1 without particles to player for 2 seconds
+		send "&aKill 15 Zamboes to progress! 5 extra are spawned in case some get lost."
+		set {dszm::1} to {dungeon.forestspawner}
+		set {dszm::2} to block at location 10 meters in front of {dszm::2}
+		send title "&2Kill Zamboes" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		

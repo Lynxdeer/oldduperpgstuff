@@ -1,0 +1,12 @@
+import:
+	org.bukkit.entity.HumanEntity
+
+on left click with stick:
+	#wcd = weapon cooldown
+	line 1 of player's tool's lore starts with "&7egg go brr"
+	cancel event
+
+	set {_loc} to location 1.6 meters above location of player
+	set {_loc} to location 1.5 meters above location of player
+	play sound "minecraft:entity.ender_dragon.hurt" with volume 0.5 and pitch 0.1 at {_loc} for all players where [input's world is player's world]
+	shoot an egg from the player

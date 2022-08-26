@@ -1,0 +1,438 @@
+on region enter:
+	player's gamemode is not spectator
+	#player is "Lynxdeer"
+	if "%event-region%" is "dungeonforestbossentry in world ul_rpg":
+		"%region at player%" is not "dungeonforestbossentry in world ul_rpg"
+		send "&aEntering the boss room."
+		apply blindness 5 without particles to player for 2 seconds
+		apply slowness 2 without particles to player for 2 seconds
+		teleport player to {dungeon.forestboss}
+		send title "&2Boss Room" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.wither.spawn" with pitch 1 to player
+		loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+			player is not the loop-player
+			loop-player's gamemode is survival
+			stop
+		while block below player is not glass:
+			wait 10 ticks
+		wait 1 second
+		
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Yes! The cage worked!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		set block at location 14 meters below {dungeon.forestboss} to air
+		set {_loc} to location 14 meters below {dungeon.forestboss}
+		play sound "minecraft:entity.wither.break_block" with volume 3 and pitch 0.75 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 0.5 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 2 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 1 for all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		#drawDot count 15, particle snowball, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		particle(item_snowball, 15, 0.2, 0.2, 0.2, {_loc})
+		
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Gah! I knew I shouldn't have made that cage out of glass!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		wait 3 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: It is no matter. You will be dead at my hand!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		wait 5 seconds
+		
+		set {_loc} to location 25 meters below {dungeon.forestboss}
+		loop 8 times:
+			#drawDot count 30, particle witchspell, XYZ 0.1, 1, 0.5, center location above {_loc}, visibleRange 50, keepFor 0 tick
+			particleWitch(30, 0.1, 1, 0.5, location above {_loc})
+			play sound "minecraft:block.lava.extinguish" with volume 1.5 and pitch 0.5 at {_loc} for all players where [input's world is player's world]
+			wait 5 ticks
+			set {_loc} to location 1 meter in front of {_loc}
+		spawn an adult zombie above {_loc}
+		set the display name of the last spawned zombie to "&6Helpless Zamboe"
+		set the helmet of the last spawned zombie to oak leaves
+		set the chestplate of the last spawned zombie to unbreakable chainmail chestplate
+		set the leggings of the last spawned zombie to unbreakable chainmail leggings
+		set the boots of the last spawned zombie to unbreakable chainmail boots
+		set the last spawned zombie's tool to air
+		set artificial intelligence of last spawned zombie to false
+		set {_pittp} to {_loc}
+		set pitch of {_pittp} to 179
+		teleport last spawned zombie to {_pittp}
+		set last spawned zombie's invulnerability ticks to 60
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: See this zamboe? Its soul is now MINE!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		wait 61 ticks
+		delete the last spawned zombie
+		loop 10 times:
+			#drawDot count 30, particle witchspell, XYZ 3, 3, 3, center {_loc}, visibleRange 50, keepFor 0 tick
+			particleWitch(30, 3, 3, 3, {_loc})
+			play sound "minecraft:block.lava.extinguish" with volume 1.5 and pitch 0.5 at {_loc} for all players where [input's world is player's world]
+			wait 5 ticks
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: YES! YES! YES!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+			add 1 to {_playercount}
+		
+		spawn a giant above {_loc}
+		set the display name of the last spawned giant to "&4Possessed Zamboe"
+		set the helmet of the last spawned giant to oak leaves
+		set the chestplate of the last spawned giant to unbreakable chainmail chestplate
+		set the leggings of the last spawned giant to unbreakable chainmail leggings
+		set the boots of the last spawned giant to unbreakable chainmail boots
+		set the last spawned giant's tool to air
+		set the last spawned giant's max health to (40 * {_playercount})
+		set the last spawned giant's health to (40 * {_playercount})
+		set artificial intelligence of last spawned giant to false
+		set last spawned giant's invulnerability ticks to 60
+		set {_pittp} to {_loc}
+		set pitch of {_pittp} to 179
+		teleport last spawned zombie to {_pittp}
+		send title "&4BOSS" with subtitle "&cPossessed Zamboe" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"] for 3 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.drowned.shoot" with volume 1.5 and pitch 0.5 at {_loc} for all players where [input's world is player's world]
+		play sound "minecraft:block.anvil.place" with volume 1.5 and pitch 0.5 at {_loc} for all players where [input's world is player's world]
+		play sound "minecraft:block.anvil.place" with volume 1.5 and pitch 2 at {_loc} for all players where [input's world is player's world]
+		play sound "minecraft:entity.cow.milk" with volume 5 and pitch 0.5 at {_loc} for all players where [input's world is player's world]
+		play sound "minecraft:entity.husk.converted_to_zombie" with volume 2 and pitch 1.5 at {_loc} for all players where [input's world is player's world]
+		play sound "minecraft:entity.zombie.infect" with volume 1.5 and pitch 2 at {_loc} for all players where [input's world is player's world]
+		play sound "minecraft:entity.zombie.hurt" with volume 1.5 and pitch 0.5 at {_loc} for all players where [input's world is player's world]
+		apply night vision without particles to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"] for 10 minutes
+		wait 2 seconds
+		set artificial intelligence of last spawned giant to true
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: YOU WILL DIE!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+			"%region at loop-player%" is "dungeonforestbossroom in world ul_rpg"
+			make loop-player say "/thegreatrace"
+		set {_e} to the last spawned giant
+		while {_e} is alive:
+			loop players in radius 10 around {_e}:
+				set {_v} to vector between {_e} and loop-player
+				set {_vecloc} to {_e}'s location
+				set {_vecloc}'s yaw to {_v}'s yaw
+				teleport {_e} to {_loc}
+				make {_e} swing their main hand
+				damage loop-player by 3.5
+				particleWitch(30, 1, 1, 1, location above loop-player)
+				#drawDot count 30, particle witchspell, XYZ 1, 1, 1, center location above loop-player, visibleRange 50, keepFor 0 tick
+			loop all players where [distance between {_e}'s head location and input is less than 10]:
+				set {_v} to vector between {_e}'s head location and loop-player
+				set {_vecloc} to {_e}'s location
+				set {_vecloc}'s yaw to {_v}'s yaw
+				teleport {_e} to {_loc}
+				make {_e} swing their main hand
+				damage loop-player by 4
+				particleWitch(30, 1, 1, 1, location above loop-player)
+				
+			wait 2 seconds
+		delete the last spawned giant
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: NO... WHAT... HOW.... I CALL HACKS!" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		delete {-forestdungeon}
+		set block above {_loc} to chest
+		particleWitch(30, 1, 1, 1, location above {_loc})
+		#drawDot count 30, particle witchspell, XYZ 1, 1, 1, center location above {_loc}, visibleRange 50, keepFor 0 tick
+		play sound "entity.chicken.egg" to all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]
+		
+		
+		
+	if "%event-region%" is "dungeonforestentry in world ul_rpg":
+	
+		"%region at player%" is not "dungeonforestentry in world ul_rpg"
+		remove night vision from potion effects of player
+		apply slowness 1 without particles to player for 2 seconds
+		send "&aKill 5 Zamboes to progress! 1 extra spawned."
+		set {-forestdungeon} to true
+		set {_dszm::1} to {dungeon.forestspawner}
+		
+		set {_dszm::2} to location at block 10 meters in front of {_dszm::1}
+		set {_dszm::2} to location below {_dszm::2}
+		set {_dszm::2} to location 1 meter left of {_dszm::2}
+		
+		set {_dszm::3} to location at block 10 meters in front of {_dszm::2}
+		set {_dszm::3} to location 1 meters right of {_dszm::3}
+		
+		set {_dszm::4} to location at block 10 meters in front of {_dszm::3}
+		set {_dszm::4} to location 1 meters left of {_dszm::4}
+		
+		set {_dszm::5} to location at block 10 meters in front of {_dszm::4}
+		set {_dszm::5} to location 1 meters right of {_dszm::5}
+		set {_dszm::6} to location 2 meters above {_dszm::5}
+		send title "&2Kill Zamboes" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		set {-fdzamboeskilled} to 0
+		loop {_dszm::*}:
+			set {_loc} to {_dszm::%loop-index%}
+			set {_next} to (loop-index parsed as integer + 1)
+			#drawDot count 25, particle witchspell, XYZ 0.6, 0.6, 0.6, center {_loc}, visibleRange 50, keepFor 0 tick
+			particleWitch(25, 0.6, 0.6, 0.6, {_loc})
+			set {_num} to loop-index parsed as integer
+			set {_v} to vector from {_num} to {_next}
+			set yaw of {_loc} to {_v}'s yaw # Used to be "vector yaw of {_v}" but that broke so changing it out
+			set pitch of {_loc} to {_v}'s pitch
+			
+			spawn an adult zombie above {_loc}
+			set the display name of the last spawned zombie to "&4Zamboe"
+			set the helmet of the last spawned zombie to spruce leaves
+			set the chestplate of the last spawned zombie to unbreakable chainmail chestplate
+			set the leggings of the last spawned zombie to unbreakable chainmail leggings
+			set the boots of the last spawned zombie to unbreakable chainmail boots
+			set the last spawned zombie's tool to air
+			apply speed 2 without particles to the last spawned zombie for 999 days
+			apply strength 2 without particles to the last spawned zombie for 999 days
+			apply resistance 1 without particles to the last spawned zombie for 999 days
+			set the max health of the last spawned zombie to 24
+			set the health of the last spawned zombie to 24
+			
+			loop 10 times:
+				#drawDot count 3, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+				#drawDot count 1, particle critmagic, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+				particleWitch(3, 0.2, 0.2, 0.2, {_loc})
+				particle(enchanted_hit, 1, 0, 0, 0, {_loc})
+				set {_loc} to location 1 meter in front of {_loc}
+				wait 1 tick
+				
+				
+				
+				
+				
+				
+	if "%event-region%" is "dungeoncastleentry in world ul_rpg":
+	
+		"%region at player%" is not "dungeoncastleentry in world ul_rpg"
+		remove night vision from potion effects of player
+		apply slowness 1 without particles to player for 2 seconds
+		send "&aKill 5 Skeleton Warriors to progress! 1 extra spawned."
+		set {-castledungeon} to true
+		set {_dszm::1} to {dungeon.castlespawner}
+		
+		set {_dszm::2} to location at block 8 meters in front of {_dszm::1}
+		set {_dszm::2} to location 1 meter left of {_dszm::2}
+		
+		set {_dszm::3} to location at block 8 meters in front of {_dszm::2}
+		set {_dszm::3} to location 1 meters right of {_dszm::3}
+		
+		set {_dszm::4} to location at block 8 meters in front of {_dszm::3}
+		set {_dszm::4} to location below {_dszm::4}
+		set {_dszm::4} to location 1 meters left of {_dszm::4}
+		
+		set {_dszm::5} to location at block 8 meters in front of {_dszm::4}
+		set {_dszm::5} to location 1 meters right of {_dszm::5}
+		
+		set {_dszm::6} to location 8 meters in front of {_dszm::5}
+		set {_dszm::6} to location 1 meters right of {_dszm::6}
+		
+		send title "&7Kill Skeleton Warriors" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		set {-cdskeletonskilled} to 0
+		loop {_dszm::*}:
+			set {_loc} to {_dszm::%loop-index%}
+			set {_next} to (loop-index parsed as integer + 1)
+			#drawDot count 25, particle witchspell, XYZ 0.6, 0.6, 0.6, center {_loc}, visibleRange 50, keepFor 0 tick
+			particleWitch(25, 0.6, 0.6, 0.6, {_loc})
+			set {_num} to loop-index parsed as integer
+			set {_v} to vector from {_num} to {_next}
+			set yaw of {_loc} to {_v}'s yaw
+			set pitch of {_loc} to {_v}'s pitch # used to be vector pitch of {_v} but then it broke
+			
+			spawn a skeleton above {_loc}
+			set the display name of the last spawned skeleton to "&4Skeleton Warrior"
+			set the helmet of the last spawned skeleton to unbreakable chainmail helmet of protection 2
+			set the chestplate of the last spawned skeleton to unbreakable iron chestplate of protection 2
+			set the leggings of the last spawned skeleton to unbreakable iron leggings of protection 2
+			set the boots of the last spawned skeleton to unbreakable iron boots of protection 2
+			set the last spawned skeleton's tool to iron sword
+			set the max health of the last spawned skeleton to 35
+			set the health of the last spawned skeleton to 35
+			apply speed 2 without particles to the last spawned skeleton for 999 days
+			apply strength 2 without particles to the last spawned skeleton for 999 days
+			
+			
+			loop 8 times:
+				#drawDot count 3, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+				#drawDot count 1, particle critmagic, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+				particleWitch(3, 0.2, 0.2, 0.2, {_loc})
+				particle(enchanted_hit, 1, 0, 0, 0, {_loc})
+				set {_loc} to location 1 meter in front of {_loc}
+				wait 1 tick
+				
+	if "%event-region%" is "dungeoncastleparkourentrance in world ul_rpg":
+	
+		set {_betw1} to location at 1993, 93, and 348 in world "ul_rpg"
+		set {_betw2} to location at 1989, 93, and 344 in world "ul_rpg"
+		block at {_bet1} is not air
+	
+		"%region at player%" is not "dungeoncastleparkourentrance in world ul_rpg"
+		apply slowness 2 without particles to player for 2 seconds
+		loop all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]:
+			player is not the loop-player
+			stop
+		
+		send "&7The floor feels wobbly, as if the bricks were falling apart..."
+		wait 25 ticks
+		remove night vision from potion effects of player
+		loop all blocks within {_betw1} and {_betw2}:
+			add loop-block's location to {_loc::*}
+		play sound "minecraft:entity.wither.break_block" with volume 3 and pitch 0.75 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 0.5 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 2 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 1 for all players where ["%region at input%" is "dungeoncastleparkourentrance in world ul_rpg"]
+		loop {_loc::*}:
+			set block at loop-value to air
+			#drawDot count 3, particle critmagic, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			#drawDot count 3, particle witchspell, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			particleWitch(3, 0.3, 0.3, 0.3, {_loc%loop-index%})
+			particle(enchanted_hit, 3, 0.3, 0.3, 0.3, {_loc::%loop-index%})
+		wait 5 seconds
+		
+		loop {_loc::*}:
+			set block at loop-value to cracked stone bricks
+			#drawDot count 3, particle critmagic, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			#drawDot count 3, particle witchspell, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			particleWitch(3, 0.3, 0.3, 0.3, {_loc::%loop-index%})
+			particle(enchanted_hit, 3, 0.3, 0.3, 0.3, {_loc::%loop-index%})
+		
+		
+		
+		
+		
+	if "%event-region%" is "dungeoncastleparkour in world ul_rpg":
+		"%region at player%" is not "dungeoncastleparkour in world ul_rpg"
+		wait 1 tick
+		while "%region at player%" is "dungeoncastleparkour in world ul_rpg":
+			if block at player is lava:
+				if "%region at player%" is "dungeoncastleparkour in world ul_rpg":
+					send "&7You fell!"
+					teleport player to location at 1990, 46, and 345 in world "ul_rpg"
+					apply blindness 5 without particles to player for 2 seconds
+					apply slowness 2 without particles to player for 2 seconds
+			#send "when the debug is spam (%region at player%)" to player
+			wait 10 ticks
+			if "%region at player%" is "<none>":
+				stop loop
+		
+		
+	if "%event-region%" is "dungeoncastlebossentry in world ul_rpg":
+	
+		"%region at player%" is not "dungeoncastlebossentry in world ul_rpg"
+		send "&aEntering the boss room."
+		apply blindness 5 without particles to player for 2 seconds
+		apply slowness 2 without particles to player for 2 seconds
+		teleport player to {dungeon.castleboss}
+		loop all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]:
+			player is not the loop-player
+			player's gamemode is survival
+			stop
+		set {_loc} to location 40 meters in front of {dungeon.castleboss}
+		set {_loc2} to location at block 6 meters above {_loc}
+		set {_loc2}'s yaw to 179
+		#send "%{_loc}% | %{_loc2}%"
+		
+		spawn a skeleton at {_loc2}
+		set the display name of the last spawned skeleton to "&4Skeleton King"
+		set the helmet of the last spawned skeleton to unbreakable golden helmet
+		set the chestplate of the last spawned skeleton to unbreakable diamond chestplate
+		set the leggings of the last spawned skeleton to unbreakable diamond leggings
+		set the boots of the last spawned skeleton to unbreakable diamond boots
+		set the last spawned skeleton's tool to air
+		set artificial intelligence of last spawned skeleton to false
+		apply resistance 6 without particles to the last spawned skeleton for 10 minutes
+		
+		set {_skelking} to last spawned skeleton
+		wait 2 ticks
+		send title "&7Boss Room" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.wither.spawn" with pitch 1 to player
+		
+		wait 1 second
+		
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Ah! They finally showed up!" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Then the fight has started. RELEASE THE BEAST!" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		
+		wait 5 seconds
+		set {_playercount} to 0
+		loop all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]:
+			add 1 to {_playercount}
+		set {_loc}'s yaw to 179
+		spawn a ravager at {_loc}
+		set the display name of the last spawned ravager to "&4The Beast"
+		set the last spawned ravager's max health to (40 * {_playercount})
+		set the last spawned ravager's health to (40 * {_playercount})
+		apply strength 6 without particles to the last spawned ravager
+		apply speed 3 without particles to the last spawned ravager
+		set last spawned ravager's invulnerability ticks to 60
+		set {_e} to the last spawned ravager
+		while {_e} is alive:
+			loop players in radius 4 around {_e}:
+				damage loop-player by 4
+				#drawDot count 30, particle witchspell, XYZ 1, 1, 1, center location above loop-player, visibleRange 50, keepFor 0 tick
+				particleWitch(30, 0, 0, 0, location above loop-player)
+			wait 2 seconds
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Oh? You killed my beast?" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "&a&kooooooo&a: No matter, I'll kill you MYSELF!" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+				
+		wait 2 seconds
+		
+		set artificial intelligence of {_skelking} to true
+		remove resistance from potion effects of {_skelking}
+		set {_playercount} to 0
+		loop all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]:
+			add 1 to {_playercount}
+		push {_skelking} upwards with force 0.5
+		push {_skelking} in {_skelking}'s direction with force 2
+		set {_skelking}'s max health to (100 * {_playercount})
+		set {_skelking}'s health to (100 * {_playercount})
+		
+		wait 1 second
+		set {_skelking}'s tool to unbreakable diamond sword of sharpness 5
+		apply strength 7 without particles to {_skelking} for 999 days
+		apply resistance 1 without particles to {_skelking} for 999 days
+		apply fire resistance 3 without particles to {_skelking} for 999 days
+		apply speed 3 without particles to {_skelking} for 999 days
+		
+		loop all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]:
+			"%region at loop-player%" is "dungeoncastlebossroom in world ul_rpg"
+			make loop-player say "/thegreatrace"
+			
+		while {_skelking} is alive:
+			wait 1 second
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "&a&kooooooo&a: It seems my fate has been sealed by a worthy opponent. Then I shall let it be." to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		
+		wait 2.5 seconds
+		
+		set {_chest} to location at 2017, 117, and 448 in world "ul_rpg"
+		delete {-castledungeon}
+		loop all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]:
+			set block at {_chest} to chest
+		#drawDot count 30, particle witchspell, XYZ 1, 1, 1, center {_chest}, visibleRange 50, keepFor 0 tick
+		particleWitch(30, 1, 1, 1, {_chest})
+		play sound "entity.chicken.egg" to all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]
+		
+		
+		
+		# SHADOW DUNGEON AND FURTHER ARE IN regions2.sk
+		
+		
+		
+		
+		

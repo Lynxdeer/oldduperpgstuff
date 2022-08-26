@@ -1,0 +1,193 @@
+import:
+    org.bukkit.entity.LivingEntity
+
+on damage:
+	line 1 of damager's tool's lore contains "&7Shoots 1 beam with high range." or "&7oh crap im on fire" or "&7Demoman 2.0"
+	cancel event
+
+on left click with stick:
+	line 1 of player's tool's lore starts with "&7Shoots 1 beam with high range."
+	cancel event
+
+	if {mana::%player%} is less than 1:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 1)
+
+	set {_loc} to location 1.6 meters above location of player
+	set {_loc}'s world to player's world
+	#drawDot count 1, particle soul, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	set {_loc} to location 1.5 meters above location of player
+	set {_loc}'s world to player's world
+	play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players
+	play sound "minecraft:entity.ender_dragon.hurt" with volume 0.5 and pitch 1.5 at {_loc} for all players
+	#drawDot count 5, particle totem, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	loop 25 times:
+		if {_dontshoot} is set:
+			stop
+		set {_loc} to location 1 meter in front of {_loc}
+		set {_loc}'s world to player's world
+		#drawDot count 1, particle endrod, XYZ 0, 0.02, 0, center {_loc}, visibleRange 50, keepFor 1 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc})
+		#execute console command "particle minecraft:end_rod %x-position of {_loc}% %y-position of {_loc}% %z-position of {_loc}% 0 0 0 0 1 force @a"
+		loop all entities where [distance between input's head location and {_loc} is less than 1.5]:
+			loop-entity is not the player
+			calculateArmor(3, loop-entity, player)
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+
+
+
+
+
+# Blazing Wand
+on left click with blaze rod:
+
+	line 1 of player's tool's lore starts with "&7oh crap im on fire"
+	cancel event
+	if lvl(player) is less than 12:
+		send "&cYou must have at least combat 12 to use this item!"
+		stop
+	cancel event
+
+	if {mana::%player%} is less than 2:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 2)
+	
+	set {_loc} to location 1.6 meters above location of player
+	#drawDot count 1, particle soul, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	set {_loc} to location 1.5 meters above location of player
+	play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players
+	play sound "minecraft:entity.blaze.hurt" with volume 0.5 and pitch 1.5 at {_loc} for all players
+	#drawDot count 5, particle totem, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	loop 25 times:
+		if {_dontshoot} is set:
+			stop
+		set {_loc} to location 1 meter in front of {_loc}
+		set {_loc}'s world to player's world
+		particle(dripping_lava, 1, 0, 0, 0, {_loc})
+		#drawDot count 1, particle lavadrip, XYZ 0, 0.02, 0, center {_loc}, visibleRange 50, keepFor 1 tick
+		loop all entities where [distance between input's head location and {_loc} is less than 1.5]:
+			loop-entity is not the player
+			calculateArmor(5, loop-entity, player)
+			loop-entity is not the player
+			
+			if loop-entity is not a player:
+				ignite loop-entity for 3 seconds
+			if loop-entity is a player:
+				loop-entity's world is not "ul_rpg"
+				loop-entity's time played is more than 5 minutes
+				ignite loop-entity for 3 seconds
+			
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+			
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+			
+			
+on right click with tripwire hook:
+	line 1 of player's tool's lore starts with "&7Demoman 2.0"	
+	cancel event
+	
+on left click with tripwire hook:
+
+
+	line 1 of player's tool's lore starts with "&7Demoman 2.0"
+	if "%event-item's lore%" does not contain "&eOwner:":
+		send "&cThis item is not ownership tagged and cannot be used!"
+		stop
+	if "%event-item's lore%" does not contain "&f%player%":
+		send "&cYou do not own this item! This is to prevent boosting of this item."
+		stop
+		
+		
+		
+		
+	cancel event
+	if lvl(player) is less than 50:
+		send "&cYou must have at least combat 50 to use this item!"
+		stop
+	cancel event
+
+	if {mana::%player%} is less than 5:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 5)
+			
+
+	set {_loc} to location 0.5 meters above location of player
+	play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players
+	play sound "minecraft:entity.egg.throw" with volume 1 and pitch 0.8 at {_loc} for player
+	set {_grav} to 0.8
+	if player is sneaking:
+		set {_nograv} to true
+		set {_loc} to location 1.5 meters above location of player
+	loop 25 times:
+		if {_dontshoot} is set:
+			stop
+		set {_loc} to location 1.2 meter in front of {_loc}
+		set {_loc}'s world to player's world
+		
+		if {_nograv} is not true:
+			set {_loc} to location {_grav} meters above {_loc}
+			
+		remove 0.1 from {_grav}
+		#drawDot count 1, particle critmagic, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 1 tick
+		particle(enchanted_hit, 1, 0, 0, 0, {_loc})
+		if {_nograv} is not true:
+			#drawDot count 1, particle critmagic, XYZ 0.1, 0.1, 0.1, center {_loc}, visibleRange 50, keepFor 1 tick
+			particle(enchanted_hit, 1, 0.1, 0.1, 0.1, {_loc})
+		wait 1 tick
+		loop blocks in radius 0.8 around {_loc}:
+			{_dontshoot} is not true
+			loop-block is solid
+			play sound "minecraft:entity.generic.explode" with volume 20 and pitch 1 at {_loc} for player
+			#drawDot count 1, particle explosionhuge, XYZ 0.1, 0.1, 0.1, center {_loc}, visibleRange 100, keepFor 1 tick
+			particle(explosion_emitter, 1, 0, 0, 0, {_loc})
+			set {_dontshoot} to true
+			loop entities in radius 4 around {_loc}:
+				calculateArmor(9, loop-entity, player)
+				if "%region at loop-entity%" contains "spawn":
+					loop-entity is not the player
+					stop loop
+				if loop-entity is the player:
+					set {_d} to (1.4 / distance between {_loc} and loop-entity)
+					set {_v} to vector from {_loc} to block above loop-entity
+					if {_d} is more than 3:
+						set {_d} to 3
+					if {_d} is less than 1:
+						set {_d} to 1
+					#send "(debug) %{_d}%"
+					push loop-entity {_v} with force {_d}
+				else:
+					set {_d} to (1 / distance between {_loc} and loop-entity)
+					set {_v} to vector from {_loc} to block above loop-entity
+					push loop-entity {_v} with force abs({_d})
+				if loop-entity's world is not "ul_rpg":
+					loop-entity is not the player
+					"%region at loop-entity%" does not contain "spawn"
+					set {_dontshoot} to true
+				loop-entity is a player
+				loop-entity is not the player
+			stop
+	{_dontshoot} is not true
+	play sound "minecraft:entity.generic.explode" with volume 20 and pitch 1 at {_loc} for player
+	#drawDot count 1, particle explosionhuge, XYZ 0.1, 0.1, 0.1, center {_loc}, visibleRange 100, keepFor 1 tick
+	particle(explosion_emitter, 1, 0, 0, 0, {_loc})
+	loop entities in radius 4 around {_loc}:
+		if "%region at loop-entity%" contains "spawn":
+			loop-entity is not the player
+			stop loop
+		set {_d} to (1 / distance between {_loc} and loop-entity)
+		set {_v} to vector from block above loop-entity to {_loc}
+		push loop-entity {_v} with force {_d}
+		calculateArmor(9, loop-entity, player)
+		set {_dontshoot} to true

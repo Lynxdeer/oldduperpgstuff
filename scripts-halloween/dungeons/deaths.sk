@@ -1,0 +1,113 @@
+on death:
+	victim's display name is "&4Skeleton King" or "&4The Beast"
+	clear drops
+		
+on death:
+	victim's display name is "&4Zamboe"
+	cancel drops
+	add 1 to {-fdzamboeskilled}
+	loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+		send "&7%{-fdzamboeskilled}%&7/5" to loop-player
+	if {-fdzamboeskilled} is more than 4:
+		loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+			send "&aThe boss door is being opened! Good luck. The boss door will remain open until entered." to loop-player
+		loop all entities where [input's display name is "&4Zamboe"]:
+			delete the loop-entity
+		set {-fdzamboeskilled} to 0
+		set {_loc} to {dungeon.forestdoor}
+		set {_loc2} to block 1 meter left of {_loc}
+		
+		set block at {_loc} to air
+		set block at {_loc2} to air
+		
+		wait 10 ticks
+		
+		set block above {_loc} to air
+		set block above {_loc2} to air
+		
+		wait 10 ticks
+		
+		set block 2 meters above {_loc} to air
+		set block 2 meters above {_loc2} to air
+		
+		wait 10 seconds
+		set {_am} to 0
+		loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+			add 1 to {_am}
+		while {_am} is more than 0:
+			set {_am} to 0
+			loop all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]:
+				add 1 to {_am}
+			send action bar "&cThe boss door is opened! Go already!" to all players where ["%region at input%" is "dungeonforestentry in world ul_rpg"]
+			wait 10 ticks
+		
+		set block at {_loc} to spruce wood
+		set block at {_loc2} to spruce wood
+		
+		wait 10 ticks
+		
+		set block above {_loc} to spruce wood
+		set block above {_loc2} to spruce wood
+		
+		wait 10 ticks
+		
+		set block 2 meters above {_loc} to spruce wood
+		set block 2 meters above {_loc2} to spruce wood
+		
+		
+		
+		
+		
+on death:
+	victim's display name is "&4Skeleton Warrior"
+	cancel drops
+	add 1 to {-cdskeletonskilled}
+	loop all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]:
+		send "&7%{-cdskeletonskilled}%&7/5" to loop-player
+	if {-cdskeletonskilled} is more than 4:
+		loop all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]:
+			send "&aThe boss door is being opened! Good luck. The boss door will remain open until entered." to loop-player
+		loop all entities where [input's display name is "&4Skeleton Warrior"]:
+			delete the loop-entity
+		set {-cdskeletonskilled} to 0
+		
+		
+		
+		
+		
+		set {_betw1} to location at 1993, 94, and 343 in world "ul_rpg"
+		set {_betw2} to location at 1989, 99, and 343 in world "ul_rpg"
+		block at {_bet1} is not air
+		wait 25 ticks
+		loop all blocks within {_betw1} and {_betw2}:
+			add loop-block's location to {_loc::*}
+		loop {_loc::*}:
+			set block at loop-value to air
+			drawDot count 3, particle critmagic, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			drawDot count 3, particle witchspell, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+		play sound "minecraft:entity.wither.break_block" with volume 3 and pitch 0.75 for all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 0.5 for all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 2 for all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]
+		play sound "minecraft:block.glass.break" with volume 3 and pitch 1 for all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]
+		
+		
+		
+		
+		
+		
+		wait 10 seconds
+		set {_am} to 0
+		loop all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]:
+			add 1 to {_am}
+		while {_am} is more than 0:
+			set {_am} to 0
+			loop all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]:
+				add 1 to {_am}
+			send action bar "&cThe boss door is opened! Go already!" to all players where ["%region at input%" is "dungeoncastleentry in world ul_rpg"]
+			wait 10 ticks
+		wait 1 second
+		loop {_loc::*}:
+			set block at loop-value to spruce wood
+			drawDot count 3, particle critmagic, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			drawDot count 3, particle witchspell, XYZ 0.3, 0.3, 0.3, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			

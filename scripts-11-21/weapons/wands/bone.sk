@@ -1,0 +1,31 @@
+on left click with bone:
+	#wcd = weapon cooldown
+	line 1 of player's tool's lore starts with "&7A warrior's bone infused with magic."
+	if difference between {-wcd::%player%} and now is less than 0.25 seconds:
+		if {-wcd::%player%} is not set:
+			exit 2 sections
+		stop
+	set {-wcd::%player%} to now
+	cancel event
+
+	set {_loc} to location 1.6 meters above location of player
+	set {_loc} to location 1.5 meters above location of player
+	play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players
+	play sound "minecraft:entity.skeleton.ambient" with volume 0.5 and pitch 1.5 at {_loc} for all players
+	play sound "minecraft:entity.skeleton.death" with volume 2 and pitch 1.5 at {_loc} for all players
+	play sound "minecraft:entity.skeleton.hurt" with volume 2 and pitch 1.5 at {_loc} for all players
+	loop 20 times:
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			stop
+		set {_loc} to location 1 meter in front of {_loc}
+		#particle(item_snowball, 1, 0, 0, 0, {_loc})
+		particle(end_rod, 1, 0, 0, 0, {_loc})
+		#particle(ash, 5, 0, 0, 0, {_loc})
+		
+		set {_ent::*} to hitbox(player, {_loc})
+		size of {_ent::*} is more than 0
+		#send "%{_ent::*}%"
+		loop all entities where [{_ent::*} contains input]:
+			loop-entity is not the player
+			calculateArmor(3.5, loop-entity, player)

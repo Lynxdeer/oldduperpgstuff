@@ -1,0 +1,188 @@
+on skript stop:
+	delete {magmaboss}
+
+on rightclick:
+	distance between {place.magmaboss} and clicked block is less than 2
+	cancel event
+	if {magmaboss} is true:
+		send "&cPlease wait until the current magma boss dies before using this!"
+		stop
+	open createGui("magmaboss") to player
+
+function spawnMagma():
+	drawDot count 15, particle endrod, XYZ 1, 1, 1, center {place.magmaboss}, visibleRange 150, keepFor 10 tick
+	drawDot count 5, particle cloud, XYZ 1, 1, 1, center {place.magmaboss}, visibleRange 150, keepFor 10 tick
+	drawDot count 25, particle portal, XYZ 1, 1, 1, center {place.magmaboss}, visibleRange 150, keepFor 10 tick
+	set {_loc} to block above {place.magmaboss}
+	play sound "minecraft:block.lava.extinguish" for all players at {_loc}
+	spawn a magma cube above {place.magmaboss}
+	set the nbt of the last spawned magma cube to "{Size:8,PersistenceRequired:1}"
+	set the display name of the last spawned magma cube to "&6Magma Boss"
+	push the last spawned magma cube upwards at speed 2
+	apply jump boost 2 without particles to the last spawned magma cube
+	apply speed 15 without particles to the last spawned magma cube
+	apply strength 25 without particles to the last spawned magma cube
+	set the max health of the last spawned magma cube to 600
+	set the health of the last spawned magma cube to 600
+	set {_m} to the last spawned magma cube
+	set {magmaboss} to true
+	magmaAbilities(last spawned magma cube)
+	broadcast "&cNote: There is an mc bug where you need to hit the BOTTOM of the magma boss to damage it. Hitting the top won't do anything! Use F3 + B to see its hitbox."
+	while {_m} is alive:
+		set {-magmaenthealth} to health of the last spawned magma cube
+		#broadcast "(debug) %{-magmaenthealth}% %{_m}'s health%"
+		wait 10 ticks
+	
+function magmaAbilities(e: entity):
+	while {_e} is alive:
+		if {magmaboss} is not true:
+			stop loop
+		{magmaboss} is true
+		if {-magmaent} is not alive:
+			stop loop
+		if {_e} is not alive:
+			delete {_e}
+			stop loop
+		set {_ability} to random integer between 1 and 4
+		#broadcast "(debug) %{_ability}%"
+		if {_ability} is 1:
+			loop players in radius 50 around {_e}:
+				set {_dist} to distance between {_e} and loop-player
+				set {_v} to vector from {_e} to loop-player
+				set {_loc} to {_e}
+				#broadcast "(debug) %{_v}% | %{_v}'s vector yaw% %{_v}'s vector pitch% | %{_e}'s yaw% %{_e}'s pitch%"
+				#teleport {_e} to location({_e}'s x-position, {_e}'s y-position, {_e}'s z-position, world "ul_rpg", vector pitch of {_v}, vector yaw of {_v})
+				
+				set {_l} to location of {_e}
+				set yaw of {_l} to vector yaw of {_v}
+				set pitch of {_l} to vector pitch of {_v}
+				teleport {_e} to {_l}
+				
+				loop {_dist} times:
+					drawDot count 5, particle flame, XYZ 0.1, 0.1, 0.1, center {_loc}, visibleRange 150, keepFor 1 tick
+					drawDot count 2, particle explosion, XYZ 2, 2, 2, center {_loc}, visibleRange 150, keepFor 1 tick
+					drawDot count 8, particle lavadrip, XYZ 1, 1, 1, center {_loc}, visibleRange 150, keepFor 1 tick
+					set {_loc} to location 1 meter in front of {_loc}
+					loop players in radius 4 around {_loc}:
+						push loop-player-2 upwards with force 0.5
+						remove absorption from the loop-player-2
+						remove fire resistance from the loop-player-2
+						calculateArmor(15, loop-player-2, {_e})
+						ignite the loop-player-2 for 5 seconds
+
+		
+		
+		
+		if {_ability} is 2:
+			distance between {_e} and {place.volcano} is more than 20
+			set {_v} to vector from {_e} to {place.volcano}
+			set yaw of {_e} to yaw of {_v}
+			set pitch of {_e} to pitch of {_v}
+			push {_e} upwards with force 1
+			push {_e} {_v} with force 2
+			
+		if {_ability} is 3:
+			loop players in radius 20 around {_e}:
+				push loop-player upwards with force 2
+				set loop-player's health to (loop-player's health - 4)
+				calculateArmor(5, loop-player, {_e})
+				ignite the loop-player for 5 seconds
+				remove fire resistance from the loop-player
+				remove absorption from the loop-player
+				send "&6You have been launched by the magma boss!" to loop-player
+				drawDot count 30, particle flame, XYZ 8, 1, 8, center {_l}, visibleRange 150, keepFor 1 tick
+				drawDot count 12, particle explosion, XYZ 10, 2, 10, center {_l}, visibleRange 150, keepFor 1 tick
+				drawDot count 12, particle smoke, XYZ 8, 2, 8, center {_l}, visibleRange 150, keepFor 1 tick
+				
+		if {_ability} is 4:
+			size of all entities is less than 150
+			{-magmaminionamount} is less than 7
+			add 1 to {-magmaminionamount}
+			tps from the last minute is more than 15
+			loop blocks in radius 8 around {_e}:
+				loop-block is not solid
+				loop-block's y-position is more than 101
+				loop-block is not lava
+				block above loop-block is air
+				block 2 meters above loop-block is air
+				chance of 0.05%:
+					spawn a blaze above the loop-block
+					set the display name of the last spawned blaze to "&6Magma Minion"
+					apply strength 6 without particles to the last spawned blaze for 999 days
+					apply speed 6 without particles to the last spawned blaze for 999 days
+					apply fire resistance 4 without particles to the last spawned blaze for 999 days
+					set the max health of the last spawned blaze to 5
+					set the health of the last spawned blaze to 5
+				
+		wait 1.5 seconds
+	stop
+	
+on damage:
+	victim's world is "ul_rpg"
+	"%victim%" contains "dropped"
+	cancel event
+	push victim upwards with force 0.07
+
+on damage:
+	victim's display name is "&6Magma Boss"
+	damager is a player
+	add damage to {-magmabossdmg::%damager%}
+	
+on death:
+	victim's display name is "&6Magma Boss"
+	cancel event
+	delete {-magmaent}
+	delete {-magmaminionamount}
+	set {magmaboss} to false
+	set the nbt of the victim to "{Size:0}"
+	kill the victim
+	delete the victim
+	set {_highest} to 0
+	loop {-magmabossdmg::*}:
+		loop-value is more than {_highest}
+		set {_highest} to loop-value
+		set {_hplayer} to loop-index parsed as offline player
+	play sound "minecraft:entity.chicken.step" with volume 20 and pitch 2 at victim for all players
+	broadcast "&8--------------------------"
+	broadcast "&6&lMagma Boss Down!"
+	broadcast ""
+	broadcast "&6Highest damager: %{_hplayer}% &7(%round({_highest})%&7)"
+	broadcast "&8--------------------------"
+	set {_i} to getItem("flamethrower")
+	set line 5 of {_i}'s lore to "&eOwner: &f%{_hplayer}%"
+	loop {-magmabossdmg::*}:
+		send "&f(debug): %loop-index% : %loop-value%" to loop-index parsed as offlineplayer
+		if {boost} is not more than 1 second:
+			send "&3+ %(loop-value * 250)% &3XP" to loop-index parsed as offlineplayer
+			set {_xp} to round(loop-value * 250)
+			xpAdd(loop-index parsed as offlineplayer, {_xp})
+		if {boost} is more than 1 second:
+			send "&d+ %(loop-value * 500)% &dXP &7(boosted)" to loop-index parsed as offlineplayer
+			set {_xp} to round(loop-value * 500)
+			xpAdd(loop-index parsed as offlineplayer, {_xp})
+	if {_hplayer} has space for flint and steel:
+		give {_hplayer} {_i}
+		send "&6+ Flamethrower" to {_hplayer}
+	else:
+		send "&cYou don't have enough space in your inventory for a flamethrower, so it was dropped on the ground!"
+		drop {_i} at {_hplayer}
+		
+		
+	loop all entities where [input is a blaze]:
+		loop-entity's world is "ul_rpg"
+		delete the loop-entity
+	loop 40 times:
+		drawDot count 2, particle explosionlarge, XYZ 5, 5, 5, center victim, visibleRange 150, keepFor 10 tick
+		play sound "minecraft:entity.generic.explode" with volume 20 and pitch 1 at victim for all players
+			
+		#drop a experience bottle named "&aXPMAGMA" at {_r}
+		wait 3 tick
+		drawDot count 2, particle explosionlarge, XYZ 5, 5, 5, center victim, visibleRange 150, keepFor 10 tick
+	
+	#drop {_i} at {_r}
+	set {magmaboss} to false
+	delete {-magmaenthealth}
+	delete {-magmabossdmg::*}
+			
+			
+	

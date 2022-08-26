@@ -1,0 +1,22 @@
+on load:
+	set {place.cake} to location(-5, 151, 6, world "ul_void")
+	set {place.cake2} to location(6, 100, 12, world "ul_rpg")
+
+on rightclick:
+	if distance between the clicked block and {place.cake} is less than 2:
+		cancel event
+		add 1 to {cakesgiven}
+		send "&5&ko &dHappy Birthday to Lynxdeer! &5&ko"
+		if player cannot hold cake:
+			send "&cEmpty out an inventory slot to recieve a cake!"
+			stop
+		give player cake named "&dLynxdeer's 13th birthday cake" with lore "&7wao happy birthday" and "&7Date: Oct. 4, 2021" and "&eOwner: &f%player%" with nbt "%{givenbt}%"
+	
+	if distance between the clicked block and {place.cake2} is less than 2:
+		cancel event
+		add 1 to {cakesgiven}
+		send "&5&ko &dHappy Birthday to Lynxdeer! &5&ko"
+		if player cannot hold cake:
+			send "&cEmpty out an inventory slot to recieve a cake!"
+			stop
+		give player cake named "&dLynxdeer's 13th birthday cake" with lore "&7wao happy birthday" and "&7Date: Oct. 4, 2021" and "&eOwner: &f%player%" with nbt "%{givenbt}%"

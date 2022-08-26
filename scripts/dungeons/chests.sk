@@ -1,0 +1,189 @@
+on rightclick on chest:
+	"%region at player%" is "dungeonforestbossroom in world ul_rpg"
+	set {_glass} to location 14 meters below {dungeon.forestboss}
+	set block at {_glass} to glass
+	set the event-block to air
+	loop all players where ["%region at input%" is "dungeonforestbossroom in world ul_rpg"]:
+		send "&aThe chest is opening!" to the loop-player
+		wait 0.5 seconds
+		send "&aYou will be tped back to the dungeon lobby in 15 seconds." to loop-player
+		set {_amount} to random number between 2 and 5
+		set {_gui} to chest inventory with 3 rows named "Dungeon Chest (Drag Items Out)"
+		loop {_amount} times:
+			set {_rand} to random integer between 0 and 26
+			set {_chance} to random integer between 0 and 9
+			if {_chance} is 1:
+				set slot {_rand} of {_gui} to stick named "&6Strong Oak Wand" with lore "&7Shoots 1 beam with high range." and "&6Weapon Stats:" and "&e Damage: +20%%" and "&eOwner: &f%loop-player%" with nbt "%{givenbt}%"
+			if {_chance} is 2:
+				set slot {_rand} of {_gui} to wooden shovel named "&6Strong Oak Staff" with lore "&7Shoots multiple beams with low range." and "&6Weapon Stats:" and "&e Damage: +20%%" and "&eOwner: &f%loop-player%" with nbt "%{givenbt}%"
+			if {_chance} is 3:
+				set slot {_rand} of {_gui} to oak log named "&4Rottener Wood" with lore "&7Can be used to buy a forest key at the dungeon shop!"
+			if {_chance} is 4:
+				set slot {_rand} of {_gui} to getItem("dkey_forest") 
+			if {_chance} is 5:
+				set slot {_rand} of {_gui} to getItem("dkey_castle") 
+			if {_chance} is 6:
+				set slot {_rand} of {_gui} to gold ingot named "&a$1,000"
+			if {_chance} is 7:
+				set slot {_rand} of {_gui} to gold ingot named "&a$2,500"
+			if {_chance} is 8:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l15,000 XP"
+			if {_chance} is 9:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l20,000 XP"
+		
+		open {_gui} to loop-player
+		dungeonTeleportBack(loop-player)
+
+on inventory click:
+	if name of player's current inventory is "Dungeon Chest (Drag Items Out)":
+		if name of event-item is "&a$1,000":
+			set event-slot to air
+			cancel event
+			add 1000 to {bal::%player%}
+			send "&a+ $1,000"
+		if name of event-item is "&a$2,500":
+			set event-slot to air
+			cancel event
+			add 2500 to {bal::%player%}
+			send "&a+ $2,500"
+		if name of event-item is "&a$3,000":
+			set event-slot to air
+			cancel event
+			add 3000 to {bal::%player%}
+			send "&a+ $3,000"
+		if name of event-item is "&a$5,000":
+			set event-slot to air
+			cancel event
+			add 5000 to {bal::%player%}
+			send "&a+ $5,000"
+		if name of event-item is "&a$15,000":
+			set event-slot to air
+			cancel event
+			add 5000 to {bal::%player%}
+			send "&a+ $15,000"
+			
+		if name of event-item is "&3&l15,000 XP":
+			set event-slot to air
+			cancel event
+			xpAdd(player, 15000)
+			if {boost} is not set:
+				send "&3+ 15,000 XP"
+				stop
+			send "&d+30,000 XP"
+		if name of event-item is "&3&l20,000 XP":
+			set event-slot to air
+			cancel event
+			xpAdd(player, 20000)
+			if {boost} is not set:
+				send "&3+ 20,000 XP"
+				stop
+			send "&d+40,000 XP"
+		if name of event-item is "&3&l30,000 XP":
+			set event-slot to air
+			cancel event
+			xpAdd(player, 30000)
+			if {boost} is not set:
+				send "&3+ 30,000 XP"
+				stop
+			send "&d+60,000 XP"
+		if name of event-item is "&3&l40,000 XP":
+			set event-slot to air
+			cancel event
+			xpAdd(player, 40000)
+			if {boost} is not set:
+				send "&3+ 40,000 XP"
+				stop
+			send "&d+80,000 XP"
+		if name of event-item is "&3&l50,000 XP":
+			set event-slot to air
+			cancel event
+			xpAdd(player, 50000)
+			if {boost} is not set:
+				send "&3+ 50,000 XP"
+				stop
+			send "&d+100,000 XP"
+		if name of event-item is "&3&l75,000 XP":
+			set event-slot to air
+			cancel event
+			xpAdd(player, 75000)
+			if {boost} is not set:
+				send "&3+ 75,000 XP"
+				stop
+			send "&d+150,000 XP"
+			
+		
+on rightclick on chest:
+	"%region at player%" is "dungeoncastlebossroom in world ul_rpg"
+	set the event-block to air
+	loop all players where ["%region at input%" is "dungeoncastlebossroom in world ul_rpg"]:
+		send "&aThe chest is opening!" to the loop-player
+		wait 0.5 seconds
+		send "&aYou will be tped back to the dungeon lobby in 15 seconds." to loop-player
+		set {_amount} to random number between 3 and 7
+		set {_gui} to chest inventory with 3 rows named "Dungeon Chest (Drag Items Out)"
+		loop {_amount} times:
+			set {_rand} to random integer between 0 and 26
+			set {_chance} to random integer between 0 and 9
+			if {_chance} is 0 or 1:
+				set slot {_rand} of {_gui} to firework star named "&7Scrap" with lore "&7Can be used to buy things at the dungeon shop." and "&cUndupable" with nbt "%{givenbt}%"
+				set item amount of slot {_rand} of {_gui} to random integer between 3 and 5
+			if {_chance} is 2:
+				set slot {_rand} of {_gui} to wooden shovel named "&aShove Staff" with lore "&7hippity hoppity you are now off my property" and "&eOwner: &f%loop-player%" with nbt "%{givenbt}%"
+			if {_chance} is 3:
+				set slot {_rand} of {_gui} to cobblestone named "&4Skeleton King's Stone" with lore "&7Can be used to buy a castle key at the dungeon shop!"
+			if {_chance} is 4:
+				set slot {_rand} of {_gui} to getItem("dkey_castle") 
+			if {_chance} is 5:
+				set slot {_rand} of {_gui} to getItem("dkey_forest") 
+			if {_chance} is 6:
+				set slot {_rand} of {_gui} to gold ingot named "&a$3,000"
+			if {_chance} is 7:
+				set slot {_rand} of {_gui} to gold ingot named "&a$5,000"
+			if {_chance} is 8:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l30,000 XP"
+			if {_chance} is 9:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l40,000 XP"
+		
+		open {_gui} to loop-player
+		dungeonTeleportBack(loop-player)
+		set the event-block to air
+		
+		
+		
+on rightclick on chest:
+	"%region at player%" is "dungeonshadowbossroom in world ul_rpg"
+	set the event-block to air
+	loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+		send "&aThe chest is opening!" to the loop-player
+		wait 0.5 seconds
+		send "&aYou will be tped back to the dungeon lobby in 15 seconds." to loop-player
+		set {_amount} to random number between 4 and 8
+		set {_gui} to chest inventory with 3 rows named "Dungeon Chest (Drag Items Out)"
+		loop {_amount} times:
+			set {_rand} to random integer between 0 and 26
+			set {_chance} to random integer between 0 and 10
+			if {_chance} is 0 or 1 or 2:
+				set slot {_rand} of {_gui} to firework star named "&7Scrap" with lore "&7Can be used to buy things at the dungeon shop." and "&cUndupable" with nbt "%{givenbt}%"
+				set item amount of slot {_rand} of {_gui} to random integer between 4 and 9
+			if {_chance} is 3:
+				set slot {_rand} of {_gui} to getItem("shadowchestplate")
+				set line 8 of slot {_rand} of {_gui}'s lore to "&eOwner: &f%player%"
+			if {_chance} is 4:
+				set slot {_rand} of {_gui} to black dye named "&8Shadow Essence" with lore "&7Can be used to buy a shadow key at the dungeon shop!" and "&cUndupable"
+				set item amount of slot {_rand} of {_gui} to random integer between 1 and 3
+			if {_chance} is 5:
+				set slot {_rand} of {_gui} to getItem("dkey_castle") 
+			if {_chance} is 6:
+				set slot {_rand} of {_gui} to getItem("dkey_forest") 
+			if {_chance} is 7:
+				set slot {_rand} of {_gui} to gold ingot named "&a$5,000"
+			if {_chance} is 8:
+				set slot {_rand} of {_gui} to gold ingot named "&a$15,000"
+			if {_chance} is 9:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l50,000 XP"
+			if {_chance} is 10:
+				set slot {_rand} of {_gui} to experience bottle named "&3&l75,000 XP"
+		
+		open {_gui} to loop-player
+		dungeonTeleportBack(loop-player)
+		set the event-block to air

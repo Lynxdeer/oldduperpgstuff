@@ -1,0 +1,254 @@
+import:
+	org.bukkit.entity.LivingEntity
+	org.bukkit.event.Listener
+	
+	
+	
+function hitbox(p: player, loc: location) :: entities:
+
+		#set {_head} to loop-entity's head location
+		#set {_body} to location 1 meter above loop-entity
+		#set {_feet} to loop-entity's location
+
+	loop all entities where [distance between input's head location and {_loc} is less than 1.1]:
+		loop-entity is not {_p}
+		{_ret::*} does not contain loop-entity
+		add loop-entity to {_ret::*}
+		
+	loop all entities where [distance between location at block 1 meter above input and {_loc} is less than 1.1]:
+		loop-entity is not {_p}
+		{_ret::*} does not contain loop-entity
+		add loop-entity to {_ret::*}
+		
+	loop all entities where [distance between input's location and {_loc} is less than 1.1]:
+		loop-entity is not {_p}
+		{_ret::*} does not contain loop-entity
+		add loop-entity to {_ret::*}
+		
+	return {_ret::*}
+
+function particleWitch(count: number, v1: number, v2: number, v3: number, loc: location):
+	set {_vec} to vector {_v1}, {_v2}, {_v3}
+	play {_count} of witch at {_loc} offset by {_vec} with extra 0 for all players
+	
+function particle(particle: particle, count: number, v1: number, v2: number, v3: number, loc: location):
+	set {_vec} to vector {_v1}, {_v2}, {_v3}
+	play {_count} of {_particle} at {_loc} offset by {_vec} with extra 0 for all players
+
+function javaParticle(player: player, particle: text, count: number, xyzorrgb: text, v1: number, v2: number, v3: number, loc: location):
+	{_player}.spawnParticle(Particle.END_ROD, {_loc}, {_count}, {_v1}, {_v2}, {_v3})
+	
+	#Syntax: spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY, double offsetZ)
+	
+
+function modifyMana(p: player, m: number):
+	{_p} is not "*"
+	{_p}'s gamemode is not creative
+	set {-dontregen::%{_p}%} to 2
+	if {mana::%{_p}%} is less than {_m}:
+		send action bar "&cNot enough mana!" to {_p}
+		stop
+	remove {_m} from {mana::%{_p}%}
+	if {combatlog::%{_p}%} is set:
+		send action bar "&e[God Apple: %( {gapcd::%{_p}%} + 0)%&e] &6[Combat: %{combatlog::%{_p}%}% &6seconds] &b[Mana | %{mana::%{_p}%}%/25⸎]" to {_p}
+	else:
+		if {mana::%{_p}%} is less than 25:
+			send action bar "&b[Mana | %{mana::%{_p}%}%/25⸎]" to {_p}
+		else:
+			send action bar "&3[Mana | %{mana::%{_p}%}%/25⸎]" to {_p}
+
+function cancelDmgTicks(e: entity):
+	{_e}.setNoDamageTicks(0)
+	wait 1 tick
+	{_e}.setNoDamageTicks(0)
+	
+function setDmgTicks(e: entity, n: number):
+	{_e}.setNoDamageTicks({_n})
+	wait 1 tick
+	{_e}.setNoDamageTicks({_n})
+	
+function invert(n: number) :: number:
+	if {_n} is more than 0:
+		set {_n} to "-%{_n}%"
+		return {_n} parsed as number
+		stop
+	return abs({_n})
+	
+function damageTicks(e: entity):
+	{_e} is not a painting or boat or regular minecart or item frame or dropped item or end crystal or fireball or small fireball or dragon fireball or arrow or armor stand
+	{_e} is not a boat or experience bottle or egg or snowball or firework rocket or firework or end crystal or trident
+	"%{_e}%" does not contain "dropped"
+	wait 2 ticks
+	{_e}.setNoDamageTicks(5)
+	
+
+	
+	
+function justDied(e: entity):
+	{_e} is not "*"
+	set {-nd::%{_e}%} to true
+	wait 5 ticks
+	delete {-nd::%{_e}%}
+	
+	
+function calculateArmor(d: number, e: entity, a: entity) :: integer:
+# d = damage, e = victim, a = damager
+	set {_aam} to 0
+	if "%{_a}'s tool's lore%" contains "&6Weapon Stats":
+		set {_lore::*} to {_a}'s tool's lore
+		loop {_lore::*}:
+			if loop-value starts with "&e Damage:":
+				set {_t} to loop-value
+				replace first "&e Damage: " in {_t} with ""
+				if {_t} starts with "+":
+					replace first "+" in {_t} with ""
+					replace first "%%" in {_t} with ""
+					set {_aam} to {_t} parsed as number
+					set {_aam} to (5 / 100 * {_aam})
+					set {_d} to ({_d} + {_aam})
+	"%{_e}%" does not contain "dropped"
+	{_e} is not a painting or boat or regular minecart or item frame or dropped item or end crystal or fireball or small fireball or dragon fireball or arrow or armor stand
+	{_e} is not a boat or experience bottle or egg or snowball or firework rocket or firework or end crystal or trident
+	{_e}.getNoDamageTicks() is not more than 0
+	if {_e}'s display name is "&6Magma Boss":
+		add damage to {-magmabossdmg::%{_a}%}
+	if {_e} is not a player:
+		damage {_e} by ({_d} + {_aam})
+		stop
+	if {_e}'s time played is less than 5 minutes:
+		stop
+	if {_e}'s world is "ul_rpg":
+		stop
+	if {_e}'s gamemode is survival:
+		{_e}'s world is not "ul_rpg"
+		"%region at {_e}%" does not contain "spawn"
+		{_e} is not {_a}
+		set {combatlog::%{_e}%} to 10
+		set {combatlog::%{_a}%} to 10 
+	{_e}'s gamemode is not creative or spectator
+	set {_armor} to 1
+	
+	if helmet of {_e} is netherite helmet or diamond helmet:
+		add 0.15 to {_armor}
+	if chestplate of {_e} is netherite chestplate or diamond chestplate:
+		add 0.4 to {_armor}
+	if leggings of {_e} is netherite leggings or diamond leggings:
+		add 0.3 to {_armor}
+	if boots of {_e} is netherite boots or diamond boots:
+		add 0.15 to {_armor}
+	
+
+	set {_prot} to level of protection of {_e}'s helmet
+	set {_prot} to {_prot} + level of protection of {_e}'s chestplate
+	set {_prot} to {_prot} + level of protection of {_e}'s leggings
+	set {_prot} to {_prot} + level of protection of {_e}'s boots
+
+	set {_prot} to {_prot} * 12.5
+	set {_prot} to round({_prot} / 200)
+	
+	#set {_armor} to {_armor} * 2
+	#set {_prot} to {_prot} * 2
+
+	#                          broadcast "&8%{_armor}%&8 | %{_prot}%"
+	set {_fp} to ({_armor} + {_prot})
+	set {_dmg} to ({_d} + {_aam})
+	set {_dmg} to ({_dmg} / {_fp})
+	if {_dmg} is infinity value:
+		set {_dmg} to 1
+	if {_dmg} is more than 9.9:
+		set {_dmg} to 9
+
+	#                           broadcast "&7(%{_d}%&7, %{_dmg}%) &cDmg: %({_d} / {_dmg})%"
+	"%region at {_e}%" does not contain "spawn"
+	{_e}'s time played is more than 5 minutes
+	{_e}.getNoDamageTicks() is not more than 0
+	damage {_e} by {_dmg}
+	{_e}.setNoDamageTicks(5)
+	#send "&8(debug) %{_armor}% | %{_prot}% | %{_dmg}%" to {_a}
+	damageTicks({_e})
+	#set {_e}'s health to ({_e}'s health - {_dmg})
+	{_e} is not alive
+	{_a} is not {_e}
+	{_a} is a player
+	{-nd::%{_e}%} is not true
+	justDied({_e})
+	set {_attuuid} to {_a}'s uuid
+	add 1000 to {bal::%{_attuuid}%}
+	send "&aYou recieved $1000 for out-magicking %{_e}%&a!" to {_a}
+	broadcast "&c%{_e}% &fwas magicked by &c%{_a}%&f."
+	return {_dmg}
+	
+	
+	
+	
+	
+	
+	
+function oldCalculateArmor(d: number, e: entity, a: entity) :: integer:
+# d = damage, e = victim, a = damager
+	{_e}.geNoDamageTicks() is not more than 0
+	if {_e} is not a player:
+		damage {_e} by {_d}
+		stop
+	if {_e}'s time played is less than 5 minutes:
+		stop
+	if {_e}'s world is "ul_rpg":
+		stop
+	if {_e}'s gamemode is survival:
+		{_e}'s world is not "ul_rpg"
+		"%region at {_e}%" does not contain "spawn"
+		{_e} is not {_a}
+		set {combatlog::%{_e}%} to 10
+		set {combatlog::%{_a}%} to 10 
+	{_e}'s gamemode is not creative or spectator
+	set {_armor} to 1
+	
+	if helmet of {_e} is netherite helmet or diamond helmet:
+		add 0.15 to {_armor}
+	if chestplate of {_e} is netherite chestplate or diamond chestplate:
+		add 0.4 to {_armor}
+	if leggings of {_e} is netherite leggings or diamond leggings:
+		add 0.3 to {_armor}
+	if boots of {_e} is netherite boots or diamond boots:
+		add 0.15 to {_armor}
+	
+
+	set {_prot} to level of protection of {_e}'s helmet
+	set {_prot} to {_prot} + level of protection of {_e}'s chestplate
+	set {_prot} to {_prot} + level of protection of {_e}'s leggings
+	set {_prot} to {_prot} + level of protection of {_e}'s boots
+
+	set {_prot} to {_prot} * 12.5
+	set {_prot} to round({_prot} / 200)
+	
+	set {_armor} to {_armor} * 2
+	set {_prot} to {_prot} * 2
+
+	#                          broadcast "&8%{_armor}%&8 | %{_prot}%"
+	set {_fp} to ({_armor} + {_prot})
+	set {_dmg} to ({_d} / {_fp})
+	if {_dmg} is infinity value:
+		set {_dmg} to 1
+	if {_dmg} is more than 9.9:
+		set {_dmg} to 9
+
+	#                           broadcast "&7(%{_d}%&7, %{_dmg}%) &cDmg: %({_d} / {_dmg})%"
+	"%region at {_e}%" does not contain "spawn"
+	{_e}'s time played is more than 5 minutes
+	{_e}.getNoDamageTicks() is not more than 0
+	damage {_e} by 0.001
+	{_e}.setNoDamageTicks(5)
+	#send "&8(debug) %{_armor}% | %{_prot}% | %{_dmg}%" to {_a}
+	damageTicks({_e})
+	set {_e}'s health to ({_e}'s health - {_dmg})
+	{_e} is not alive
+	{_a} is not {_e}
+	{_a} is a player
+	{-nd::%{_e}%} is not true
+	justDied({_e})
+	set {_attuuid} to {_a}'s uuid
+	add 1000 to {bal::%{_attuuid}%}
+	send "&aYou recieved $1000 for out-magicking %{_e}%&a!" to {_a}
+	broadcast "&c%{_e}% &fwas magicked by &c%{_a}%&f."
+	return {_dmg}
+	

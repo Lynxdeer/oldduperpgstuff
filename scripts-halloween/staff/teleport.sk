@@ -1,0 +1,39 @@
+command /tphere [<offline player>]:
+	permission: staff.tp
+	permission message: &cno
+	trigger:
+		if arg-1 is not set:
+			send "&cPlease specify someone to teleport to you!"
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		send "&aTeleported %arg-1% &ato you."
+		teleport arg-1 to player
+		
+on teleport:
+	teleport cause is spectate
+	set {_log} to "%now%;%event-entity%;%event-entity's x-coordinate%:%event-entity's y-coordinate%:%event-entity's z-coordinate%:%event-entity's world%"
+	wait 1 tick
+	send "&3%player% &3spectator teleported to %event-entity's x-coordinate%, &3%event-entity's y-coordinate%, &3%event-entity's z-coordinate%:%event-entity's world%" to all players where [input is "Lynxdeer"]
+	set {_log2} to "%event-entity's x-coordinate%:%event-entity's y-coordinate%:%event-entity's z-coordinate%:%event-entity's world%"
+	add "%{_log}%|%{_log2}%" to {spectplog::%event-entity%::*}
+	
+command /viewtplogs [<offline player>]:
+	permission: *
+	permission message: &cLynx only!
+	trigger:
+		if player is not "Lynxdeer":
+			send "&cOnly lynx can use this command!"
+			stop
+		if arg-1 is set:
+			loop {spectplog::%arg-1%::*}:
+				set {_logtypes::*} to loop-value split at "|"
+				set {_logs::*} to {_logtypes::1} split at ";"
+				set {_coords1::*} to {_logtypes::2} split at ":"
+				set {_coords2::*} to {_logs::3} split at ":"
+				send "&3Log %loop-index%&3 at &7(%{_logs::1}%&7)"
+				send "&3To %{_coords1::*}% &3from %{_coords2::*}%"
+				#send "(debug) %{_logs::3}%"
+				send "&3Nearby players: %{_logtypes::3}%"
+			send "&3Sent %size of {spectplog::%arg-1%::*}% &3logs."

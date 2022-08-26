@@ -1,0 +1,209 @@
+on consume of enchanted golden apple:
+
+	if {-gapecd::%player%} is set:
+		send "&8[&7Halloween Event&8] &7Random effect is on cooldown."
+		stop
+	send "&8[&6Halloween Event&8] &6Random effect is being chosen..."
+	set {-gapecd::%player%} to true
+	
+	set {_chance} to random integer between 1 and 17
+	send title "&0" with subtitle "&7&kooooooo" to player for 3 seconds with fadein 0.1 second and fade out 0 second
+	loop 25 times:
+		play sound "block.note_block.bass" with volume 10 and pitch (random number between 0.1 and 2) to player
+		wait 1 tick
+		
+	play sound "minecraft:entity.experience_orb.pickup" with volume 10 and pitch ({_chance} / 8.5) to player
+	
+	if {_chance} is 1:
+		apply blindness 3 to player for 30 seconds
+		send title "&0" with subtitle "&8BLINDNESS" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 2:
+		apply glowing 3 to player for 30 seconds
+		send title "&0" with subtitle "&e&lGLOWING" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 3:
+		apply haste 3 to player for 30 seconds
+		send title "&0" with subtitle "&6&lHASTE" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 4:
+		apply hunger 3 to player for 30 seconds
+		send title "&0" with subtitle "&4&lHUNGER" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 5:
+		apply invisibility 3 to player for 30 seconds
+		send title "&0" with subtitle "&7&lINVISIBILITY" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 6:
+		apply jump boost 3 to player for 30 seconds
+		send title "&0" with subtitle "&a&lJUMP BOOST" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 7:
+		apply levitation 3 to player for 30 seconds
+		send title "&0" with subtitle "&7&lLEVITATION" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 8:
+		apply mining fatigue 3 to player for 30 seconds
+		send title "&0" with subtitle "&c&lMINING FATIGUE" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 9:
+		apply nausea 3 to player for 30 seconds
+		send title "&0" with subtitle "&2&lNAUSEA" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 10:
+		apply poison 3 to player for 30 seconds
+		send title "&0" with subtitle "&2&lPOISON" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 11:
+		apply saturation 3 to player for 30 seconds
+		send title "&0" with subtitle "&6&lSATURATION" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 12:
+		apply slow falling 3 to player for 30 seconds
+		send title "&0" with subtitle "&b&lSLOW FALLING" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 13:
+		apply slowness 3 to player for 10 seconds
+		send title "&0" with subtitle "&8&lSLOWNESS" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 14:
+		apply speed 5 to player for 30 seconds
+		send title "&0" with subtitle "&9&lSPEED" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 15:
+		apply strength 3 to player for 30 seconds
+		send title "&0" with subtitle "&c&lSTRENGTH" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 16:
+		apply weakness 3 to player for 30 seconds
+		send title "&0" with subtitle "&4&lWEAKNESS" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 17:
+		apply wither 3 to player for 30 seconds
+		send title "&0" with subtitle "&8&lWITHER" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+		
+	
+	
+	wait 5 seconds
+	delete {-gapecd::%player%}
+	
+	
+on rightclick:
+	"%player's tool's lore%" contains "bob gave you it,"
+
+	if {-capecd::%player%} is set:
+		send "&8[&7Halloween Event&8] &7You're a bit full at the moment, maybe wait a little longer."
+		stop
+	if "%player's tool's lore%" does not contain "&cUndupable":
+		send "&eThe candy you had seems to have gone stale! Talk to bob for more!"
+		stop
+		
+	send "&8[&6Halloween Event&8] &6nom nom nom"
+	set {-capecd::%player%} to true
+	remove 1 of player's tool from player's tool
+	
+	set {_chance} to random integer between 1 and 17
+	loop 25 times:
+		play sound "minecraft:entity.player.burp" with volume 10 and pitch (random number between 0.1 and 2) to player
+		wait 1 tick
+		
+	play sound "minecraft:entity.experience_orb.pickup" with volume 10 and pitch ({_chance} / 8.5) to player
+	
+	if {_chance} is 1:
+		apply blindness 3 to player for 30 seconds
+		send title "&0" with subtitle "&8BLINDNESS" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 2:
+		apply glowing 3 to player for 30 seconds
+		send title "&0" with subtitle "&e&lGLOWING" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 3:
+		apply haste 3 to player for 30 seconds
+		send title "&0" with subtitle "&6&lHASTE" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 4:
+		apply hunger 3 to player for 30 seconds
+		send title "&0" with subtitle "&4&lHUNGER" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 5:
+		apply invisibility 3 to player for 30 seconds
+		send title "&0" with subtitle "&7&lINVISIBILITY" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 6:
+		apply jump boost 3 to player for 30 seconds
+		send title "&0" with subtitle "&a&lJUMP BOOST" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 7:
+		apply levitation 3 to player for 30 seconds
+		send title "&0" with subtitle "&7&lLEVITATION" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 8:
+		apply mining fatigue 3 to player for 30 seconds
+		send title "&0" with subtitle "&c&lMINING FATIGUE" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 9:
+		apply nausea 3 to player for 30 seconds
+		send title "&0" with subtitle "&2&lNAUSEA" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 10:
+		apply poison 3 to player for 30 seconds
+		send title "&0" with subtitle "&2&lPOISON" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 11:
+		apply saturation 3 to player for 30 seconds
+		send title "&0" with subtitle "&6&lSATURATION" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 12:
+		apply slow falling 3 to player for 30 seconds
+		send title "&0" with subtitle "&b&lSLOW FALLING" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 13:
+		apply slowness 3 to player for 10 seconds
+		send title "&0" with subtitle "&8&lSLOWNESS" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 14:
+		apply speed 5 to player for 30 seconds
+		send title "&0" with subtitle "&9&lSPEED" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 15:
+		apply strength 3 to player for 30 seconds
+		send title "&0" with subtitle "&c&lSTRENGTH" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 16:
+		apply weakness 3 to player for 30 seconds
+		send title "&0" with subtitle "&4&lWEAKNESS" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+	if {_chance} is 17:
+		apply wither 3 to player for 30 seconds
+		send title "&0" with subtitle "&8&lWITHER" to player for 1 seconds with fadein 0 second and fade out 0.5 second
+		
+		
+	
+	
+	wait 15 seconds
+	delete {-capecd::%player%}
+	
+on rightclick:
+		
+	if distance between {place.halloween} and clicked block is less than 2:
+	
+		send ""
+		send "&6&lHALLOWEEN EVENT &7(Oct 31, 2021)"
+		send "&e- Double XP for the entire event!"
+		send "&e- It will always be night!"
+		send "&e- /diceroll is enabled and new things have been added"
+		send "&e- Eating god apples will give you a random effect!"
+		send "&e- Talk to bob to trick or treat!"
+		send ""
+		
+on join:
+	wait 25 ticks
+	send ""
+	send "&6&lHALLOWEEN EVENT &7(Oct 31, 2021)"
+	send "&e- Double XP for the entire event!"
+	send "&e- It will always be night!"
+	send "&e- /diceroll is enabled and new things have been added"
+	send "&e- Eating god apples will give you a random effect!"
+	send "&e- Talk to bob to trick or treat!"
+	send ""

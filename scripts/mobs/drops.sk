@@ -1,0 +1,104 @@
+on death:
+	victim's display name is "&8[1] &2Zamboe"
+	cancel drops
+	drop a experience bottle named "&aXPZM"
+	chance of 15%:
+		drop a oak log named "&2Rotten Wood" with lore "&7Ew."
+		stop
+	chance of 10%:
+		set {_ch} to random integer between 1 and 4
+		if {_ch} is 1:
+			set {_item} to getItem("treehelm")
+			drop {_item}
+		if {_ch} is 2:
+			set {_item} to getItem("treechest")
+			drop {_item}
+		if {_ch} is 3:
+			set {_item} to getItem("treelegs")
+			drop {_item}
+		if {_ch} is 4:
+			set {_item} to getItem("treeboots")
+			drop {_item}
+			
+on death:
+	victim's display name is "&8[3] &7Skeleton Warrior"
+	cancel drops
+	drop a experience bottle named "&aXPSW"
+	chance of 15%:
+		drop a cobblestone named "&7Skeleton Stone"
+	chance of 10%:
+		set {_i} to getItem("brokenknightsdagger")
+		drop {_i}
+	chance of 10%:
+		set {_i} to getItem("brokenknightsaxe")
+		drop {_i}
+	chance of 10%:
+		set {_ch} to random integer between 1 and 4
+		if {_ch} is 1:
+			set {_item} to getItem("skelhelm")
+			drop {_item}
+		if {_ch} is 2:
+			set {_item} to getItem("skelchest")
+			drop {_item}
+		if {_ch} is 3:
+			set {_item} to getItem("skellegs")
+			drop {_item}
+		if {_ch} is 4:
+			set {_item} to getItem("skelboots")
+			drop {_item}
+
+on death:
+	victim's display name is "&8[8] &7Undead Miner"
+	cancel drops
+	drop a experience bottle named "&aXPUM"
+	chance of 8%:
+		set {_item} to getItem("stonestaff")
+		drop {_item}
+	
+
+on death:
+	victim's display name is "&8[12] &6Blazin Boi"
+	cancel drops
+	#drawDot count 5, particle smoke, XYZ .5, .5, .5, center victim, visibleRange 50, keepFor 10 tick
+	particle(smoke, 5, 0.5, 0.5, 0.5, victim)
+	drop a experience bottle named "&aXPBB"
+	chance of 5%:
+		set {_item} to getItem("blazewand")
+		drop {_item}
+	chance of 10%:
+		set {_ch} to random integer between 1 and 4
+		if {_ch} is 1:
+			set {_item} to getItem("molthelm")
+			drop {_item}
+		if {_ch} is 2:
+			set {_item} to getItem("moltchest")
+			drop {_item}
+		if {_ch} is 3:
+			set {_item} to getItem("moltlegs")
+			drop {_item}
+		if {_ch} is 4:
+			set {_item} to getItem("moltboots")
+			drop {_item}
+
+on death:
+	victim's display name is "&7[25] &8Shade"
+	cancel drops
+	drop a experience bottle named "&aXPSHA"
+	chance of 1%:
+		set {_item} to getItem("shadowstaff")
+		drop {_item}
+	chance of 5%:
+		drop a black dye named "&8Shadow Essence" with lore "&7Can be used to buy a shadow key at the dungeon shop!" and "&cUndupable"
+		
+		
+on death:
+	victim's display name is "&8[50] &6Alien"
+	cancel drops
+	drop a experience bottle named "&aXPALI"
+	chance of 2%:
+		set {_item} to getItem("explosivewanddrop")
+		drop {_item}
+	chance of 5%:
+		drop a green dye named "&2Alien Essence" with lore "&7Can be used to buy a moon key at the dungeon shop!" and "&cUndupable"
+		
+		

@@ -1,0 +1,31 @@
+on join:
+	loop items in player's inventory:
+		if checkForIllegal(loop-item) is true:
+			set loop-item to air
+			send "&cYou had an illegal item in your inventory, so it was deleted!"
+			
+on inventory open:
+	loop items in player's current inventory:
+		if checkForIllegal(loop-item) is true:
+			set loop-item to air
+			send "&cYou had an illegal item in your inventory, so it was deleted!"
+			
+on inventory click:
+	if checkForIllegal(event-item) is true:
+		send "&cYou had an illegal item in your inventory, so it was deleted!"
+		set {_s} to index of event-item
+		set slot {_s} of player's current inventory to air
+			
+			
+function checkForIllegal(i: item) :: boolean:
+	if "%{_i}'s lore%" contains "&7[Ability: Laser]":
+		return true
+	if {_i}'s name is "&dCreative Mind":
+		return true
+	if {_i}'s name is "&aXPSH":
+		return true
+	return false
+	
+function listobjects(p: player):
+	loop items in {_p}'s inventory:
+		debug(%(index of loop-item)%)

@@ -1,0 +1,108 @@
+on left click with flint and steel:
+
+
+	line 1 of player's tool's lore starts with "&7Left click to shoot a flare,"
+	cancel event
+	
+	
+	
+	if "%event-item's lore%" does not contain "&eOwner:":
+		send "&cThis item is not ownership tagged and cannot be used!"
+		stop
+	if "%event-item's lore%" does not contain "&f%player%":
+		send "&cYou do not own this item! This is to prevent boosting of this item."
+		stop
+		
+		
+		
+	if lvl(player) is less than 12:
+		send "&cYou must have at least combat 12 to use this item!"
+		stop
+	cancel event
+
+	if {mana::%player%} is less than 5:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		modifyMana(player, 4)
+	set {_loc} to location 1.6 meters above location of player
+	#drawDot count 1, particle soul, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	set {_loc} to location 1.5 meters above location of player
+	play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players
+	play sound "minecraft:block.lava.extinguish" with volume 1 and pitch 0.5 at {_loc} for all players
+	#drawDot count 5, particle totem, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	loop 40 times:
+		if {_dontshoot} is set:
+			stop
+		set {_loc} to location 1 meter in front of {_loc}
+		drawDot count 1, particle flame, XYZ 0, 0.02, 0, center {_loc}, visibleRange 50, keepFor 1 tick
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			if loop-entity is not a player:
+				ignite loop-entity for 15 seconds
+			if loop-entity is a player:
+				loop-entity's world is not "ul_rpg"
+				loop-entity's time played is more than 5 minutes
+				ignite loop-entity for 15 seconds
+			calculateArmor(7, loop-entity, player)
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+		wait 1 tick
+		
+on right click with flint and steel:
+
+	line 1 of player's tool's lore starts with "&7Left click to shoot a flare,"
+	"%player's tool's lore %" does not contain "&7[Ability"
+	cancel event
+
+
+
+	if "%event-item's lore%" does not contain "&eOwner:":
+		send "&cThis item is not ownership tagged and cannot be used!"
+		stop
+	if "%event-item's lore%" does not contain "&f%player%":
+		send "&cYou do not own this item! This is to prevent boosting of this item."
+		stop
+		
+		
+		
+		
+
+	if lvl(player) is less than 12:
+		send "&cYou must have at least combat 12 to use this item!"
+		stop
+	cancel event
+
+	if {mana::%player%} is less than 1:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	if player's gamemode is not creative:
+		modifyMana(player, 1)
+	set {_loc} to location 1.6 meters above location of player
+	#drawDot count 1, particle soul, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	set {_loc} to location 1.5 meters above location of player
+	#play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players
+	play sound "minecraft:block.lava.extinguish" with volume 3 and pitch 2 at {_loc} for all players
+	#drawDot count 5, particle totem, XYZ .25, .25, .25, center {_loc}, visibleRange 50, keepFor 1 tick
+	loop 7 times:
+		if {_dontshoot} is set:
+			stop
+		set {_loc} to location 1 meter in front of {_loc}
+		drawDot count 5, particle flame, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			if loop-entity is not a player:
+				ignite loop-entity for 5 seconds
+			if loop-entity is a player:
+				loop-entity's world is not "ul_rpg"
+				loop-entity's time played is more than 5 minutes
+				ignite loop-entity for 5 seconds
+			calculateArmor(3, loop-entity, player)
+			setDmgTicks(loop-entity, 5)
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+		

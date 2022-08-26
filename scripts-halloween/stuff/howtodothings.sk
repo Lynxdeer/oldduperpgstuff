@@ -1,0 +1,24 @@
+command /howtogetstuff [<text>]:
+	trigger:
+		send "&aTo get a stone staff, kill undead miners in the cave (level 8)"
+		send "&aTo get a blaze wand, kill blazin bois in the volcano (level 12)"
+		send "&aTo get a shadow staff, kill shades in the shadow realm (level 25)"
+		send "&aTo get an explosive wand, kill aliens on the moon (level 50)"
+		
+command /dupeip [<text>]:
+	trigger:
+		send "&eThis command does literally nothing its just a maxbans command, you can ignore it"
+		
+command /droptables [<text>]:
+	trigger:
+		send "&3Drop tables:"
+		send "15%%: rotten wood, skeleton stone"
+		send "8%%: stone staff"
+		send "5%%: blaze wand, shadow essence, alien essence"
+		send "1%%: shadow staff"
+		send "2%%: explosive wand"
+		
+command /whatdoidowithmoney [<text>]:
+	aliases: /whatcanidowithmoney
+	trigger:
+		send "&eYou can use money to buy abilities at the ability tables at the &6Volcano (Level 12) &eor the &6Moon (Level 50) &eor spawn a magma boss at the &6Volcano (Level 12)"

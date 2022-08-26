@@ -1,0 +1,250 @@
+on load:
+	set {place.spawn} to location(0, 150, 0, world "ul_void")
+	set {place.forestwarp} to location(0, 100, 0, world "ul_void")
+	set {place.forest} to location(0, 101, 0, world "ul_rpg")
+	set {place.castlewarp} to location(-17, 100, 53, world "ul_rpg")
+	set {place.castle} to location(0, 101, 250, world "ul_rpg", 90, 0)
+	set {place.cavewarp} to location(-91, 95, 263, world "ul_rpg")
+	set {place.cave} to location(0.0, 125, 500.0, world "ul_rpg")
+	set {place.volcanowarp} to location(-30, 58, 521, world "ul_rpg")
+	set {place.volcano} to location(0.0, 100, 1000.0, world "ul_rpg")
+	set {place.swordstone} to location(0.0, 100, 1037.0, world "ul_rpg")
+	set {place.magmaboss} to location(-21.5, 101, 976.5, world "ul_rpg")
+	set {place.shadowwarp} to location(-24, 13, 501, world "ul_rpg")
+	set {place.shadowwarp2} to location(9, 92, 1023, world "ul_rpg")
+	set {place.shadow} to location(0.0, 100, 750, world "ul_rpg")
+	set {place.moonwarp} to location(-23, 101, 741, world "ul_rpg")
+	set {place.moon} to location(-60, 100, 1445, world "ul_rpg")
+	set {place.abilitiesvolcano} to location(32, 100, 1004, world "ul_rpg")
+	set {place.abilitiesmoon} to location(-23, 98, 1467, world "ul_rpg")
+	set {place.abilitiesforest} to location(-23, 99, -1, world "ul_rpg")
+	set {place.event} to location(0, 100, 0, world "ul_event")
+	
+	set {place.dungeon} to location(500, 100, 250, world "ul_rpg")
+	
+
+on skript start:
+	reload script "stuff/warps"
+
+on rightclick:
+	if distance between {place.forestwarp} and clicked block is less than 2:
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use warps in combat!"
+			stop
+		cancel event
+		send "&aWarped to &2Forest."
+		teleport player to {place.forest}
+		send title "&2Forest" to player for 1 second
+		wait 1 second
+		note(player, "flute", 10)
+		note(player, "flute", 22)
+		wait 2 ticks
+			
+		note(player, "flute", 24)
+		note(player, "bass", 24)
+		wait 2 tick
+			
+		note(player, "flute", 22)
+		note(player, "bass", 22)
+		wait 2 ticks
+			
+		note(player, "flute", 17)
+		note(player, "flute", 17)
+		wait 7 ticks
+			
+		note(player, "bass", 24)
+		wait 4 ticks
+			
+		note(player, "bass", 22)
+		wait 4 ticks
+			
+		note(player, "bass", 17)
+		wait 4 ticks
+		stop
+			
+	if distance between {place.castlewarp} and clicked block is less than 2:
+	
+		if {lvl::%player%} is not set:
+			send "&cYou do not have the level requirement to use this warp!"
+			stop
+
+		if  {lvl::%player%} is less than 3:
+			if player has the permission "warps.bypass":
+				send "Normally you would need more levels to use this warp, but you bypass it!"
+				teleport player to {place.castle}
+				stop
+
+			send "&cYou do not have the level requirement to use this warp!"
+			stop
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use warps in combat!"
+			stop
+		cancel event
+		send "&aWarped to &6Castle."
+		teleport player to {place.castle}
+
+	if distance between {place.cavewarp} and clicked block is less than 2:
+
+		if  {lvl::%player%} is less than 8:
+			if player has the permission "warps.bypass":
+				send "Normally you would need more levels to use this warp, but you bypass it!"
+				teleport player to {place.cave}
+				stop
+			send "&cYou do not have the level requirement to use this warp!"
+			stop
+
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use warps in combat!"
+			stop
+		cancel event
+		send "&aWarped to &7Cave."
+		teleport player to {place.cave}
+
+	if distance between {place.volcanowarp} and clicked block is less than 2:
+
+		if {lvl::%player%} is less than 12:
+			if player has the permission "warps.bypass":
+				send "Normally you would need more levels to use this warp, but you bypass it!"
+				teleport player to {place.volcano}
+				stop
+			send "&cYou do not have the level requirement to use this warp!"
+			stop
+
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use warps in combat!"
+			stop
+		cancel event
+		send "&aWarped to &cVolcano."
+		teleport player to {place.volcano}
+		
+	if distance between {place.swordstone} and clicked block is less than 2:
+
+		if {lvl::%player%} is less than 100:
+			send "&cYou are not strong enough to pull the sword out..."
+			stop
+		send "&aYou pulled out the sword!"
+		give player iron sword named "&dThe Sword in the Stone" with nbt "%{givenbt}%" with lore "&7doesn't actually do anything yet lol" and "&7have fun with your cosmetic item" and "&eOwner: &f%player%"
+
+
+
+
+
+	if distance between {place.shadowwarp} and clicked block is less than 2:
+
+		if lvl(player) is less than 25:
+			if player has the permission "warps.bypass":
+				send "Normally you would need more levels to use this warp, but you bypass it!"
+				apply blindness 2 without particles to player for 999 days
+				teleport player to {place.shadow}
+				stop
+			send "&cYou do not have the level requirement to use this warp!"
+			stop
+
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use warps in combat!"
+			stop
+		cancel event
+		send "&aWarped to &8The shadow realm."
+		teleport player to {place.shadow}
+		apply blindness 2 without particles to player for 999 days
+		
+	if distance between {place.shadowwarp2} and clicked block is less than 2:
+
+		if lvl(player) is less than 25:
+			if player has the permission "warps.bypass":
+				send "Normally you would need more levels to use this warp, but you bypass it!"
+				apply blindness 2 without particles to player for 999 days
+				teleport player to {place.shadow}
+				stop
+			send "&cYou do not have the level requirement to use this warp!"
+			stop
+
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use warps in combat!"
+			stop
+		cancel event
+		send "&aWarped to &8The shadow realm."
+		teleport player to {place.shadow}
+		apply blindness 2 without particles to player for 999 days
+
+
+
+
+
+	if distance between {place.moonwarp} and clicked block is less than 2:
+
+		if {lvl::%player%} is less than 50:
+			if player has the permission "warps.bypass":
+				send "Normally you would need more levels to use this warp, but you bypass it!"	
+				remove blindness from the player
+				apply night vision 2 without particles to player for 999 days
+				teleport player to {place.space}
+				stop
+			send "&cYou do not have the level requirement to use this warp!"
+			stop
+
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use warps in combat!"
+			stop
+		cancel event
+		send "&aWarped to &fMoon"
+		teleport player to {place.moon}
+		remove blindness from the player
+		apply night vision 2 without particles to player for 999 days
+		
+
+	if distance between {place.abilitiesmoon} and clicked block is less than 2:
+		cancel event
+		
+		if "%player's tool's lore%" contains "&7[Ability:":
+			send "&cYou already have an ability on this item!"
+			stop
+		
+		if player's tool is air:
+			send "&cHold an item to add an ability to!"
+			stop
+		send "&3Click to select an ability!"
+		set {_gui} to createGui("abilitymoon")
+		open {_gui} to player
+		
+	if distance between {place.abilitiesvolcano} and clicked block is less than 2:
+		cancel event
+		
+		if "%player's tool's lore%" contains "&7[Ability:":
+			send "&cYou already have an ability on this item!"
+			stop
+		
+		if player's tool is air:
+			send "&cHold an item to add an ability to!"
+			stop
+		send "&3Click to select an ability!"
+		set {_gui} to createGui("abilityvolcano")
+		open {_gui} to player
+	
+	if distance between {place.abilitiesforest} and clicked block is less than 2:
+		cancel event
+		
+		if "%player's tool's lore%" contains "&7[Ability:":
+			send "&cYou already have an ability on this item!"
+			stop
+		
+		if player's tool is air:
+			send "&cHold an item to add an ability to!"
+			stop
+		send "&3Click to select an ability!"
+		set {_gui} to createGui("abilityforest")
+		open {_gui} to player
+
+
+on resurrect attempt:
+	"%region at player%" contains "shadow"
+	wait 5 ticks
+	"%region at player%" contains "shadow"
+	apply blindness 2 without particles to player for 999 days
+
+on command "spawn":
+	remove blindness from the player
+
+on region exit:
+	event-region contains "shadow"
+	remove blindness from the player

@@ -1,0 +1,60 @@
+import:
+	org.bukkit.entity.HumanEntity
+
+on load:
+	set {dungeon.shop} to location(484, 100, 266, world "ul_rpg")
+	set {dungeon.forestwarp} to location(500, 102, 283, world "ul_rpg")
+	set {dungeon.forest} to location(1000, 100, 250, world "ul_rpg")
+	set {dungeon.forestkeeper} to location(998, 105, 301, world "ul_rpg")
+	set {dungeon.forestspawner} to location(1000, 104, 316, world "ul_rpg")
+	set {dungeon.forestdoor} to location(1004, 103, 365, world "ul_rpg")
+	set {dungeon.forestboss} to location(1001, 80, 423, world "ul_rpg")
+	
+	set {dungeon.castlewarp} to location(462, 95, 250, world "ul_rpg")
+	set {dungeon.castle} to location(2000, 101, 250, world "ul_rpg")
+	set {dungeon.castlekeeper} to location(1995, 97, 286, world "ul_rpg")
+	set {dungeon.castlespawner} to location(1993, 95, 296, world "ul_rpg")
+	set {dungeon.castledoor} to location(1993, 94, 343, world "ul_rpg")
+	set {dungeon.castleboss} to location(2017, 118, 426, world "ul_rpg")
+	
+	set {dungeon.shadowwarp} to location(500, 93, 229, world "ul_rpg")
+	set {dungeon.shadow} to location(3000, 101, 250, world "ul_rpg")
+	set {dungeon.shadow}'s yaw to -180
+	set {dungeon.shadowkeeper} to location(3003, 98, 209, world "ul_rpg")
+	set {dungeon.shadowspawner} to location(3007, 100, 169, world "ul_rpg")
+	set {dungeon.shadowboss} to location(3003, 80, -49, world "ul_rpg")
+		
+on place:
+	if line 1 of player's tool's lore contains "&7Opens the &2Forest Dungeon&7.":
+		cancel event
+	if line 1 of player's offhand tool's lore contains "&7Opens the &2Forest Dungeon&7.":
+		cancel event
+	if line 1 of player's tool's lore contains "&7Opens the &7Castle Dungeon&7.":
+		cancel event
+	if line 1 of player's offhand tool's lore contains "&7Opens the &7Castle Dungeon&7.":
+		cancel event
+
+on skript start:
+	reload script "custom/dungeons"
+	
+function dungeonTeleportBack(p: player):
+	wait 15 seconds
+	teleport {_p} to {place.dungeon}
+	send "&aYou have been teleported back to the dungeon spawn!" to {_p}
+		
+on toggling gliding:
+	"%region at player%" contains "dungeon"
+	send "&cSorry, no elytras in dungeons"
+	cancel event
+	
+on command:
+	"%region at player%" contains "dungeon"
+	command starts with "tpa" or "home" or "sethome" or "delhome" or "spawn" or "gotostaffbase"
+	send "&cPlease finish your dungeon before doing this!"
+	cancel event
+		
+on death:
+	victim's display name is "&6Helpless Zamboe" or "&4Possessed Zamboe"
+	clear drops
+		
+		

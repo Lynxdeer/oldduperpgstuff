@@ -1,0 +1,174 @@
+on join:
+	delete {-nonpc::%player%}
+
+command /fixnpcs [<text>]:
+	trigger:
+		send "&aFixed your npcs."
+		delete {-nonpc::%player%}
+
+on command "npcresp id003 p00":
+	cancel event
+	{-nonpc::%player%} is not true
+	set {-nonpc::%player%} to true
+	if {q+duck::%player%} is 1:
+		delete {-nonpc::%player%}
+		loop items in player's inventory:
+			loop-item's name is "&5Grapes"
+			remove 1 of loop-item from player's inventory
+			send ""
+			send "&eLemonade Seller: Ah, thanks. Hey orange bill, I got you some grapes! Can you &oplease &ego away now?"
+			send "&7Press [SHIFT] to continue"
+			send ""
+			apply slowness 7 without particles to player for 999 days
+			apply jump boost 150 without particles to player for 999 days
+			while player is not sneaking:
+				if player is not online:
+					stop loop
+				wait 2 ticks
+				send action bar "&7[Press SHIFT to continue]" to player
+			play sound "block.lava.pop" with pitch 2 to player
+			remove slowness from the player
+			remove jump boost from the player
+			wait 0.5 seconds
+			
+			send ""
+			send "&6Duck: *munch munch* No thanks."
+			send "&7Press [SHIFT] to continue"
+			send ""
+			apply slowness 7 without particles to player for 999 days
+			apply jump boost 150 without particles to player for 999 days
+			while player is not sneaking:
+				if player is not online:
+					stop loop
+				wait 2 ticks
+				send action bar "&7[Press SHIFT to continue]" to player
+			play sound "block.lava.pop" with pitch 2 to player
+			remove slowness from the player
+			remove jump boost from the player
+			wait 0.5 seconds
+			
+			send ""
+			send "&eLemonade Seller: Well, I tried. Thanks for your help, %player%&e."
+			send "&7Press [SHIFT] to continue"
+			send ""
+			apply slowness 7 without particles to player for 999 days
+			apply jump boost 150 without particles to player for 999 days
+			while player is not sneaking:
+				if player is not online:
+					stop loop
+				wait 2 ticks
+				send action bar "&7[Press SHIFT to continue]" to player
+			play sound "block.lava.pop" with pitch 2 to player
+			remove slowness from the player
+			remove jump boost from the player
+			wait 0.5 seconds
+			play sound "minecraft:entity.player.levelup" with volume 3 and pitch 2 for player
+			send ""
+			send "&d&lQUEST COMPLETE!"
+			send "&3+ 300 XP"
+			send ""
+			set {q+duck::%player%} to 2
+			add 300 to {xp::%player%}
+			stop
+			
+			
+		send ""
+		send "&7Quest: Purchase Grapes from the Grape Store"
+		send "&7[X 910 &8|&7 Z 1024]"
+		send ""
+		stop
+	if {q+duck::%player%} is 2:
+		send "&7You have already completed this quest!"
+		delete {-nonpc::%player%}
+		stop
+	send ""
+	send "&eLemonade Seller: I'm telling you, I do not have any grapes!"
+	send "&7Press [SHIFT] to continue"
+	send ""
+	apply slowness 7 without particles to player for 999 days
+	apply jump boost 150 without particles to player for 999 days
+	while player is not sneaking:
+		if player is not online:
+			stop loop
+		wait 2 ticks
+		send action bar "&7[Press SHIFT to continue]" to player
+	play sound "block.lava.pop" with pitch 2 to player
+	remove slowness from the player
+	remove jump boost from the player
+	wait 0.5 seconds
+	
+	
+	send ""
+	send "&6Duck: Hey! Got any grapes?"
+	send "&7Press [SHIFT] to continue"
+	send ""
+	apply slowness 7 without particles to player for 999 days
+	apply jump boost 150 without particles to player for 999 days
+	while player is not sneaking:
+		if player is not online:
+			stop loop
+		wait 2 ticks
+		send action bar "&7[Press SHIFT to continue]" to player
+	play sound "block.lava.pop" with pitch 2 to player
+	remove slowness from the player
+	remove jump boost from the player
+	wait 0.5 seconds
+	
+	
+	send ""
+	send "&eLemonade Seller: YOU'VE BEEN HERE FOR THREE HOURS! FOR THE LAST TIME, I DO NOT HAVE GRAPES!"
+	send "&7Press [SHIFT] to continue"
+	send ""
+	apply slowness 7 without particles to player for 999 days
+	apply jump boost 150 without particles to player for 999 days
+	while player is not sneaking:
+		if player is not online:
+			stop loop
+		wait 2 ticks
+		send action bar "&7[Press SHIFT to continue]" to player
+	play sound "block.lava.pop" with pitch 2 to player
+	remove slowness from the player
+	remove jump boost from the player
+	wait 0.5 seconds
+	
+	
+	send ""
+	send "&6Duck: What are you gonna do, glue me to a tree?"
+	send "&7Press [SHIFT] to continue"
+	send ""
+	apply slowness 7 without particles to player for 999 days
+	apply jump boost 150 without particles to player for 999 days
+	while player is not sneaking:
+		if player is not online:
+			stop loop
+		wait 2 ticks
+		send action bar "&7[Press SHIFT to continue]" to player
+	play sound "block.lava.pop" with pitch 2 to player
+	remove slowness from the player
+	remove jump boost from the player
+	wait 0.5 seconds
+	
+	
+	send ""
+	send "&eLemonade Seller: *sigh* Hey you there, %player%&e, can you run to the grape store real quick and buy some grapes?"
+	send "&7Press [SHIFT] to continue"
+	send ""
+	apply slowness 7 without particles to player for 999 days
+	apply jump boost 150 without particles to player for 999 days
+	while player is not sneaking:
+		if player is not online:
+			stop loop
+		wait 2 ticks
+		send action bar "&7[Press SHIFT to continue]" to player
+	play sound "block.lava.pop" with pitch 2 to player
+	remove slowness from the player
+	remove jump boost from the player
+	wait 0.5 seconds
+	send ""
+	send "&7Quest: Purchase Grapes from the Grape Store"
+	send "&7[X 910 &8|&7 Z 1024]"
+	send ""
+	delete {-nonpc::%player%}
+	set {q+duck::%player%} to 1
+	send "&a+ $5"
+	add 5 to {bal::%player%}

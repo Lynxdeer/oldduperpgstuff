@@ -1,0 +1,105 @@
+on load:
+	set {givenbt} to "{HideFlags:126,Unbreakable:1,CustomModelData:1,AttributeModifiers:[{AttributeName:""generic.attack_speed"",Amount:100,Slot:mainhand,Name:""generic.attack_speed"",UUID:[I;-121620,21630,111310,-43260]}]}"
+
+command /cgive <text>:
+	usage: &cInvalid Usage! Usage: /cgive (item | list)
+	permission: *
+	permission message: &cNo.
+	trigger:
+
+		if player is not "Lynxdeer":
+			send "&cno you suck"
+			strike lightning effect at player
+			damage the player by 1
+			ignite the player for 3 second
+			stop
+		give player getItem(arg-1)
+
+function getItem(i: text) :: item:
+	if {_i} is "fireworkwand":
+		return diamond shovel named "&9Firework Wand" with lore "&7Shoots Fireworks. &3[2 Mana]" with nbt "%{givenbt}%"
+		stop
+
+	if {_i} is "oakwand":
+		return stick named "&6Oak Wand" with lore "&7Shoots 1 beam with high range. &3[1 Mana]" with nbt "%{givenbt}%"
+		stop
+	
+	if {_i} is "blazewand":
+		return blaze rod named "&6Blaze Wand" with lore "&7oh crap im on fire &3[2 Mana]" and "&cRequires Combat 12" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "flamethrower":
+		return flint and steel named "&6&lFlamethrower" with lore "&7Left click to shoot a flare," and "&7Right click to shoot a stream of fire! " and "&3[L: 5 Mana &8| &3R: 1 Mana]" and "&cRequires Combat 12" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "flamethrowerdrop":
+		return flint and steel named "&6&lFlamethrower" with lore "&7Left click to shoot a flare," and "&7Right click to shoot a stream of fire! " and "&3[L: 5 Mana &8| &3R: 1 Mana]" and "&cRequires Combat 12" and "ownerpickup" with nbt "%{givenbt}%"
+		stop
+
+	if {_i} is "oakstaff":
+		return wooden shovel named "&6Oak Staff" with lore "&7Shoots multiple beams with low range. &3[1 Mana]" with nbt "%{givenbt}%"
+		stop
+
+	if {_i} is "stonestaff":
+		return stone shovel named "&6Stone Staff" with lore "&7New and improved! &3[2 Mana]" and "&cRequires Combat 8" with nbt "%{givenbt}%"
+		stop
+
+	if {_i} is "shadowstaff":
+		return netherite shovel named "&8Shadow Staff" with lore "&7Draws energy from the shadow realm! &3[3 Mana]" and "&cRequires Combat 25" with nbt "%{givenbt}%"
+		stop
+	
+	if {_i} is "snowspraystaff":
+		return iron shovel named "&f&lSnow Spray Staff" with lore "&7It's snow-time. &3[6 Mana]" and "&b+ Freezing:" and "&b| Victims have slowness for 3 seconds" and "&cRequires Combat 75" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "explosivewand":
+		return tripwire hook named "&6Explosive Wand" with lore "&7Demoman 2.0 &3[5 Mana]" and "&cRequires Combat 50" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "explosivewanddrop":
+		return tripwire hook named "&6Explosive Wand" with lore "&7Demoman 2.0 &3[5 Mana]" and "&cRequires Combat 50" and "ownerpickup" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_forest":
+		return tripwire hook named "&2Forest Dungeon Key" with lore "&7Opens the &2Forest Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_castle":
+		return tripwire hook named "&7Castle Dungeon Key" with lore "&7Opens the &7Castle Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_shadow":
+		return tripwire hook named "&8Shadow Dungeon Key" with lore "&7Opens the &8Shadow Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "dkey_moon":
+		return tripwire hook named "&6Moon Dungeon Key" with lore "&7Opens the &6Moon Dungeon&7." and "&cUndupable" with nbt "%{givenbt}%"
+		stop
+		
+	if {_i} is "beer":
+		set {_i1} to potion named "&6Beer" with lore "&7burp"
+		return {_i1}
+		
+	if {_i} is "treehelm":
+		set {_i1} to leather helmet named "&2Helmet of the Trees" with lore "&7Provides some basic protection." with nbt "%{givenbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+	if {_i} is "treechest":
+		set {_i1} to leather chestplate named "&2Tunic of the Trees" with lore "&7Provides some basic protection." with nbt "%{givenbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+	if {_i} is "treelegs":
+		set {_i1} to leather leggings named "&2Leggings of the Trees" with lore "&7Provides some basic protection." with nbt "%{givenbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+	if {_i} is "treeboots":
+		set {_i1} to leather boots named "&2Shoes of the Trees" with lore "&7Provides some basic protection." with nbt "%{givenbt}%"
+		dye {_i1} green
+		return {_i1}
+		
+
+	return bedrock named "&cInvalid Id" with lore "&7Id returned was ""%{_i}%&7"" " and "&7Not a bug, you may throw this item away," and "&7no need to pester lynx"
+	

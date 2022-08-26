@@ -1,0 +1,34 @@
+on left click with netherite hoe:
+	"%player's tool's lore%" contains "&7will exterminate everything (lynx only)"
+	cancel event
+	if player is not "Lynxdeer":
+		send "&cYou must have at least combat 99999999999999999999999999999999 to use this item!"
+		stop
+	cancel event
+
+	set {_loc} to location 1.5 meters above location of player
+	play sound "entity.blaze.shoot" with volume 1 and pitch 2 at {_loc} for all players where [input's world is player's world]
+	play sound "minecraft:entity.wither.break_block" with volume 1 and pitch 1.5 at {_loc} for all players where [input's world is player's world]
+	loop 80 times:
+		set {_loc} to location 1 meter in front of {_loc}
+		#drawDot count 1, particle totem, XYZ 0, 0.02, 0, center {_loc}, visibleRange 50, keepFor 1 tick
+		particle(totem_of_undying, 1, 0, 0, 0, {_loc})
+		loop entities in radius 8 around {_loc}:
+			loop-entity is not the player
+			#loop-entity is not a player
+			if loop-entity is not a player:
+				kill the loop-entity
+			loop-entity is a player
+			loop-entity's world is not "ul_rpg"
+			kill the loop-entity
+			
+
+on rightclick with netherite hoe:
+	"%player's tool's lore%" contains "&7will exterminate everything (lynx only)"
+	cancel event
+	if player is not "Lynxdeer":
+		send "&cYou must have at least combat 99999999999999999999999999999999 to use this item!"
+		stop
+	cancel event
+	loop entities in radius 10 around player:
+		send "%loop-entity's display name%: %loop-entity's health%/%loop-entity's max health%"

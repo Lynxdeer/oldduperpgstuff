@@ -1,0 +1,153 @@
+command /auction [<text>]:
+	aliases: /ah
+	permission: *
+	permission message: &cThe auction is under development!
+	trigger:
+		set {_gui} to chest inventory with 6 rows named "ᴛʀᴀᴅᴇ ᴍᴀʀᴋᴇᴛ"
+		set {_slot} to 45
+		
+		loop 9 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+			
+		set {_slot} to 0
+		loop 46 times:
+			{_slot} is less than 45
+			#set {_slotp} to ({_i} + 1) * 44 + {_slot}
+			#send "%{_i}% | %{_slot}% | %{_slotp}% %slot {_slot} of player's current inventory%"
+			set {_item} to {ah::%{_slot}%}
+			#{ah::%{_slot}%} is set
+			
+			set {_a::*} to {_item}'s lore
+			set {_l} to size of {_a::*}
+			set {_ahpt::*} to {ahp::%{_slot}%} split at ";;" 
+			set line ({_l} + 1) of {_item}'s lore to "&0%{_slot}%"
+			set line ({_l} + 2) of {_item}'s lore to "&3Price: &f%{_ahpt::1}%"
+			set line ({_l} + 3) of {_item}'s lore to "&3Seller: &f%{_ahpt::2}%"
+			#send "(debug) %{_item}'s lore%"
+				
+			set slot ({_slot} - 1) of {_gui} to {_item}
+			add 1 to {_slot}
+			delete {_item}
+		open {_gui} to player
+		stop
+		
+		
+on inventory click:
+	name of player's current inventory is "ᴛʀᴀᴅᴇ ᴍᴀʀᴋᴇᴛ"
+	cancel event
+	event-item's name is not "&0"
+	event-item is set
+	event-item is not air
+	set {_item} to event-item
+	#send "%size of {_lore::*}% %{_lore::*}%"
+	delete line {_index} of lore of {_item}
+	
+	set {_a::*} to event-item's lore
+	set {_l} to size of {_a::*}
+	set {_itg} to uncolored line ({_l} - 2) of {_item}'s lore
+	replace first "&0" in {_itg} with ""
+	replace first "&&0" in {_itg} with ""
+	set {_itg} to {_itg} parsed as integer
+	#send "%{_itg}% | %line ({_l} - 2) of {_item}'s lore% | %{_item}'s lore%"
+	#send "%{_l}%"
+	close inventory for player
+	send ""
+	send "&eConfirm purchase of ""%event-item%&e""?"
+	send formatted "&6<tooltip:&6Click to confirm purchase!><cmd:/leauctionbuyitem %{_itg}%>[Click to Confirm]<reset>"
+	send "" # LEFTOFF
+	
+	
+on command "leauctionbuyitem":
+	cancel event
+	set {_itemid} to complete command
+	replace first "leauctionbuyitem" in {_itemid} with ""
+	set {_itemid} to {_itemid} parsed as number
+	
+	set {_ahpt::*} to {ahp::%{_itemid}%} split at ";;" 
+	remove {_ahpt::1} from {bal::%player%}
+	send "&a%player% &abought your item for $%{_ahpt::1}%&a!" to {_ahpt::2} parsed as offlineplayer
+	send "&aPurchased!"
+	
+	give {ah::%{_itemid}%} to {_p}
+	delete {ah::%{_itemid}%}
+	delete {ahp::%{_itemid}%}
+	paginateAuction()
+	
+	
+	
+			
+			
+command /ahsell [<integer>] [<text>]:
+	permission: op
+	permission message: &cUnder Maintenance!
+	trigger:
+		if player's tool is air:
+			send "&cHold something to sell!"
+			stop
+		if "%player's tool's lore%" contains "&eOwner":
+			send "&cThis item is ownership tagged and cannot be sold!"
+			stop
+		if arg-1 is not set:
+			send "&cPlease name a price!"
+			stop
+		if arg-1 is less than 100:
+			send "&cYou cannot sell an item for this cheap! ($100 minimum)"
+			stop
+		if arg-1 is more than 250000:
+			send "&cYou cannot sell this item for this expensive ($250,000 maximum)"
+			stop
+		add player's tool to {ah::*}
+		add "%arg-1%;;%player%" to {ahp::*}
+		#send "%last element of {ah::*}% &8| %last element of {ahp::*}%"
+		send "&aSold for $%arg-1%&a."
+		set player's tool to air
+		
+		
+function paginateAuction():
+	loop {ah::*}:
+		if loop-value is air:
+			set {_condition} to true
+		if loop-value is not set:
+			set {_condition} to true
+		if {_condition} is true:
+			delete {ah::%loop-index%}
+			delete {ahp::%loop-index%}
+			#loop {ah::*}:
+				#if loop-index-2 => loop-index-1:
+					#set {_index} to (loop-index-2 - 1)             *sigh* please help me, idek, I dont understand anything
+					#set {ah::%loop-index-1%} to {ah::%{_index}%}   this is too complicated for my 3 brain cells to handle
+			#loop {ahp::*}:
+				#set {ahp::%loop-index-2%} to loop-value
+			
+		
+	
+			
+
+command /paginateauction [<text>]:
+	permission: *
+	permission message: &cDebugging purposes only!
+	trigger:
+		send "&ePaginating auction."
+		execute player command "/ah"
+		paginateAuction()
+		wait 2 second
+		send "&ePaginated."
+		execute player command "/ah"
+		
+command /fillauction:
+	permission: *
+	permission message: &cno
+	trigger:
+		loop 44 times:
+			execute player command "ahsell 20"
+		execute player command "irename &apog"
+		execute player command "ahsell 15"
+			
+
+command /clearauction:
+	permission: *
+	trigger:
+		send "&eCleared Auction."
+		delete {ah::*}
+		delete {ahp::*}

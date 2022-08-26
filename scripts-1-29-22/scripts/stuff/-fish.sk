@@ -1,0 +1,6 @@
+import:
+	org.bukkit.event.player.PlayerEvent
+	
+on PlayerFishEvent:
+	if player.PlayerFishEvent.State = "CAUGHT_FISH":
+		send "&aYou caught a fish!"

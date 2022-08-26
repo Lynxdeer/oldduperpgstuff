@@ -1,0 +1,15 @@
+on rightclick:
+	"%player's tool's lore%" starts with "&7why"
+	cancel event
+	shoot an arrow from the player
+	set the name of the last shot arrow to "potato"
+	while the last shot arrow's name is "potato":
+		drop a potato named "_NOPICKUP[aaa]" at the last shot arrow
+		play sound "minecraft:entity.chicken.egg" at the last shot arrow
+		wait 2 ticks
+		delete the last dropped item
+
+on projectile hit:
+	name of the event-projectile contains "potato"
+	set the name of the event-projectile to "nope"
+	delete the event-projectile

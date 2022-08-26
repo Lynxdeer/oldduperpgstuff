@@ -1,0 +1,304 @@
+on region enter:
+	player's gamemode is not spectator		
+		
+	if "%event-region%" is "dungeonshadowfog in world ul_rpg":
+		"%region at player%" is not "dungeonshadowfog in world ul_rpg"
+		kill the player
+		fixOpenDungeons(player)
+		
+	if "%event-region%" is "dungeonshadowparkour in world ul_rpg":
+		"%region at player%" is not "dungeonshadowparkour in world ul_rpg"
+		while "%region at player%" is "dungeonshadowparkour in world ul_rpg":
+			if block below player is black stained glass:
+				kill the player
+				stop loop
+			wait 10 ticks
+		
+		# THE REGIONS 2 SKRIPT IS FOR THE SHADOW AND MOON DUNGEONS
+		# FOR FOREST AND CASTLE PLEASE SEE regions.sk
+		# The reason this exists is cause the original file was too big lmao
+		
+	if "%event-region%" is "dungeonshadowentry in world ul_rpg":
+	
+		set {_ap::*} to all players where ["%region at input%" is "dungeonshadowentry in world ul_rpg"]
+		debug("%size of {_ap::*}%")
+		if size of {_ap::*} is more than 0:
+			debug("yep")
+			set {-sdshadeskilled} to 0
+			loop all entities where ["%region at input%" is "dungeonshadowentry in world ul_rpg"]:
+				loop-entity is a wither skeleton
+				delete the loop-entity
+		"%region at player%" is not "dungeonshadowentry in world ul_rpg"
+		remove night vision from potion effects of player
+		apply slowness 1 without particles to player for 2 seconds
+		send "&7Kill 5 Shades to progress!"
+		set {-shadowdungeon} to true
+		set {_dszm::1} to location at 3006, 100, and 172 in world "ul_rpg"
+		
+		set {_dszm::2} to location at block 10 meters behind {_dszm::1}
+		set {_dszm::2} to location 1 meter left of {_dszm::2}
+		
+		set {_dszm::3} to location at block 10 meters behind {_dszm::2}
+		set {_dszm::3} to location 1 meters right of {_dszm::3}
+		
+		set {_dszm::4} to location at block 10 meters behind {_dszm::3}
+		set {_dszm::4} to location 1 meters left of {_dszm::4}
+		
+		set {_dszm::5} to location at block 10 meters behind {_dszm::4}
+		set {_dszm::5} to location 1 meters right of {_dszm::5}
+		
+		send title "&8Kill Shades" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		loop {_dszm::*}:
+			set {_loc} to {_dszm::%loop-index%}
+			set {_next} to (loop-index parsed as integer + 1)
+			#drawDot count 25, particle witchspell, XYZ 0.6, 0.6, 0.6, center {_loc}, visibleRange 50, keepFor 0 tick
+			particleWitch(25, 0.6, 0.6, 0.6, {_loc})
+			set {_num} to loop-index parsed as integer
+			set {_v} to vector from {_num} to {_next}
+			set yaw of {_loc} to {_v}'s yaw # Used to be "vector yaw of {_v}" but that broke so changing it out
+			set pitch of {_loc} to {_v}'s pitch
+			
+			spawn a wither skeleton above {_loc}
+			set the display name of the last spawned wither skeleton to "&4Shade"
+			set the last spawned wither skeleton's max health to 50
+			set the last spawned wither skeleton's health to 50
+			apply invisibility without particles to the last spawned wither skeleton for 999 days
+			apply speed 1 without particles to the last spawned wither skeleton for 999 days
+			apply strength 12 without particles to the last spawned wither skeleton for 999 days
+			apply fire resistance 3 without particles to the last spawned wither skeleton for 999 days
+			set the chestplate of the last spawned wither skeleton to netherite chestplate
+			set the tool of the last spawned wither skeleton to air
+			
+			loop 10 times:
+				#drawDot count 3, particle witchspell, XYZ 0.2, 0.2, 0.2, center {_loc}, visibleRange 50, keepFor 0 tick
+				#drawDot count 1, particle critmagic, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+				particleWitch(3, 0.2, 0.2, 0.2, {_loc})
+				particle(enchanted_hit, 1, 0, 0, 0, {_loc})
+				set {_loc} to location 1 meter in front of {_loc}
+				wait 1 tick
+		
+	if "%event-region%" is "dungeonshadowbossentry in world ul_rpg":
+		"%region at player%" is not "dungeonshadowbossentry in world ul_rpg"
+		send "&aEntering the boss room."
+		apply blindness 5 without particles to player for 2 seconds
+		apply slowness 2 without particles to player for 2 seconds
+		teleport player to {dungeon.shadowboss}
+		send title "&8Boss Room" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.wither.spawn" with pitch 1 to player
+		loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+			player is not the loop-player
+			player's gamemode is survival
+			stop
+			
+			
+		# Enderman spawn has been moved to after the core destruction
+			
+		set {_loc} to location at 3003.5, 82, and -41.5 in world "ul_rpg"
+		set {_loc}'s yaw to 180
+		
+		wait 1 tick
+		
+		loop all entities where [input is a wither skeleton or enderman]:
+			distance between {_loc} and loop-entity is less than 33
+			kill the loop-entity
+			set {-shbossskelsleft} to 10
+			delete the loop-entity
+			
+			
+		
+		wait 2 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Yet another adventurer arrives in an attempt to eliminate me." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 3 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: I don't plan on falling today, sorry about that." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Well, it's about time you meet your match, bud. &cARISE, MINIONS OF SHADOW!" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 1 second
+		
+		# LEFTOFF: DO MINION CRAP
+		# After no minions are left, boss comes and shreks people, and the core opens so you can kill the boss
+		set {_playercount} to 0
+		loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+			add 1 to {_playercount}
+		
+		set {_loc} to location at block 3 meters in front of {_loc}
+		set {_loc} to location at block 2 meters below {_loc}
+		loop blocks in radius 8 around {_loc}:
+			loop-block is black concrete
+			loop-block's y-position is more than 78
+			block above loop-block is air
+			block 2 meters above loop-block is air
+			add location above loop-block to {_spawnloc::*}
+			
+		loop 10 times:
+			spawn a wither skeleton above {_spawnloc::%random integer between 1 and size of {_spawnloc::*}%}
+			set the last spawned wither skeleton's max health to (60 * {_playercount})
+			set the last spawned wither skeleton's health to (60 * {_playercount})
+			apply invisibility without particles to the last spawned wither skeleton for 999 days
+			apply speed 3 without particles to the last spawned wither skeleton for 999 days
+			apply strength 10 without particles to the last spawned wither skeleton for 999 days
+			apply fire resistance 3 without particles to the last spawned wither skeleton for 999 days
+			set the chestplate of the last spawned wither skeleton to netherite chestplate
+			set the tool of the last spawned wither skeleton to air
+			set the name of the last spawned wither skeleton to "&4boss shade lol"
+		set {-shbossskelsleft} to 10
+			
+		while {-shbossskelsleft} is not 0:
+			wait 25 ticks
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: I no longer feel my minions' power. I can only assume you did the worst." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: I felt a surge, the core protecting me is weakening...." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&4Shadow Captain&4: If this is how you want to play, then let's play." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			
+		wait 2 seconds
+		
+		
+		
+		set {_loc} to location at 3003.5, 82, and -41.5 in world "ul_rpg"
+		set {_loc}'s yaw to 180
+		spawn enderman at {_loc}
+		set {_sboss} to last spawned enderman
+		set artificial intelligence of the last spawned enderman to false
+		apply strength 8 without particles to the last spawned enderman for 999 days
+		apply fire resistance 3 without particles to the last spawned enderman for 999 days
+		apply speed 3 without particles to the last spawned enderman for 999 days
+		set the display name of the last spawned enderman to "&4Shadow Captain"
+		set {_sboss}'s tool to cauldron
+		
+		set {_playercount} to 0
+		loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+			add 1 to {_playercount}
+		if {_playercount} is less than 1:
+			broadcast "&dIt seems as though the shadow dungeon has broken and not detected any players! Dungeons will now be fixed. We apologize for the inconvenience. If you are currently in the dungeon, please open the chest in the middle."
+			set {_end} to true
+		{_end} is not true
+		
+		set {_sboss}'s max health to (200 * {_playercount})
+		set {_sboss}'s health to (200 * {_playercount})
+		
+		set artificial intelligence of {_sboss} to true
+		loop blocks in radius 5 around {_loc}:
+			loop-block is purple glass
+			add location at loop-block to {_purpleblocks::*}
+			set loop-block to air
+			particle(portal, 10, 2, 2, 2, loop-block)
+			particleWitch(10, 2, 2, 2, loop-block)
+			particle(dragon_breath, 10, 2, 2, 2, loop-block)
+			
+			
+		
+		wait 3 seconds
+		
+		send "&7The purple gaze of the captain's eyes turn to glare at you, spelling out something unintelligible." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 3 seconds
+		
+		loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+			loop-player's gamemode is survival
+			add loop-player to {_targets::*} #LEFTOFF: FINISH BOSS DUEL, MAKE IT REALLY HARD AND ADD PANIC ZEALOT SOUNDS
+			
+		set {_target} to {_targets::%random integer between 1 and size of {_targets::*}%}
+			
+		wait 1 second
+		loop {_purpleblocks::*}:
+			set block at loop-value to purple glass
+			
+		teleport {_sboss} to {_target}
+		damage {_target} by 2
+		loop 20 times:
+			play sound "minecraft:entity.ghast.scream" with volume 50 and pitch 1.5 at {_target} for all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			play sound "minecraft:entity.ghast.scream" with volume 50 and pitch 2 at {_target} for all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			
+			set {_sboss}'s target to {_target}
+			teleport {_sboss} to {_target}
+			damage {_target} by 2
+			
+			if {_sboss} is not alive:
+				stop loop
+			if "%region at {_target}%" does not contain "dungeonshadowbossroom":
+				remove {_target} from {_targets::*}
+				if size of {_targets::*} is less than 1:
+					delete {-shadowdungeon}
+					delete {-shadowisopened}
+				set {_target} to {_targets::%random integer between 1 and size of {_targets::*}%}
+				set {_sboss}'s target to {_target}
+				stop loop
+			
+			set {_t} to round(20 / loop-number * 4)
+			loop {_t} times:
+				wait 1 tick
+				
+		loop 10 times:
+			play sound "minecraft:entity.ghast.scream" with volume 50 and pitch 1.5 at {_target} for all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			play sound "minecraft:entity.ghast.scream" with volume 50 and pitch 2 at {_target} for all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			
+			set {_sboss}'s target to {_target}
+			teleport {_sboss} to {_target}
+			damage {_target} by 2.5
+			wait 4 tick
+			if {_sboss} is not alive:
+				stop loop
+			if "%region at {_target}%" does not contain "dungeonshadowbossroom":
+				remove {_target} from {_targets::*}
+				if size of {_targets::*} is less than 1:
+					delete {-shadowdungeon}
+					delete {-shadowisopened}
+				set {_target} to {_targets::%random integer between 1 and size of {_targets::*}%}
+				set {_sboss}'s target to {_target}
+				stop loop
+		while {_sboss} is alive:
+			play sound "minecraft:entity.ghast.scream" with volume 50 and pitch 1.5 at {_target} for all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			play sound "minecraft:entity.ghast.scream" with volume 50 and pitch 2 at {_target} for all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			
+			teleport {_sboss} to {_target}
+			wait 10 ticks
+			if {_sboss} is not alive:
+				set {_chest} to location at {_sboss}
+				kill {_sboss}
+				stop loop
+			if "%region at {_target}%" does not contain "dungeonshadowbossroom":
+				remove {_target} from {_targets::*}
+				if size of {_targets::*} is less than 1:
+					delete {-shadowdungeon}
+					delete {-shadowisopened}
+				set {_target} to {_targets::%random integer between 1 and size of {_targets::*}%}
+				set {_sboss}'s target to {_target}
+		
+		if block at {_chest} is air:
+			set block at {_chest} to chest
+			particleWitch(30, 1, 1, 1, location above {_chest})
+			play sound "entity.chicken.egg" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		else if block above {_chest} is air:
+			set block at {_chest} to chest
+		else:
+			set {_chest} to location at 3003, 82, and -40 in world "ul_rpg"
+			set block at {_chest} to chest
+			
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&aShadow Captain: :(" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		

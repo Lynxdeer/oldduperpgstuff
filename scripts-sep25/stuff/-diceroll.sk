@@ -1,0 +1,35 @@
+command /diceroll [<integer>]:
+	cooldown: 1 minute
+	cooldown message: &cPlease wait %remaining time% &cto use rtd again!
+	cooldown bypass: *
+	trigger:
+		if {combatlog::%player%} is set:
+			send "&cYou cannot use this in combat!"
+			stop
+		set {_roll} to random integer between 1 and 3
+		if arg-1 is set:
+			set {_roll} to arg-1
+		send "&fYou rolled a &9%{_roll}%"
+		if {_roll} is 1:
+			send "&7You Rolled &4Explode."
+			play sound "minecraft:entity.generic.explode" with volume 5 and pitch 1 at player for all players
+			drawDot count 1, particle explosionhuge, XYZ 0.1, 0.1, 0.1, center player, visibleRange 100, keepFor 1 tick
+			kill player
+		if {_roll} is 2:
+			send "&7You Rolled &cLife Drain."
+			loop 3 times:
+				remove 5 from player's health
+				wait 11 ticks
+		if {_roll} is 3:
+			send "&7You Rolled &2Snail. &8(10 seconds)"
+			set player's walk speed to 0.05
+			apply jump boost 130 without particles to player for 10 seconds
+			wait 10 seconds
+			set player's walk speed to 0.2
+		if {_roll} is 4:
+			send "&7You Rolled &6Double Speed. &8(10 seconds)"
+			set player's walk speed to 0.4
+			apply jump boost 2 without particles to player for 10 seconds
+			wait 10 seconds
+			set player's walk speed to 0.2
+			

@@ -1,0 +1,277 @@
+function playStartMusic(p: player):
+	note({_p}, "harp", 10)
+	note({_p}, "harp", 10)
+	wait 3 ticks
+	note({_p}, "harp", 3)
+	note({_p}, "harp", 15)
+	wait 3 ticks
+	note({_p}, "harp", 8)
+	note({_p}, "harp", 20)
+	wait 3 ticks
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 13)
+	wait 3 ticks
+	note({_p}, "harp", 10)
+	note({_p}, "harp", 22)
+	wait 3 ticks
+	note({_p}, "harp", 17)
+	note({_p}, "harp", 17)
+	wait 3 ticks
+	note({_p}, "harp", 12)
+	note({_p}, "harp", 24)
+	wait 3 ticks
+	note({_p}, "harp", 19)
+	note({_p}, "harp", 19)
+	wait 3 ticks
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 13)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 20)
+	note({_p}, "harp", 20)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 6)
+	note({_p}, "bass", 6)
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 22)
+	note({_p}, "snare", 8) # 12
+	note({_p}, "snare", 18)
+	note({_p}, "snare", 13)
+	note({_p}, "hat", 18)
+	wait 6 ticks
+	
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 22)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 22)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 22)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 22)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 13)
+	note({_p}, "harp", 22)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 15)
+	note({_p}, "harp", 24)
+	note({_p}, "snare", 8)
+	note({_p}, "bass", 1)
+	wait 3 ticks
+	note({_p}, "harp", 15)
+	note({_p}, "harp", 24)
+	note({_p}, "snare", 8)
+	note({_p}, "bass", 1)
+	wait 9 ticks
+	
+	note({_p}, "snare", 8)
+	note({_p}, "bass", 1)
+	wait 3 ticks
+	note({_p}, "snare", 8)
+	note({_p}, "bass", 4)
+	note({_p}, "harp", 16)
+	note({_p}, "harp", 13)
+	note({_p}, "hat", 18)
+	wait 6 ticks
+	
+	note({_p}, "harp", 16)
+	note({_p}, "harp", 13) #26
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 16)
+	note({_p}, "harp", 13)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 16)
+	note({_p}, "harp", 13)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 16)
+	note({_p}, "harp", 13)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 16)
+	note({_p}, "harp", 13)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "harp", 18)
+	note({_p}, "harp", 15) # 32
+	note({_p}, "snare", 8)
+	wait 2 ticks
+	note({_p}, "harp", 18)
+	note({_p}, "harp", 15) # 33
+	note({_p}, "snare", 8)
+	wait 6 ticks
+	note({_p}, "flute", 18)
+	note({_p}, "flute", 20)
+	wait 3 ticks
+	note({_p}, "flute", 22)
+	note({_p}, "flute", 13)
+	note({_p}, "snare", 8)
+	note({_p}, "bass", 4)
+	wait 3 ticks
+	note({_p}, "flute", 15)
+	note({_p}, "bass", 3)
+	note({_p}, "harp", 22)
+	note({_p}, "harp", 15) #36
+	note({_p}, "snare", 8)
+	note({_p}, "hat", 18)
+	wait 6 ticks
+	note({_p}, "hat", 18)
+	wait 6 ticks
+	note({_p}, "hat", 18)
+	wait 6 ticks
+	note({_p}, "hat", 18)
+	wait 6 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 20) # 45
+	note({_p}, "hat", 18)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 20)
+	wait 3 ticks
+	
+	note({_p}, "snare", 8)
+	note({_p}, "hat", 18)
+	note({_p}, "flute", 15) # 48
+	note({_p}, "bass", 3)
+	note({_p}, "harp", 22)
+	note({_p}, "harp", 15)
+	wait 3 ticks
+	note({_p}, "snare", 8)
+	note({_p}, "flute", 15) # 49
+	note({_p}, "bass", 3)
+	note({_p}, "harp", 22)
+	note({_p}, "harp", 15)
+	wait 3 ticks
+	note({_p}, "snare", 8)
+	note({_p}, "hat", 18)
+	note({_p}, "flute", 15) # 50
+	note({_p}, "bass", 3)
+	note({_p}, "harp", 22)
+	note({_p}, "harp", 15)
+	wait 6 ticks
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "hat", 18)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	wait 6 ticks
+	
+	note({_p}, "guitar", 15)
+	note({_p}, "guitar", 20)
+	note({_p}, "guitar", 22)
+	wait 3 ticks
+	note({_p}, "guitar", 17)
+	note({_p}, "guitar", 16)
+	wait 3 ticks
+	note({_p}, "guitar", 15)
+	wait 15 ticks
+	
+	note({_p}, "guitar", 3)
+	wait 3 ticks
+	note({_p}, "guitar", 10)
+	wait 3 ticks
+	note({_p}, "guitar", 3)
+	wait 3 ticks
+	note({_p}, "guitar", 10)
+	wait 3 ticks
+	note({_p}, "guitar", 3)
+	wait 3 ticks
+	note({_p}, "guitar", 10)
+	wait 3 ticks
+	note({_p}, "guitar", 3)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "guitar", 10)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "guitar", 3)
+	note({_p}, "hat", 18)
+	wait 3 ticks
+	note({_p}, "guitar", 10)
+	wait 3 ticks
+	note({_p}, "guitar", 3)
+	note({_p}, "snare", 3)
+	note({_p}, "hat", 18)
+	note({_p}, "harp", 15)
+	wait 3 ticks
+	note({_p}, "guitar", 10)
+	note({_p}, "snare", 3) # 79
+	note({_p}, "hat", 18)
+	note({_p}, "harp", 15)
+	wait 3 ticks
+	note({_p}, "snare", 8) # 80
+	note({_p}, "snare", 22)
+	note({_p}, "snare", 18)
+	note({_p}, "snare", 13)
+	note({_p}, "hat", 18)
+	note({_p}, "harp", 20)
+	note({_p}, "harp", 8)
+	note({_p}, "bass", 8)
+	wait 3 ticks
+	note({_p}, "snare", 22)
+	note({_p}, "hat", 18) #81
+	note({_p}, "harp", 8)
+	wait 3 ticks
+	note({_p}, "snare", 22)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "harp", 12) # 83
+	note({_p}, "harp", 8)
+	note({_p}, "harp", 15)
+	wait 3 ticks
+	note({_p}, "snare", 22)
+	wait 3 ticks
+	
+	note({_p}, "snare", 22)
+	note({_p}, "hat", 18) #85
+	note({_p}, "harp", 8)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "snare", 22)
+	note({_p}, "harp", 18) # 83
+	note({_p}, "harp", 8)
+	note({_p}, "bass", 8)
+	wait 3 ticks 
+	note({_p}, "hat", 18) #85
+	note({_p}, "harp", 8)
+	wait 3 ticks
+	note({_p}, "hat", 18)
+	note({_p}, "harp", 12) # 83
+	note({_p}, "harp", 8)
+	note({_p}, "bass", 6)
+	wait 3 ticks 
+	note({_p}, "snare", 22) # 84
+	
+	
+	
+	
+	
+	
+	
+	

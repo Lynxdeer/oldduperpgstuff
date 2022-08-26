@@ -1,0 +1,24 @@
+function damageHologram(e: entity, d: number):
+	set {_r1} to random number between -1.2 and 1.2
+	set {_r2} to random number between 0.6 and 2.2
+	set {_r3} to random number between -1.2 and 1.2
+	#create a new hologram with line "&c%{_d}%" and store in {_holo}
+	create new hologram with line "&c- %{_d}% ❤" that follows {_e} offset by ({_r1} meters right and {_r2} meters above and {_r3} meter infront) and store in {_holo}
+	make hologram {_holo} stop following
+	#send "(debug) %{_r1}% %{_r2}% %{_r3}% | %{_e}% %{_d}%" to {_e}
+	#let hologram {_holo} follow {_e} offset by {_r1}, {_r2}, {_r3}
+	wait 1.5 second
+	delete hologram {_holo}
+	
+function deathHologram(e: entity, p: player, xp: number):
+	set {_loc} to {_e}'s head location
+	particle(smoke, 5, 0.5, 0.2, 0.5, {_loc})
+	if {boost} is set:
+		create new hologram with line "&7[&d+%{_xp} * 2% &dXP&7]" at {_loc} and store in {_holo}
+	else:
+		create new hologram with line "&7[&a+%{_xp}% &aXP&7]" at {_loc} and store in {_holo}
+	append "&7(%{_p}%&7)" to hologram {_holo}
+	wait 2 seconds
+	set {_nloc} to {_loc}
+	particle(poof, 10, 0.5, 0.2, 0.5, {_loc})
+	delete hologram {_holo}

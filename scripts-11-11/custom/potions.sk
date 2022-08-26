@@ -1,0 +1,5 @@
+
+function getPotion(potion: text, amount: integer, duration: integer) :: item:
+	if {_potion} is "heal":
+		set {_i} to potion named "&cPotion of Healing" with lore "&7Duration: %{_duration}% &7seconds" and "&7Effects:" and "&7| &c+%{_amount}% &chealth" with nbt "%{givenbt}%"
+		dye {_i} red

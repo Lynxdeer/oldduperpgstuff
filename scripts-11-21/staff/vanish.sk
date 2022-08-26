@@ -1,0 +1,10 @@
+command /invis [<text>]:
+	permission: staff.invis
+	permission message: &cNo.
+	trigger:
+		if "%player's potion effects%" contains "invisibility":
+			remove invisibility from potion effects of player
+			send "&3Toggled off vanish."
+		else:
+			apply invisibility without particles to player for 999 days
+			send "&3Toggled on vanish."

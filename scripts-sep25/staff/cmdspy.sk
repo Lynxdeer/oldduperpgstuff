@@ -1,0 +1,27 @@
+on command:
+	sender is not "Lynxdeer"
+	executor is not console
+	command does not start with "dupe " or "d " or "sc " or "staffchat" or "npcresp"
+	command is not "dupe" or "d" or "sc" or "staffchat"
+	loop all players where [input has the permission "staff.cspy"]:
+		{cspy::%loop-player%} is not false
+		if sender is console:
+			send "&6Server &8| &f/%complete command%" to loop-player
+			stop
+		sender is not the loop-player
+		send "&6%player% &8| &f/%complete command%" to loop-player
+
+
+command /cspy:
+	permission: staff.cspy
+	permission message: &cno
+	aliases: /cmdspy, /commandspy
+	trigger:
+		if {cspy::%player%} is not set:
+			send "&cTurned off cmdspy."
+			set {cspy::%player%} to false
+			stop
+		if {cspy::%player%} is false:
+			send "&aTurned on cmdspy."
+			delete {cspy::%player%} 
+			stop

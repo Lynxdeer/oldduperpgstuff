@@ -1,0 +1,60 @@
+on command:
+	command starts with "//"
+	player has the permission "builder.gm"
+	if player is not op:
+		player's world contains "ul_void"
+		send "&cYou cannot do this in the main worlds!"
+		stop
+		
+command /gmc [<offline player>] [<text>]:
+	permission: builder.gm
+	permission message: &cno
+	trigger:
+		if player is not op:
+			player's world contains "ul_void"
+			send "&cYou cannot do this in the main worlds!"
+			stop
+		if arg-1 is not set:
+			send "&aYour gamemode has been set to creative."
+			set player's gamemode to creative
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+
+		if player is not op:
+			send "&cYou need op to set others' gamemodes to creative!"
+			stop
+		send "&c%arg-1%&c's gamemode was set to creative by %player%." to all players where [input is op]
+		set arg-1's gamemode to creative
+
+command /gms [<offline player>] [<text>]:
+	permission: staff.gm
+	permission message: &cno
+	trigger:
+		if arg-1 is not set:
+			send "&aYour gamemode has been set to survival."
+			set player's gamemode to survival
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		send "&a%arg-1%&a's gamemode was set to survival by %player%." to all players where [input is op]
+		set arg-1's gamemode to survival
+
+command /gmsp [<offline player>] [<text>]:
+	permission: staff.gm
+	permission message: &cno
+	trigger:
+		if arg-1 is not set:
+			send "&aYour gamemode has been set to spectator."
+			set player's gamemode to spectator
+			stop
+		if arg-1 is offline:
+			send "&cThis player is offline!"
+			stop
+		if player is not op:
+			send "&cYou cannot set others to gmsp!"
+			stop
+		send "&a%arg-1%&a's gamemode was set to spectator by %player%." to all players where [input is op]
+		set arg-1's gamemode to spectator

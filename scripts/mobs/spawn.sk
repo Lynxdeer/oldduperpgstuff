@@ -1,0 +1,195 @@
+on load:
+	set {mobspawn.zamboe} to location(9, 99, 5, world "ul_rpg")
+
+	set {mobspawn.castle1} to location(-68, 100, 236, world "ul_rpg")
+	set {mobspawn.castle2} to location(-90, 100, 250, world "ul_rpg")
+
+	set {mobspawn.cave1} to location(19, 59, 509, world "ul_rpg")
+
+	set {mobspawn.volcano1} to location(-19, 99, 1023, world "ul_rpg")
+
+	set {mobspawn.shadow1} to location(-18, 100, 761, world "ul_rpg")
+	set {mobspawn.shadow2} to location(14, 100, 750, world "ul_rpg")
+	set {mobspawn.shadow3} to location(-10, 100, 723, world "ul_rpg")
+	
+	set {mobspawn.moon1} to location(-50, 95, 1455, world "ul_rpg")
+
+function spawnMob(mob: text, loc: location):
+	if {_mob} is "zamboe" or "zm":
+		spawn an adult zombie at {_loc}
+		set the display name of the last spawned zombie to "&8[1] &2Zamboe"
+		set the helmet of the last spawned zombie to oak leaves
+		set the chestplate of the last spawned zombie to unbreakable chainmail chestplate
+		set the leggings of the last spawned zombie to unbreakable chainmail leggings
+		set the boots of the last spawned zombie to unbreakable chainmail boots
+		set the last spawned zombie's tool to air
+		set the max health of the last spawned zombie to 6
+		set the health of the last spawned zombie to 6
+	if {_mob} is "skeletonwarrior" or "sw":
+		spawn a skeleton above {_loc}
+		set the display name of the last spawned skeleton to "&8[3] &7Skeleton Warrior"
+		set the helmet of the last spawned skeleton to chainmail helmet
+		set the chestplate of the last spawned skeleton to unbreakable iron chestplate
+		set the leggings of the last spawned skeleton to unbreakable iron leggings
+		set the boots of the last spawned skeleton to unbreakable iron boots
+		set the last spawned skeleton's tool to iron sword
+		set the max health of the last spawned skeleton to 12
+		set the health of the last spawned skeleton to 12
+	if {_mob} is "undeadminer" or "um":
+		spawn a zombie villager at {_loc}
+		set the nbt of the last spawned zombie villager to "{IsBaby:0}"
+		set the display name of the last spawned zombie villager to "&8[8] &7Undead Miner"
+		set the helmet of the last spawned zombie villager to air
+		set the chestplate of the last spawned zombie villager to unbreakable golden chestplate
+		set the leggings of the last spawned zombie villager to unbreakable golden leggings
+		set the boots of the last spawned zombie villager to unbreakable iron boots
+		set the last spawned zombie villager's tool to iron pickaxe
+		apply strength 1 without particles to the last spawned zombie villager for 999 days
+		apply speed 3 without particles to the last spawned zombie villager for 999 days
+		set the max health of the last spawned zombie villager to 15
+		set the health of the last spawned zombie villager to 15
+	if {_mob} is "blazinboi" or "bb":
+		spawn a blaze at {_loc}
+		set the display name of the last spawned blaze to "&8[12] &6Blazin Boi"
+		apply strength 4 without particles to the last spawned blaze for 999 days
+		apply speed 4 without particles to the last spawned blaze for 999 days
+		apply fire resistance 4 without particles to the last spawned blaze for 999 days
+		set the max health of the last spawned blaze to 20
+		set the health of the last spawned blaze to 20
+	if {_mob} is "shade" or "sh":
+		spawn a wither skeleton at {_loc}
+		set the display name of the last spawned wither skeleton to "&7[25] &8Shade"
+		set the helmet of the last spawned wither skeleton to air
+		set the chestplate of the last spawned wither skeleton  to unbreakable netherite chestplate
+		set the leggings of the last spawned wither skeleton to air
+		set the boots of the last spawned wither skeleton to air
+		dye the chestplate of the last spawned wither skeleton black
+		set the last spawned wither skeleton's tool to air
+		apply strength 4 without particles to the last spawned wither skeleton for 999 days
+		apply speed 4 without particles to the last spawned wither skeleton for 999 days
+		apply invisibility 4 without particles to the last spawned wither skeleton for 999 days
+		apply fire resistance 4 without particles to the last spawned wither skeleton for 999 days
+		set the max health of the last spawned wither skeleton to 30
+		set the health of the last spawned wither skeleton to 30
+	if {_mob} is "alien" or "al":
+		spawn a creeper at {_loc}
+		set the display name of the last spawned creeper to "&8[50] &6Alien"
+		apply speed 4 without particles to the last spawned creeper for 999 days
+		apply fire resistance 4 without particles to the last spawned creeper for 999 days
+		set the max health of the last spawned creeper to 40
+		set the health of the last spawned creeper to 40
+
+command /cspawnmob [<text>]:
+	permission: *
+	permission message: &cno
+	trigger:
+		send "&aSpawned a %arg-1%&a."
+		spawnMob(arg-1, player)
+
+
+every 8 seconds:
+	set {_playersnearby} to 0
+	loop players in radius 30 around {mobspawn.zamboe}:
+		add 1 to {playersnearby}
+	loop blocks in radius 10 around {mobspawn.zamboe}:
+		loop-block is solid
+		loop-block's y-position is less than 99
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.6 * {playersnearby})%:
+			spawnMob("zamboe", location at block above loop-block)
+
+	wait 1 tick
+	set {_playersnearby} to 0
+	loop players in radius 20 around {mobspawn.castle1}:
+		add 1 to {_playersnearby}
+	loop blocks in radius 10 around {mobspawn.castle1}:
+		loop-block is solid
+		loop-block's y-position is less than 105
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.5 * {_playersnearby})%:
+			spawnMob("skeletonwarrior", location at block above loop-block)
+	wait 1 tick
+	set {_playersnearby} to 0
+	loop players in radius 20 around {mobspawn.castle2}:
+		add 1 to {_playersnearby}
+	loop blocks in radius 10 around {mobspawn.castle2}:
+		loop-block is solid
+		loop-block's y-position is less than 105
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.5 * {_playersnearby})%:
+			spawnMob("skeletonwarrior", location at block above loop-block)
+	wait 1 tick
+	set {playersnearby} to 0
+	loop players in radius 20 around {mobspawn.cave1}:
+		add 1 to {playersnearby}
+	loop blocks in radius 10 around {mobspawn.cave1}:
+		loop-block is solid
+		loop-block's y-position is less than 60
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.7 * {playersnearby})%:
+			spawnMob("um", location at block above loop-block)
+	wait 1 tick
+	set {playersnearby} to 0
+	loop players in radius 30 around {mobspawn.shadow1}:
+		add 1 to {playersnearby}
+	loop blocks in radius 10 around {mobspawn.shadow1}:
+		loop-block is solid
+		loop-block's y-position is less than 105
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.6 * {playersnearby})%:
+			spawnMob("sh", location at block above loop-block)
+	wait 1 tick
+	set {playersnearby} to 0
+	loop players in radius 20 around {mobspawn.shadow2}:
+		add 1 to {playersnearby}
+	loop blocks in radius 10 around {mobspawn.shadow2}:
+		loop-block is solid
+		loop-block's y-position is less than 105
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.6 * {playersnearby})%:
+			spawnMob("sh", location at block above loop-block)
+	wait 1 tick
+	set {playersnearby} to 0
+	loop players in radius 20 around {mobspawn.shadow3}:
+		add 1 to {playersnearby}
+	loop blocks in radius 10 around {mobspawn.shadow3}:
+		loop-block is solid
+		loop-block's y-position is less than 105
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.6 * {playersnearby})%:
+			spawnMob("sh", location at block above loop-block)
+
+	wait 1 tick
+	set {playersnearby} to 0
+	loop players in radius 30 around {mobspawn.volcano1}:
+		add 1 to {playersnearby}
+	loop blocks in radius 8 around {mobspawn.volcano1}:
+		loop-block is solid
+		loop-block's y-position is less than 105
+		loop-block is not lava
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.6 * {playersnearby})%:
+			spawnMob("bb", location at block above loop-block)
+
+	wait 1 tick
+	set {playersnearby} to 0
+	loop players in radius 30 around {mobspawn.moon1}:
+		add 1 to {playersnearby}
+	loop blocks in radius 8 around {mobspawn.moon1}:
+		loop-block is solid
+		loop-block's y-position is less than 100
+		loop-block is not lava
+		block above loop-block is air
+		block 2 meters above loop-block is air
+		chance of (0.7 * {playersnearby})%:
+			spawnMob("alien", location at block above loop-block)
+		
+		

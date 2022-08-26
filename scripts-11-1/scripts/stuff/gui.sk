@@ -1,0 +1,186 @@
+function createGui(guiname: text) :: inventory:
+
+	if {_guiname} is "start":
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Choose a starter weapon!"
+		loop 36 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		set slot 14 of {_gui} to stick named "&6Oak Wand" with lore "&7Click to choose!" and "" and "&8Damage: 3" and "&8Range: Medium" and "" and "&7Ability" and "&7Shoots 1 beam. &3[1 Mana]" with nbt "{HideFlags:63,Unbreakable:1,CustomModelData:1}"
+		set slot 12 of {_gui} to wooden shovel named "&6Oak Staff" with lore "&7Click to choose!" and "" and "&8Damage: 4" and "&8Range: Low" and "" and "&7Ability" and "&7Shoots multiple beams. &3[1 Mana]" with nbt "{HideFlags:63,Unbreakable:1,CustomModelData:1}"
+
+	if {_guiname} is "magmaboss":
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Magma Boss Altar"
+		loop 36 times:
+			set slot {_slot} of {_gui} to red stained glass pane named "&0"
+			add 1 to {_slot}
+		set slot 13 of {_gui} to magma cream named "&cSummon Magma Boss" with lore "&eCost: $15000" with nbt "{HideFlags:63}"
+		
+		
+		
+		
+		
+	if {_guiname} is "warps":
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Welcome to Warp Zone!"
+		loop 36 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		
+		
+		
+		
+	if {_guiname} is "abilitymoon":
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Apply Abilities"
+		loop 36 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		#set slot 12 of {_gui} to feather named "&fLeap" with lore "&7Abilities will be applied to your held item!" and "&7Cost: $20000" with nbt "{HideFlags:63}"
+		set slot 12 of {_gui} to netherite axe named "&4Charge" with lore "&7Abilities will be applied to your held item!" and "&7Cost: $30000" with nbt "{HideFlags:63}"
+		set slot 14 of {_gui} to golden apple named "&eSoul Trade" with lore "&7Abilities will be applied to your held item!" and "&7Cost: $20000" with nbt "{HideFlags:63}"
+	
+	if {_guiname} is "abilityvolcano":
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Apply Abilities"
+		loop 36 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		set slot 13 of {_gui} to feather named "&fLeap" with lore "&7Abilities will be applied to your held item!" and "&7Cost: $2500" with nbt "{HideFlags:63}"
+	
+	if {_guiname} is "abilityforest":
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Apply Abilities"
+		loop 36 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		set slot 13 of {_gui} to crimson hyphae named "&aHeal" with lore "&7Abilities will be applied to your held item!" and "&7Cost: $250" with nbt "{HideFlags:63}"
+
+	return {_gui}
+
+command /opengui [<text>]:
+	permission: *
+	permission message: &cDebug purposes only!
+	trigger:
+		send "&eOpening gui %arg-1%&e."
+		set {_gui} to createGui("%arg-1%")
+		open {_gui} to player
+
+on inventory click:
+	name of player's current inventory is "Choose a starter weapon!"
+	cancel event
+
+	if event-item's name is "&6Oak Wand":
+		send "&eYou chose the oak wand!"
+		give player getItem("oakwand")
+		set {dontclose::%player%} to true
+		close inventory for player
+		wait 1 seconds
+		delete {dontclose::%player%}
+		executeStartSequence(player)
+
+	if event-item's name is "&6Oak Staff":
+		send "&eYou chose the oak staff!"
+		give player getItem("oakstaff")
+		set {dontclose::%player%} to true
+		close inventory for player
+		wait 1 seconds
+		delete {dontclose::%player%}
+		executeStartSequence(player)
+
+
+
+
+on inventory click:
+	name of player's current inventory is "Magma Boss Altar"
+	cancel event
+
+	if event-item's name is "&cSummon Magma Boss":
+		if {bal::%player%} is more than 14999:
+			remove 15000 from {bal::%player%}
+			broadcast "%nl%&6%player% &6spawned the magma boss! Head to the volcano to fight it!"
+			broadcast ""
+			spawnMagma()
+			stop
+		send "&cInsufficient funds!"
+				
+on inventory click:
+	name of player's current inventory is "Apply Abilities"
+	cancel event
+	if "%player's tool's lore%" contains "&7[Ability:":
+		send "&cYou already have an ability on this item!"
+		close inventory for player
+		stop
+		
+		
+	if {bal::%player's uuid%} is less than 250:
+		send "&cInsufficient funds!"
+		stop
+	if event-item's name is "&aHeal":
+	
+		send "&fAdded ability ""Heal"" to your held item."
+		set {_a::*} to player's tool's lore
+		set {_l} to size of {_a::*}
+		set line ({_l} + 1) of player's tool's lore to "&7[Ability: Heal]"
+		close inventory for player
+		remove 250 from {bal::%player's uuid%}
+		
+	
+	
+	
+	
+	
+	
+	
+	if {bal::%player's uuid%} is less than 2500:
+		send "&cInsufficient funds!"
+		stop
+	if event-item's name is "&fLeap":
+	
+		send "&fAdded ability ""Leap"" to your held item."
+		set {_a::*} to player's tool's lore
+		set {_l} to size of {_a::*}
+		set line ({_l} + 1) of player's tool's lore to "&7[Ability: Leap]"
+		close inventory for player
+		remove 2500 from {bal::%player's uuid%}
+		
+		
+		
+		
+		
+	if event-item's name is "&4Charge":
+		if {bal::%player's uuid%} is less than 30000:
+			send "&cInsufficient funds!"
+			stop
+	
+		send "&fAdded ability ""Charge"" to your held item."
+		set {_a::*} to player's tool's lore
+		set {_l} to size of {_a::*}
+		set line ({_l} + 1) of player's tool's lore to "&7[Ability: Charge]"
+		close inventory for player
+		remove 30000 from {bal::%player's uuid%}
+		
+		
+	if event-item's name is "&eSoul Trade":
+		if {bal::%player's uuid%} is less than 20000:
+			send "&cInsufficient funds!"
+			stop
+	
+		send "&fAdded ability ""Soul Trade"" to your held item."
+		set {_a::*} to player's tool's lore
+		set {_l} to size of {_a::*}
+		set line ({_l} + 1) of player's tool's lore to "&7[Ability: Soul Trade]"
+		close inventory for player
+		remove 20000 from {bal::%player's uuid%}
+
+
+
+
+on inventory close:
+	name of player's current inventory is "Choose a starter weapon!"
+	{dontclose::%player%} is not true
+	wait 1 tick
+	open createGui("start") to player
+	send "&cChoose a weapon!"
+	note(player, "bass", 12)

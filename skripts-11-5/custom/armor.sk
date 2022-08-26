@@ -1,0 +1,46 @@
+on armor change:
+	if line 1 of event-item's lore is "&7&oGOTTA GO FAST":
+		if line 2 of event-item's lore does not contain "&f%player%":
+			send "&cThese speed boots are not yours!"
+			stop
+		send "&7Equipped &9Speed Boots."
+		while line 1 of player's boots' lore is "&7&oGOTTA GO FAST":
+			if player is not online:
+				stop loop
+			apply speed 4 without particles to player for 1 second
+			wait 10 ticks
+		send "&7Unequipped &9Speed Boots."
+		remove speed from potion effects of player
+	if line 1 of event-item's lore is "&7Provides some basic protection.":
+		send "&7Equipped &2Armor of the Trees."
+	if line 1 of event-item's lore is "&7An old, battered piece of armor a skeleton was wearing in the castle.":
+		send "&7Equipped &7Warrior's Armor."
+	if line 1 of event-item's lore is "&7Did someone turn up the heat in here?":
+		send "&7Equipped &6Molten Armor."
+		
+on combust:
+	event-entity is a player
+	if line 1 of event-entity's helmet's lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event
+	if line 1 of event-entity's chestplate's lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event
+	if line 1 of event-entity's leggings' lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event
+	if line 1 of event-entity's boots' lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event

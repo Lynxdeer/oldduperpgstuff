@@ -1,0 +1,116 @@
+on armor change:
+	if "%event-item's enchantments%" contains "Curse of Binding":
+		send "&cYou have equipped something with curse of binding on it! If you wish to remove it, relog (quit and join back) and the item will be safely dropped on the floor!"
+	
+	
+	if line 1 of event-item's lore is "&7&oGOTTA GO FAST":
+		if "%event-item's lore%" does not contain "&f%player%":
+			send "&cThese speed boots are not yours!"
+			set player's boots to air
+			stop
+		send "&7Equipped &9Speed Boots."
+		while line 1 of player's boots' lore is "&7&oGOTTA GO FAST":
+			if player is not online:
+				stop loop
+			apply speed 4 without particles to player for 1 second
+			wait 15 ticks
+		send "&7Unequipped &9Speed Boots."
+		remove speed from potion effects of player
+		
+	if line 1 of event-item's lore is "&7Slinking through the shadows...":
+		if "%event-item's lore%" does not contain "&f%player%":
+			send "&cThis shadow chestplate is not yours!"
+			set player's chestplate to air
+			stop
+		send "&7Equipped &8Shadow Chestplate."
+		apply blindness 1 without particles to player for 15 seconds
+		while line 1 of player's chestplate's lore is "&7Slinking through the shadows...":
+			if player is not online:
+				stop loop
+			apply blindness 1 without particles to player for 1 second
+			apply slowness 1 without particles to player for 1 second
+			apply strength 4 without particles to player for 1 second
+			wait 15 ticks
+		send "&7Unequipped &8Shadow Chestplate."
+		remove slowness from potion effects of player
+		
+		if "%region at player%" is not "shadow in world ul_rpg": # Anti cheese
+			remove blindness from potion effects of player
+		else:
+			remove blindness from potion effects of player
+			apply blindness 1 without particles to player for 20 seconds
+			
+		remove strength from potion effects of player
+		
+		
+	if line 1 of event-item's lore is "&7Provides some basic protection.":
+		send "&7Equipped &2Armor of the Trees."
+		
+	if line 1 of event-item's lore is "&7An old, battered piece of armor a skeleton was wearing in the castle.":
+		send "&7Equipped &7Warrior's Armor."
+		
+	if line 1 of event-item's lore is "&7Did someone turn up the heat in here?":
+		send "&7Equipped &6Molten Armor."
+		
+	if "%event-item's lore%" contains "&eOwner:":
+		"%event-item's lore%" does not contain "&f%player%"
+		loop items in player's inventory:
+			if "%loop-item's lore%" contains "&eOwner:":
+				"%loop-item's lore%" does not contain "&f%player%"
+				set loop-item to air
+			if player's helmet is loop-item:
+				set player's helmet to air
+			if player's chestplate is loop-item:
+				set player's chestplate to air
+			if player's leggings is loop-item:
+				set player's leggings to air
+			if player's boots is loop-item:
+				set player's boots to air
+				
+		send "&cYou were wearing armor that was not yours, so we deleted it!"
+	
+on death:
+	damager is a player
+	if line 1 of damager's boots' lore is "&7Unleash your fury upon the world!":
+		if line 2 of damager's boots' lore does not contain "&f%damager%":
+			send "&cThese boots of fury are not yours and the kill was not counted!" to damager
+			stop
+	line 1 of damager's boots' lore is "&7Unleash your fury upon the world!"
+	if victim is a player:
+		apply speed 2 without particles to damager for 15 seconds
+		apply strength 3 without particles to damager for 15 seconds
+		apply absorption 4 without particles to damager for 15 seconds
+		heal the damager by 3.5
+		send "&7[Fury streams out of your boots, granting you immense power]" to damager
+	if victim is not a player:
+		apply speed 1 without particles to damager for 5 seconds
+		apply strength 1 without particles to damager for 5 seconds
+		apply absorption 1 without particles to damager for 5 seconds
+		heal the damager by 0.75
+		
+on combust:
+	event-entity is a player
+	if line 1 of event-entity's helmet's lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event
+	if line 1 of event-entity's chestplate's lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event
+	if line 1 of event-entity's leggings' lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event
+	if line 1 of event-entity's boots' lore is "&7Did someone turn up the heat in here?":
+		particle(flame, 5, 1, 0.5, 1, event-entity)
+		if "%player's potion effects%" does not contain "fire resistance":
+			remove fire resistance from the event-entity
+			apply fire resistance to event-entity for 5 seconds
+		cancel event

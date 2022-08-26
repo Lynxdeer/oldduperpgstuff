@@ -1,0 +1,46 @@
+on tab complete:
+	if event-string is "/mvtp" or "/mvdelete" or "/mvlist":
+		set tab completions for position 1 to {all.worlds::*}
+	if event-string is "/ver" or "/bukkit:ver" or "/version" or "/bukkit:version" or "/?" or "/bukkit:?" or "/help" or "/bukkit:help" or "/about" or "/bukkit:about":
+		set tab completions for position 1 to ""
+	if event-string is "/skript" or "/sk":
+		set tab completions for position 1 to "reload", "enable", "disable", "update", "info" and "help"
+		if tab arg-1 is "reload":	
+			loop all scripts:
+				if loop-value does not start with "-":
+					add loop-value to {_scripts::*}
+			set tab completions for position 2 to {_scripts::*} and "all" and "config" and "aliases" and "scripts"
+		if tab arg-1 is "enable":
+			loop all scripts:
+				if loop-value starts with "-":
+					add loop-value to {_scripts::*}
+			set tab completions for position 2 to {_scripts::*} and "all"
+		if tab arg-1 is "disable":
+			loop all scripts:
+				if loop-value does not start with "-":
+					add loop-value to {_scripts::*}
+			set tab completions for position 2 to {_scripts::*} and "all"
+		if tab arg-1 is "update":
+			set tab completions for position 2 to "check" and "changes" and "download"
+
+on command:
+	if command starts with "sk reload" or "skript reload":
+		set {_allsk} to complete command
+		replace first "sk" in {_allsk} with ""
+		replace first "skript" in {_allsk} with ""
+		replace first "enable" in {_allsk} with ""
+		replace first "disable" in {_allsk} with ""
+		replace first "reload" in {_allsk} with ""
+		replace all " " in {_allsk} with ""
+		{_allsk} ends with "all"
+		{_allsk} does not start with "all"
+		cancel event
+		replace every "all" in {_allsk} with ""
+		replace first "/" in {_allsk} with "\"
+		send "&7[&6Skript&7] &fReloading &6all skripts in %{_allsk}%&f..."
+		loop all scripts:
+			loop-value starts with {_allsk}
+			reload script loop-value
+			add 1 to {_allskv}
+		send "&7[&6Skript&7] &fSuccessfully reloaded &6%{_allskv}% files."
+		broadcast "%{_allsk}%/%{_allskv}%"

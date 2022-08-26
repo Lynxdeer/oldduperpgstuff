@@ -1,0 +1,121 @@
+on region enter:
+	player's gamemode is not spectator		
+		
+		
+		# THE REGIONS 2 SKRIPT IS FOR THE SHADOW AND MOON DUNGEONS
+		
+		
+	if "%event-region%" is "dungeonshadowbossentry in world ul_rpg":
+		"%region at player%" is not "dungeonshadowbossentry in world ul_rpg"
+		send "&aEntering the boss room."
+		apply blindness 5 without particles to player for 2 seconds
+		apply slowness 2 without particles to player for 2 seconds
+		teleport player to {dungeon.shadowboss}
+		send title "&8Boss Room" to player for 1 seconds with fadein 0.2 second and fadeout 0.2 second
+		play sound "minecraft:entity.wither.spawn" with pitch 1 to player
+		loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+			player is not the loop-player
+			player's gamemode is survival
+			stop
+			
+		set {_loc} to location at 3003.5, 82, and -41.5 in world "ul_rpg"
+		set {_loc}'s yaw to 180
+		spawn enderman at {_loc}
+		set {_sboss} to last spawned enderman
+		set artificial intelligence of the last spawned enderman to false
+		apply strength 10 without particles to the last spawned enderman for 999 days
+		apply fire resistance 3 without particles to the last spawned enderman for 999 days
+		apply speed 3 without particles to the last spawned enderman for 999 days
+		set the display name of the last spawned enderman to "&4Shadow Captain"
+		set the tool of the last spawned enderman to black shulker box
+		
+		wait 2 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Yet another adventurer arrives to murder me." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 3 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: I don't plan on falling today, sorry about that." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: Well, it's about time you meet your match, bud. &cARISE, MINIONS OF SHADOW!" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 1 second
+		
+		# LEFTOFF: DO MINION CRAP
+		# After no minions are left, boss comes and shreks people, and the core opens so you can kill the boss
+		
+		loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+			add 1 to {_playercount}
+		set {_sboss}'s max health to (200 * {_playercount})
+		set {_sboss}'s health to (200 * {_playercount})
+		
+		set {_loc} to location at block 3 meters in front of {_loc}
+		set {_loc} to location at block 2 meters below {_loc}
+		loop 10 times:
+			spawn a wither skeleton at {_loc}
+			set the last spawned wither skeleton's max health to (60 * {_playercount})
+			set the last spawned wither skeleton's health to (60 * {_playercount})
+			apply invisibility without particles to the last spawned wither skeleton for 999 days
+			apply speed 3 without particles to the last spawned wither skeleton for 999 days
+			apply strength 12 without particles to the last spawned wither skeleton for 999 days
+			apply fire resistance 3 without particles to the last spawned wither skeleton for 999 days
+			set the chestplate of the last spawned wither skeleton to netherite chestplate
+			set the tool of the last spawned wither skeleton to air
+			set the name of the last spawned wither skeleton to "&4boss shade lol"
+		set {-shbossskelsleft} to 10
+			
+		while {-shbossskelsleft} is not 0:
+			wait 10 ticks
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: I no longer feel my minions' power. I can only assume you did the worst." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&a&kooooooo&a: The core protecting me weakening... my children gone..." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 4 seconds
+		
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "&4Shadow Captain&4: If this is how you want to play, let's play." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		send "" to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+			
+		wait 2 seconds
+		
+		set {_loc} to location at 3003, 82, and -41 in world "ul_rpg"
+		set {_sboss}'s tool to cauldron
+		set artificial intelligence of {_sboss} to true
+		loop blocks in radius 5 around {_loc}:
+			loop-block is purple glass
+			add location at loop-block to {_purpleblocks::*}
+			set loop-block to air
+			particleWitch(10, 2, 2, 2, loop-block)
+		
+		wait 3 seconds
+		
+		send "&7The purple gaze of the captain's eyes turn to glare at you. &4Th&key sp&4ell &4o&kut&4- &kDEATH." to all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]
+		
+		wait 3 seconds
+		
+		loop all players where ["%region at input%" is "dungeonshadowbossroom in world ul_rpg"]:
+			loop-player's gamemode is survival
+			set {_sboss}'s target to loop-player #LEFTOFF: FINISH BOSS DUEL, MAKE IT REALLY HARD AND ADD PANIC ZEALOT SOUNDS
+			teleport {_sboss} to loop-player
+			
+		wait 1 second
+		loop {_purpleblocks::*}:
+			set block at loop-value to purple glass
+		
+		

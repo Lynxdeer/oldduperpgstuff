@@ -1,0 +1,102 @@
+command /boosters [<text>]:
+	aliases: /boost
+	trigger:
+		#if player is not "Lynxdeer":
+			#send "&cCurrently in development!"
+			#stop
+		send "&eOpened the boosters menu."
+		set {_slot} to 0
+		set {_gui} to chest inventory with 3 rows named "Boosters"
+		loop 36 times:
+			set slot {_slot} of {_gui} to black stained glass pane named "&0"
+			add 1 to {_slot}
+		set {_boostamount} to emerald named "&2&ko &a&lBoost the server &2&ko" with lore "&aYou currently have &2%{boost::%player%}%&a boosters left!"
+		if {boost::%player%} is set:
+			set item amount of {_boostamount} to {boost::%player%}
+		else:
+			set {_boostamount} to firework star named "&7No boosters Left!" with lore "&7You do not have any boosters!"
+			set item amount of {_boostamount} to 1
+		set slot 11 of {_gui} to paper named "&3Information" with lore "&7Boosters offer a way to" and "&7boost the amount of xp you get for the &6&lWhole server!" and "&7They can be obtained through daily rewards" and "&7as a donator or buying them on the future store."
+		set slot 13 of {_gui} to {_boostamount}
+		set slot 15 of {_gui} to gold block named "&6Donator Claim" with lore "&7Donators/Staff can claim daily boosters!" and "&7Click to claim!"
+		
+		
+		
+		
+		
+		
+		
+		
+		open {_gui} to player
+		
+		
+		
+on inventory click:
+	name of player's current inventory is "Boosters"
+	cancel event
+
+	if event-item's name is "&2&ko &a&lBoost the server &2&ko":
+		send "&aYou boosted the server!"
+		close inventory for player
+		remove 1 from {boost::%player%}
+		send title "&7[ &7 &7]" with subtitle "&0" to player for 0.5 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		send title "&7[ &7B &7]" with subtitle "&0" to player for 0.5 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		send title "&7[ &7Bo &7]" with subtitle "&0" to player for 0.5 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		send title "&7[ &7Bo &7]" with subtitle "&0" to player for 0.5 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		send title "&7[ &7Boo &7]" with subtitle "&0" to player for 0.5 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		send title "&7[ &7Boos &7]" with subtitle "&0" to player for 0.5 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		send title "&7[ &7Boost &7]" with subtitle "&0" to player for 0.5 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		send title "&8[ &dB&5o&do&5s&dt&5! &8]" with subtitle "&0" to player for 2 second with fadein 0.1 second and fade out 0 second
+		wait 5 ticks
+		play sound "minecraft:block.end_portal.spawn" with pitch 1.5 to all players
+		play sound "minecraft:block.end_portal.spawn" with pitch 1.1 to all players
+		play sound "minecraft:block.end_portal.spawn" with pitch 2 to all players
+		broadcast ""
+		broadcast "&5&k&lo &dBoost! &5&k&lo &8- &d%player% &5boosted the entire server's xp for the next 15 minutes!"
+		broadcast ""
+		send title "&8[ &dB&5o&do&5s&dt&5! &8]" with subtitle "&d%player% &5boosted the server for 15m!" to player for 2 second with fadein 0.1 second and fade out 0.2 second
+		if {boost} is set:
+			add 15 minutes to {boost}
+			send "&aSince there is already a boost active, you have extended the current boost by 15 minutes!"
+			stop
+		set {boost} to 15 minutes
+		send "&aSince there is not currently a boost active, the server has been boosted for 15 minutes only!"
+		while {boost} is more than 1 second:
+			remove 1 second from {boost}
+			wait 1 second
+		broadcast ""
+		broadcast "&dThe server's boost ran out!"
+		broadcast ""
+		delete {boost}
+	if event-item's name is "&6Donator Claim":
+		if player does not have the permission "not.default":
+			send "&cYou must be donator rank to claim your daily booster!"
+			stop
+		send "&eYou claimed your daily booster!"
+		close inventory for player
+		if {btm::%player%} is not set:
+			send "&6Since this is your first time claiming you have recieved 5 boosters instead of 1!"
+			add 5 to {boost::%player%}
+			set {btm::%player%} to now
+			stop
+		if difference between {btm::%player%} and now is less than 24 real hours:
+			set {_formboost} to "%difference between now and {btm::%player%}%"
+			replace all " seconds" or " second" with "s" in {_formboost}
+			replace all " minutes" or " minute" with "m" in {_formboost}
+			replace all " hours" or " hour" with "h" in {_formboost}
+			replace all " and " or "and " or " and" with " " in {_formboost}
+			send "&cPlease wait 24 hours between claiming boosters!"
+			send "&cTime since last claim: %{_formboost}%"
+			stop
+		add 1 to {boost::%player%}
+		set {btm::%player%} to now
+		
+		
+		

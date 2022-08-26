@@ -1,0 +1,123 @@
+command /navysealscopypasta [<text>]:
+	permission: donator.navysealspasta
+	permission message: &cYou don't have permission to use this copypasta!
+	cooldown: 3 minutes
+	cooldown message: &cFor the sake of people's chat, please wait %remaining time% &cto use this again.
+	cooldown bypass: *
+	trigger:
+		make player say "What the &kfork &fdid you just &kfork&fing say about me, you little &kbeach&f? I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I’m the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you out with precision the likes of which has never been seen before on this Earth, mark my words. You think you can get away with saying &kcrap &fto me over the Internet? Think again, &kfork&fer. As we speak I am contacting my network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You’re &kfork&fing dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your &kace &foff the face of the continent, you little &kcrap&f. If only you could have known what unholy retribution your little “clever” comment was about to bring down upon you, maybe you would have held your tongue. You didn’t, and now you’re paying the price, you goddarn idiot. You’re &kfork&fing dead, kiddo."
+
+on chat:
+	replace all ":shrug:" in the message with "¯\_(ツ)_/¯"
+	replace all "<3" in the message with "&c❤ &f"
+	replace all ":tableflip:" in the message with "(╯°□°）╯︵ ┻━┻"
+	replace all ":flip:" in the message with "(╯°□°）╯︵ ┻━┻"
+	if message contains "%{chatfilter1}%" or "%{chatfilter2}%" or "%{chatfilter3}%":
+		broadcast "&c%player% &ctried to say a very naughty word!"
+		cancel event
+		stop
+	if message starts with "<rainbow>":
+		player has the permission "not.default"	
+		replace first "<rainbow>" in message with ""
+		if message starts with " ":
+			replace first " " in message with ""
+		set {_rainbowmsg::*} to colored message split at ""
+		set {_rcolor} to 1
+		set {_msg} to ""
+		loop {_rainbowmsg::*}:
+			if {_rcolor} is 1:
+				set {_msg} to "%{_msg}%&c%loop-value%"
+			if {_rcolor} is 2:
+				set {_msg} to "%{_msg}%&6%loop-value%"
+			if {_rcolor} is 3:
+				set {_msg} to "%{_msg}%&e%loop-value%"
+			if {_rcolor} is 4:
+				set {_msg} to "%{_msg}%&a%loop-value%"
+			if {_rcolor} is 5:
+				set {_msg} to "%{_msg}%&9%loop-value%"
+			if {_rcolor} is 6:
+				set {_msg} to "%{_msg}%<##8133f5>%loop-value%"
+			loop-value is not " "
+			add 1 to {_rcolor}
+			if {_rcolor} is more than 6:
+				set {_rcolor} to 1
+		set chat format to "%player's prefix%%player%%player's suffix% &f[%({lvl::%player's uuid%} + 0)%]&f: %colored {_msg}%"
+		#send "%{_msg}%"
+		stop
+	if {mutechat} is true:
+		if player has the permission "staff.mutechat":
+			exit 2 sections
+		cancel event
+		send "&cChat is currently muted!"
+		stop
+	if player has the permission "not.default":
+		set chat format to "%player's prefix%%player%%player's suffix% &f[%({lvl::%player's uuid%} + 0)%]&f: %colored message%"
+		stop
+	set chat format to "%player's prefix%%player%%player's suffix% &7[%({lvl::%player's uuid%} + 0)%&7]: %message%"
+
+on join:
+	set join message to "&e%player% &ejoined."
+
+on quit:
+	set quit message to "&e%player% &eleft."
+
+command /whendidijoin [<offline player>]:
+	aliases: /firstjoin
+	trigger:
+		arg-1 is not "*"
+		if arg-1 is set:
+			send "&e%arg-1%&e first joined on %arg-1's first login%&e!"
+			stop
+		send "&eYou first joined on %player's first login%&e!"	
+
+
+command /emotes [<text>]:
+	trigger:
+		send "&8- &3Available Emotes &8-"
+		send "&7- :shrug: = ¯\_(ツ)_/¯"
+		send "&7- <3 = &c❤"
+		send "&7- :tableflip: / :flip: = (╯°□°）╯︵ ┻━┻"
+		#send formatted "&7- [item] = <tooltip:&7This will be your held item lol>Your held item!<reset>"
+		
+		
+# CHAT FILTER BELOW
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+on load:
+	set {chatfilter1} to "nigger"
+	set {chatfilter2} to "nigga"
+	set {chatfilter3} to "__FILTERTHISMESSAGE"

@@ -1,0 +1,92 @@
+on inventory click:
+	if event-item's name is "&aXPZM" or "&aXPSW" or "&aXPUM" or "&aXPSHA" or "&aXPBB" or "&aXPMAGMA" or "&aXPALI" or "&aXPAL":
+		set player's cursor slot to air
+		remove all event-item from player's inventory
+		send "&cPlease do not abuse expolits! If you have said item please report it."
+		cancel event
+		loop 5 times:
+			set player's cursor slot to air
+			remove all event-item from player's inventory
+			wait 1 tick
+			
+on drop:
+	if event-item's name is "&aXPZM" or "&aXPSW" or "&aXPUM" or "&aXPSHA" or "&aXPBB" or "&aXPMAGMA" or "&aXPALI" or "&aXPAL":
+		send "&cPlease do not abuse expolits! If you have said item please report it."
+		cancel event
+		remove all event-item from player's inventory
+		loop 10 times:
+			remove all event-item from player's inventory
+			wait 1 tick
+	
+on player pickup:
+	
+	event-item's name is "&aXPZM"
+	cancel event
+	delete event-entity
+	send title "&0" with subtitle "&7[&a+ %(item amount of event-item * 200)%&a XP]" to player for 0 seconds with fadein 0 second and fade out 0.5 second
+	set {_xp} to round(item amount of event-item * 200)
+	xpAdd(player, {_xp})
+	wait 1 tick
+	remove all event-item from player's inventory
+
+on player pickup:
+	event-item's name is "&aXPSW"
+	cancel event
+	delete event-entity
+	send title "&0" with subtitle "&7[&a+ %(item amount of event-item * 500)%&a XP]" to player for 0 seconds with fadein 0 second and fade out 0.5 second
+	set {_xp} to round(item amount of event-item * 500)
+	xpAdd(player, {_xp})
+	wait 1 tick
+	remove all event-item from player's inventory
+
+on player pickup:
+	event-item's name is "&aXPUM"
+	cancel event
+	delete event-entity
+	
+	send title "&0" with subtitle "&7[&a+ %(item amount of event-item * 750)%&a XP]" to player for 0 seconds with fadein 0 second and fade out 0.5 second
+	set {_xp} to round(item amount of event-item * 750)
+	xpAdd(player, {_xp})
+	wait 1 tick
+	remove all event-item from player's inventory
+
+on player pickup:
+	event-item's name is "&aXPSHA"
+	cancel event
+	delete event-entity
+	send title "&0" with subtitle "&7[&a+ %(item amount of event-item * 2000)%&a XP]" to player for 0 seconds with fadein 0 second and fade out 0.5 second
+	set {_xp} to round(item amount of event-item * 2000)
+	xpAdd(player, {_xp})
+	wait 1 tick
+	remove all event-item from player's inventory
+
+on player pickup:
+	event-item's name is "&aXPBB"
+	cancel event
+	delete event-entity
+
+	send title "&0" with subtitle "&7[&a+ %(item amount of event-item * 1200)%&a XP]" to player for 0 seconds with fadein 0 second and fade out 0.5 second
+	set {_xp} to round(item amount of event-item * 1200)
+	xpAdd(player, {_xp})
+	wait 1 tick
+	remove all event-item from player's inventory
+	
+on player pickup:
+	event-item's name is "&aXPMAGMA"
+	cancel event
+	delete event-entity
+	send title "&0" with subtitle "&7[&a+ %(item amount of event-item * 2500)%&a XP]" to player for 0 seconds with fadein 0 second and fade out 0.5 second
+	set {_xp} to round(item amount of event-item * 2500)
+	xpAdd(player, {_xp})
+	wait 1 tick
+	remove all event-item from player's inventory
+	
+on player pickup:
+	event-item's name is "&aXPALI"
+	cancel event
+	delete event-entity
+	send title "&0" with subtitle "&7[&a+ %(item amount of event-item * 6000)%&a XP]" to player for 0 seconds with fadein 0 second and fade out 0.5 second
+	set {_xp} to round(item amount of event-item * 6000)
+	xpAdd(player, {_xp})
+	wait 1 tick
+	remove all event-item from player's inventory

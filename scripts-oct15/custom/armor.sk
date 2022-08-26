@@ -1,0 +1,14 @@
+on armor change:
+	if line 1 of event-item's lore is "&7&oGOTTA GO FAST":
+		if line 2 of event-item's lore does not contain "&f%player%":
+			send "&cThese speed boots are not yours!"
+			stop
+		send "&7Equipped &9Speed Boots."
+		while line 1 of player's boots' lore is "&7&oGOTTA GO FAST":
+			if player is not online:
+				stop loop
+			apply speed 4 without particles to player for 1 second
+			wait 10 ticks
+		send "&7Unequipped &9Speed Boots."
+		remove speed from potion effects of player
+	if line 1 of event-item's lore is ""

@@ -1,0 +1,351 @@
+on damage:
+	line 1 of damager's tool's lore starts with "&7Shoots multiple beams with low range." or "&7New and improved!" or "&7Draws energy from the shadow realm!" or "&7It's snow-time." or "&7hippity hoppity you are now off my property"	
+	cancel event
+
+on left click with wooden shovel:
+
+#			OAK STAFF
+
+	line 1 of player's tool's lore starts with "&7Shoots multiple beams with low range."
+	cancel event
+
+	if {mana::%player%} is less than 2:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 1)
+
+	set {_loc} to location 1.6 meters above location of player
+	play sound "minecraft:entity.player.attack.sweep" with volume 2 and pitch 0.75 at {_loc} for all players
+	play sound "minecraft:entity.blaze.shoot" with volume 0.5 and pitch 1.5 at {_loc} for all players
+
+	set {_loc2} to location 1.2 meters left of {_loc} ~ {_v}
+	set {_loc3} to location 1.2 meters right of {_loc} ~ {_v}
+	loop 10 times:
+		if {_dontshoot} is set:
+			stop loop
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			if loop-entity is a player:
+				player's time played is less than 5 minutes
+				stop
+			calculateArmor(4, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc2}:
+			loop-entity is not the player
+			if loop-entity is a player:
+				player's time played is less than 5 minutes
+				stop
+			calculateArmor(4, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc3}:
+			loop-entity is not the player
+			if loop-entity is a player:
+				player's time played is less than 5 minutes
+				stop
+			calculateArmor(4, loop-entity, player)
+			loop-entity is a player
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc})
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc2}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc2})
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc3}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc3})
+
+		set {_loc} to location 1 meters in front of {_loc}
+		set {_loc2} to location 1 meters in front of {_loc2}
+		set {_loc3} to location 1 meters in front of {_loc3}
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+
+
+
+
+
+
+#			STONE STAFF
+on leftclick with stone shovel:
+	line 1 of player's tool's lore starts with "&7New and improved!"
+	cancel event
+	if lvl(player) is less than 8:
+		send "&cYou must have at least combat 8 to use this item!"
+		stop
+	if {mana::%player%} is less than 2:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 2)
+
+	set {_loc} to location 1.6 meters above location of player
+	play sound "minecraft:entity.player.attack.sweep" with volume 2 and pitch 0.6 at {_loc} for all players
+	play sound "minecraft:entity.blaze.shoot" with volume 0.5 and pitch 1.5 at {_loc} for all players
+
+	set {_loc2} to location 1.2 meters left of {_loc} ~ {_v}
+	set {_loc3} to location 1.2 meters right of {_loc} ~ {_v}
+	loop 10 times:
+		if {_dontshoot} is set:
+			stop
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			calculateArmor(5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc2}:
+			loop-entity is not the player
+			calculateArmor(5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc3}:
+			loop-entity is not the player
+			calculateArmor(5, loop-entity, player)
+			loop-entity is a player
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc})
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc2}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc3})
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc3}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc2})
+
+		set {_loc} to location 1 meters in front of {_loc}
+		set {_loc2} to location 1 meters in front of {_loc2}
+		set {_loc3} to location 1 meters in front of {_loc3}
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+
+
+
+
+
+
+# SHADOW STAFF
+on leftclick with netherite shovel:
+	line 1 of player's tool's lore starts with "&7Draws energy from the shadow realm!"
+	cancel event
+	if lvl(player) is less than 25:
+		send "&cYou must have at least combat 25 to use this item!"
+		stop
+	if {mana::%player%} is less than 3:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 3)
+
+	set {_loc} to location 1.6 meters above location of player
+	play sound "minecraft:entity.evoker.cast_spell" with volume 2 and pitch 2 at {_loc} for all players
+	play sound "minecraft:entity.blaze.shoot" with volume 0.5 and pitch 1.5 at {_loc} for all players
+
+	set {_loc2} to location 1.2 meters left of {_loc} ~ {_v}
+	set {_loc3} to location 1.2 meters right of {_loc} ~ {_v}
+	loop 10 times:
+		if {_dontshoot} is set:
+			stop
+		loop entities in radius 2 around {_loc}:
+			loop-entity is not the player
+			calculateArmor(6.5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc2}:
+			loop-entity is not the player
+			calculateArmor(6.5, loop-entity, player)
+			loop-entity is a player
+
+		loop entities in radius 2 around {_loc3}:
+			loop-entity is not the player
+			calculateArmor(6.5, loop-entity, player)
+			loop-entity is a player
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc})
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc2}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc2})
+
+		#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc3}, visibleRange 50, keepFor 0 tick
+		particle(end_rod, 1, 0, 0, 0, {_loc3})
+
+		set {_loc} to location 1 meters in front of {_loc}
+		set {_loc2} to location 1 meters in front of {_loc2}
+		set {_loc3} to location 1 meters in front of {_loc3}
+		loop blocks in radius 0.6 around {_loc}:
+			loop-block is solid
+			set {_dontshoot} to true
+			stop
+
+
+
+
+
+
+# SNOW SPRAY STAFF
+
+function freezeEffect(e: entity):
+	loop 20 times:
+		drawDot count 20, particle snowball, XYZ 0.5, 1, 0.5, center {_e}, visibleRange 50, keepFor 0 tick
+		wait 1 tick
+	
+	
+on leftclick with iron shovel:
+	line 1 of player's tool's lore starts with "&7It's snow-time."
+	cancel event
+	if lvl(player) is less than 75:
+		send "&cYou must have at least combat 75 to use this item!"
+		stop
+	if difference between {-sscd::%player%} and now is less than 0.5 seconds:
+		if {-sscd::%player%} is not set:
+			exit 2 sections
+		stop
+	if {mana::%player%} is less than 6:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 6)
+	set {-sscd::%player%} to now
+	play sound "minecraft:entity.snow_golem.hurt" with volume 5 and pitch 1 at player for all players
+	set {_loc::1} to location 1.6 meters above location of player
+	set {_loc::2} to location 0.2 meters left of {_loc::1}
+	set {_loc::3} to location 0.2 meters right of {_loc::1}
+	set {_loc::4} to location 0.2 meters above {_loc::2}
+	set {_loc::5} to location 0.2 meters above {_loc::3}
+	set {_loc::6} to location 0.2 meters above {_loc::1}
+	set {_loc::7} to location 0.2 meters below {_loc::2}
+	set {_loc::8} to location 0.2 meters below {_loc::1}
+	set {_loc::9} to location 0.2 meters below {_loc::3}
+#
+#  
+#        4         6         5     
+#
+#
+#        2         1         3
+#
+#
+#        7         8         9
+#
+# Spread Pattern
+	loop 15 times:
+		loop {_loc::*}:
+			{_dontshoot::%loop-index%} is not set
+			loop blocks in radius 0.6 around {_loc::%loop-index%}:
+				loop-block is solid
+				set {_dontshoot::%loop-index%} to true
+				stop
+			{_dontshoot::%loop-index%} is not set
+			loop entities in radius 2 around {_loc::%loop-index%}:
+				loop-entity is not the player
+				calculateArmor(8, loop-entity, player)
+				"%loop-entity's potion effects%" does not contain "slowness"
+				"%region at loop-entity%" does not contain "spawn"
+				loop-entity's world is not "ul_rpg"
+				apply slowness 4 without particles to loop-entity for 3 seconds
+				freezeEffect(loop-entity)
+			set {_r} to random number between 0.45 and 0.5
+			set {_loc::%loop-index%} to location {_r} meters in front of {_loc::%loop-index%}
+			#drawDot count 1, particle endrod, XYZ 0, 0, 0, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			#drawDot count 2, particle snowball, XYZ 0.05, 0.05, 0.05, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			particle(end_rod, 1, 0, 0, 0, {_loc::%loop-index%})
+			particle(item_snowball, 2, 0.05, 0.05, 0.05, {_loc::%loop-index%})
+			
+		set {_loc::2} to location 0.1 meters left of {_loc::2}
+		set {_loc::3} to location 0.1 meters right of {_loc::3}
+		set {_loc::4} to location 0.1 meters above {_loc::4}
+		set {_loc::5} to location 0.1 meters above {_loc::5}
+		set {_loc::6} to location 0.1 meters above {_loc::6}
+		set {_loc::7} to location 0.1 meters below {_loc::7}
+		set {_loc::8} to location 0.1 meters below {_loc::8}
+		set {_loc::9} to location 0.1 meters below {_loc::9}
+		
+		set {_loc::4} to location 0.1 meters left of {_loc::4}
+		set {_loc::5} to location 0.1 meters right of {_loc::5}
+		set {_loc::7} to location 0.1 meters left of {_loc::7}
+		set {_loc::9} to location 0.1 meters right of {_loc::9}
+	wait 10 ticks
+	delete {-sscd::%player%}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+on leftclick with wooden shovel:
+	line 1 of player's tool's lore starts with "&7hippity hoppity you are now off my property"
+	cancel event
+	if lvl(player) is less than 20:
+		send "&cYou must have at least combat 20 to use this item!"
+		stop
+	if "%region at player%" is "spawn in world ul_void":
+		send "&cYou cannot use the shove staff here!"
+		stop
+	if difference between {-sscd::%player%} and now is less than 1 seconds:
+		if {-sscd::%player%} is not set:
+			exit 2 sections
+		stop
+	if {mana::%player%} is less than 3:
+		send action bar "&cNot enough Mana!" to player
+		stop
+	modifyMana(player, 3)
+	set {-sscd::%player%} to now
+	play sound "minecraft:entity.iron_golem.attack" with volume 5 and pitch 1 at player for all players
+	play sound "minecraft:entity.iron_golem.attack" with volume 5 and pitch 2 at player for all players
+	play sound "minecraft:entity.iron_golem.attack" with volume 5 and pitch 0.5 at player for all players
+	set {_loc::1} to location 1.6 meters above location of player
+	set {_loc::2} to location 0.5 meters left of {_loc::1}
+	set {_loc::3} to location 0.5 meters right of {_loc::1}
+#
+#  
+#        
+#
+#
+#        2         1         3
+#
+#
+#        
+#
+# Spread Pattern
+	set {_yw} to player's yaw 
+	loop 25 times:
+		loop {_loc::*}:
+			{_dontshoot::%loop-index%} is not set
+			loop blocks in radius 0.8 around {_loc::%loop-index%}:
+				loop-block is solid
+				set {_dontshoot::%loop-index%} to true
+			{_dontshoot::%loop-index%} is not set
+			loop entities in radius 2.5 around {_loc::%loop-index%}:
+			
+				if loop-entity is not a player:
+					set {_v} to vector with yaw player's yaw and pitch 5
+					push loop-entity {_v} with force 0.6
+					push loop-entity upwards with force 0.5
+					stop
+					
+				loop-entity is not the player
+				loop-entity's gamemode is survival
+				loop-entity's world is not "ul_rpg"
+				"%region at loop-entity%" does not start with "spawn"
+				loop-entity is not flying
+				set {_v} to vector with yaw {_yw} and pitch 5
+				push loop-entity {_v} with force 0.5
+				push loop-entity upwards with force 0.4
+				
+			set {_r} to random number between 1.5 and 2
+			set {_loc::%loop-index%} to location {_r} meters in front of {_loc::%loop-index%}
+			#drawDot count 2, particle sweep, XYZ 0.1, 0, 0.1, center {_loc::%loop-index%}, visibleRange 50, keepFor 0 tick
+			particle(sweep_attack, 2, 0.1, 0, 0.1, {_loc::%loop-index%})
+			
+		set {_loc::2} to location 0.8 meters left of {_loc::2}
+		set {_loc::3} to location 0.8 meters right of {_loc::3}
+		set {-sscd::%player%} to now
+		wait 1 tick
+	set {-sscd::%player%} to now
+	wait 20 ticks
+	delete {-sscd::%player%}
+	

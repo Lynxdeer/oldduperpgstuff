@@ -1,0 +1,20 @@
+command /fly <player>:
+	permission: op	
+	permission message: &cno
+	trigger: 
+		if flight state of arg-1 is true:
+			set flight state of arg-1 to false
+			send "fly like a bird, %arg-1%!"
+			stop
+		if flight state of arg-1 is false:
+			set flight state of arg-1 to true
+			send "stop flying, %arg-1%!"
+			stop
+
+command /flyspeed [<number>]:
+	permission: builder.gm
+	permission message: &cno
+	trigger:
+		send "&aSet your flyspeed to %arg-1%"
+		set player's fly speed to arg-1
+		send "&aDebug: %arg-1%"

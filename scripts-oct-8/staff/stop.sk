@@ -1,0 +1,37 @@
+on command "stop":
+	player has the permission "staff.stop"
+	executor is a player
+	cancel event
+	send "&cDo you really want to do this? Only use /stop in emergencies! Use /reboot to restart the server instead of /stop!"
+	send formatted "<tooltip:&eYes, the server is like being hacked or smth><run command:/stopserverpls>&6[Click to Confirm]<reset>"
+
+command /reboot [<text>]:
+	permission: staff.stop
+	trigger:
+		send "&cAre you sure you want to reboot the server? Use /stop if the server is being hacked or there is an emergency!"
+		send formatted "<tooltip:&eYes, I want to reboot><run command:/rebootserverpls>&6[Click to Confirm]<reset>"
+
+on command "stopserverpls":
+	player has the permission "staff.stop"
+	cancel event
+	send "&6Aight bud, time to stop."
+	wait 5 ticks
+	stop the server
+
+on command "rebootserverpls":
+	player has the permission "staff.stop"
+	cancel event
+	send "&6Aight bud, time to reboot."
+	broadcast ""
+	broadcast "&c&lSERVER REBOOT"
+	broadcast "&7in 30 seconds!"
+	broadcast ""
+	send title "&cSERVER REBOOT" with subtitle "&7(30s)" to all players for 5 seconds
+	set {reboot} to 30
+	loop 30 times:
+		remove 1 from {reboot}
+		wait 1 second
+	broadcast "&6Join back at &e&oduperpg.minehut.gg!"
+	send title "&6Join Back Soon!" with subtitle "&eduperpg.minehut.gg" to all players for 5 seconds
+	wait 1 second
+	stop the server

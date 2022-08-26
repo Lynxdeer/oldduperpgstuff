@@ -1,0 +1,74 @@
+# Welcome to the Skript Note Block Studio!
+# The format goes like this: note(player, type, octave)
+# You can use all in place of player to do it to all players.
+#
+# Example: note("Lynxdeer", "harp", 4)
+# Custom Note Blocks work, as long as it is like blocks.note_block.(type)
+#
+#
+
+
+
+
+# Don't touch the code below unless you know what you're doing!
+
+function note(to: player, type: text, octave: integer):
+	{_to} is online
+	if {_octave} is 0:
+		set {_pitch} to 0.5
+	if {_octave} is 1:
+		set {_pitch} to 0.53
+	if {_octave} is 2:
+		set {_pitch} to 0.56
+	if {_octave} is 3:
+		set {_pitch} to 0.6
+	if {_octave} is 4:
+		set {_pitch} to 0.63
+	if {_octave} is 5:
+		set {_pitch} to 0.67
+	if {_octave} is 6:
+		set {_pitch} to 0.71
+	if {_octave} is 7:
+		set {_pitch} to 0.75
+	if {_octave} is 8:
+		set {_pitch} to 0.79
+	if {_octave} is 9:
+		set {_pitch} to 0.84
+	if {_octave} is 10:
+		set {_pitch} to 0.89
+	if {_octave} is 11:
+		set {_pitch} to 0.94
+	if {_octave} is 12:
+		set {_pitch} to 1
+	if {_octave} is 13:
+		set {_pitch} to 1.06
+	if {_octave} is 14:
+		set {_pitch} to 1.12
+	if {_octave} is 15:
+		set {_pitch} to 1.19
+	if {_octave} is 16:
+		set {_pitch} to 1.26
+	if {_octave} is 17:
+		set {_pitch} to 1.33
+	if {_octave} is 18:
+		set {_pitch} to 1.41
+	if {_octave} is 19:
+		set {_pitch} to 1.5
+	if {_octave} is 20:
+		set {_pitch} to 1.59
+	if {_octave} is 21:
+		set {_pitch} to 1.68
+	if {_octave} is 22:
+		set {_pitch} to 1.78
+	if {_octave} is 23:
+		set {_pitch} to 1.89
+	if {_octave} is 24:
+		set {_pitch} to 2
+
+	play sound "block.note_block.%{_type}%" in record category with volume 2 with pitch {_pitch} to {_to}
+
+command /playnote <text> <integer>:
+	usage: &cInvalid Usage! Usage: /playnote (type) (octave)
+	trigger:
+		note(player, arg-1, arg-2)
+		send "&aPlayed block.note_block.%arg-1%&a with octave %arg-2%&a."

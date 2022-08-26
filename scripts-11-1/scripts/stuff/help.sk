@@ -1,0 +1,8 @@
+command /help [<text>]:
+	aliases: /?
+	trigger:
+		send "&f&lDupe&3&lRPG &bHelp Page"
+		send "&7View the hologram at spawn for basic info!"
+		send "&f- You can use /d for duping or /h for homes!"
+		send "&f- You can get new earlygame weapons from killing things in the cave (Lvl 8) and the volcano (lvl 15)"
+		send "&f- If you tick people off theres a good chance you will die"

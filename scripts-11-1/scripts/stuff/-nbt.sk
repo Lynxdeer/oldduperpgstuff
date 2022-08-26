@@ -1,0 +1,18 @@
+command /checknbt <text>:
+	usage: &cInvalid Usage! Usage: /checknbt (block|entity|self|hand)
+	trigger:
+		if arg-1 does not contain "block" or "entity" or "self" or "hand":
+			send "&cInvalid Usage! Usage: /checknbt (block|entity|self|hand)"
+			stop
+		if arg-1 is "block":
+			loop blocks in radius 2 around player:
+				send "&e%loop-block%: %nbt of loop-block%"
+		if arg-1 is "entity":
+			loop entities in radius 5 around player:
+				loop-entity is not the player
+				send "&e%loop-entity% &7(%loop-entity's name%): &f%loop-entity's nbt%"
+		if arg-1 is "self":
+			send "&e%player%&f: %player's nbt%"
+		if arg-1 is "hand":
+			send "&e%player's tool%&f: %player's tool's nbt%"
+			send formatted "<suggest command:%player's tool's nbt%>&b(Copy)<reset>"

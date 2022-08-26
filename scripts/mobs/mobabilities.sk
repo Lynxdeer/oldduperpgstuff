@@ -1,0 +1,89 @@
+on target:
+	name of entity's target's current inventory is "Choose a starter weapon!"
+	cancel event
+	
+on damage:
+	victim is a player
+	damager is a wither skeleton
+	damager's display name contains "&8Shade"
+	apply blindness 1 to the victim for 15 seconds
+	
+on damage:
+	name of victim's current inventory is "Choose a starter weapon!"
+	cancel event
+
+on target:
+
+	entity's target is a player
+	event-world is "ul_rpg"
+	event-entity's display name contains "&6Alien"
+	push event-entity upwards with force 1
+	set {_loc} to event-entity's target's location
+	while event-entity is alive:
+		if event-entity's target is not alive:
+			stop
+		set {_loc} to event-entity's target's location
+		if distance between event-entity and event-entity's target is more than 5:
+			push event-entity vector from event-entity to {_loc} with force 2
+			charge the event-entity
+		else:
+			set {_v} to vector 0, 0, 0
+			set event-entity's velocity to {_v}
+			uncharge the event-entity
+		wait 10 ticks
+		apply slowness 1 to the event-entity's target for 1 second
+		set {_loc} to event-entity's target's location
+		if distance between event-entity and event-entity's target is more than 5:
+			push event-entity vector from event-entity to {_loc} with force 2
+			charge the event-entity
+		else:
+			set {_v} to vector 0, 0, 0
+			set event-entity's velocity to {_v}
+			uncharge the event-entity
+		wait 10 ticks
+	
+on explosion:
+	event-world is "ul_rpg"
+	event-entity is a creeper
+	event-entity's display name contains "&6Alien"
+	cancel event
+	
+function shockEffect(p: entity):
+	loop 8 times:
+		note({_p}, "bit", 22)
+		note({_p}, "bit", 10)
+		damage {_p} by 1.2
+		particle(white_ash, 10, 0.2, 1, 0.2, {_p})
+		particle(ash, 10, 0.2, 1, 0.2, {_p})
+		particle(totem_of_undying, 10, 0.1, 0.1, 0.1, {_p})
+		set {_p}'s invulnerability ticks to 1
+		if "%{_p}'s potion effects%" contains "glowing":
+			remove glowing from potion effects of {_p}
+			remove slowness from potion effects of {_p}
+			remove speed from potion effects of {_p}
+		else:
+			apply glowing without particles to {_p} for 1 second
+			apply speed without particles to {_p} for 1 second
+		wait 1 tick
+	
+on explosion prime:
+	event-world is "ul_rpg"
+	event-entity is a creeper
+	event-entity's display name contains "&6Alien"
+	cancel event
+	#delete the event-entity
+	#drawDot count 1, particle explosionhuge, XYZ 0.1, 0.1, 0.1, center event-entity, visibleRange 100, keepFor 1 tick
+	particle(ash, 10, 0.1, 0.1, 0.1, event-entity)
+	loop entities in radius 5 around event-entity:
+		loop-entity is not a painting or boat or regular minecart or item frame or dropped item or end crystal or fireball or small fireball or dragon fireball or arrow or armor stand
+		loop-entity is not a boat or experience bottle or egg or snowball or firework rocket or firework or end crystal or trident or arrow or experience orb or item frame
+		"%loop-entity%" does not contain "dropped"
+		loop-entity's gamemode is not spectator
+		loop-entity is not the event-entity
+		loop-entity is not a creeper
+		shockEffect(loop-entity)
+		loop-entity is not the loop-entity
+		damage the loop-entity by (5 / distance between loop-entity and event-entity)
+		set {ralien} to true
+		wait 1 tick
+		delete {ralien}

@@ -1,0 +1,8 @@
+on chat:
+	message contains ".com" or ".org" or ".net" or "discord."
+	player is not op
+	replace all ".com" in message with " com"
+	replace all ".org" in message with " org"
+	replace all ".net" in message with " net"
+	replace all "discord." in message with "discord "
+	send "&cPlease do not advertize! If this is a mistake, we apologize for the inconvenience, but you don't need to tell us."

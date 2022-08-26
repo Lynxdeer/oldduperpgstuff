@@ -1,0 +1,56 @@
+function fixOpenDungeons(p: player):
+	if "%region at {_p}%" contains "forest":
+		loop all players where ["%region at input%" is "%region at {_p}%"]:
+			loop-player is not {_p}
+			add 1 to {_plist}
+		{_plist} is not more than 1
+		delete {-forestdungeon}
+		if "%region at {_p}%" contains "boss":
+			loop all entities where ["%region at input%" is "%region at {_p}%"]:
+				loop-entity is a zombie or giant or player
+				delete the loop-entity
+				
+	if "%region at {_p}%" contains "castle":
+		loop all players where ["%region at input%" is "%region at {_p}%"]:
+			loop-player is not {_p}
+			add 1 to {_plist}
+		{_plist} is not more than 1
+		delete {-castledungeon}
+		if "%region at {_p}%" contains "boss":
+			loop all entities where ["%region at input%" is "%region at {_p}%"]:
+				loop-entity is a ravager or skeleton or player
+				delete the loop-entity
+				
+	if "%region at {_p}%" contains "shadow":
+		delete {-shadowdungeon}
+		
+	if "%region at {_p}%" contains "moon":
+		delete {-moondungeon}
+		
+on quit:
+	player's world is "ul_rpg"
+	"%region at player%" contains "dungeon"
+	fixOpenDungeons(player)
+
+on death:
+	victim is a player
+	victim's world is "ul_rpg"
+	send "&7You died!"
+	fixOpenDungeons(victim)
+	if "%region at victim%" contains "dungeon":
+		send "&4&lDUNGEON FAILED!" to victim
+		fixOpenDungeons(victim)
+		cancel event
+		wait 1 tick
+		teleport player to {place.dungeon}
+		wait 1 tick
+		play sound "minecraft:entity.drowned.shoot" with pitch 2 to player
+		play sound "minecraft:block.anvil.land" with pitch 2 to player
+		
+		stop
+	wait 5 ticks
+	if bed of victim exists:
+		teleport victim to player's bed
+		stop
+	teleport victim to {place.forest}
+	clear player's potion effects

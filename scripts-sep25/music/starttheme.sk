@@ -1,0 +1,1250 @@
+command /lestartmusic [<text>]:
+	trigger:
+		#send "&dNow Playing: Wynncraft - Epic Wynn (Ragni Outskirts)"
+		loop 5 times:
+			note(player, "harp", 16)
+			wait 6 ticks
+			note(player, "harp", 19)
+			wait 6 ticks
+			note(player, "harp", 23)
+			wait 6 ticks
+			note(player, "harp", 19)
+			wait 6 ticks
+		note(player, "harp", 16)
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 23)
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 14)
+		wait 6 ticks
+		note(player, "harp", 18)
+		wait 6 ticks
+		note(player, "harp", 21)
+		wait 6 ticks
+		note(player, "harp", 18)
+		wait 6 ticks
+		note(player, "harp", 12)
+		wait 6 ticks
+		note(player, "harp", 16)
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 16)
+		wait 6 ticks
+
+		note(player, "harp", 16)  
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 23)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		wait 6 ticks
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "harp", 23)
+		wait 6 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 23)
+		note(player, "harp", 23)
+		wait 6 ticks
+		note(player, "harp", 23)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		wait 6 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		wait 6 ticks
+
+		note(player, "harp", 19)
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		wait 3 ticks
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		wait 3 ticks
+		note(player, "harp", 23)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+
+		wait 6 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		wait 6 ticks
+
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "harp", 23)
+		wait 3 ticks
+		note(player, "harp", 24)
+		note(player, "harp", 24)
+		wait 3 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 23)
+		note(player, "harp", 23)
+		wait 3 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		wait 3 ticks
+		note(player, "harp", 23)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		wait 6 ticks
+
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 16)
+		note(player, "harp", 16) #This point at 192
+		note(player, "harp", 16)
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 23)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		wait 6 ticks
+		note(player, "harp", 16)
+		note(player, "harp", 24)
+		note(player, "harp", 24)
+		wait 6 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 23)
+		note(player, "harp", 23)
+		wait 6 ticks
+		note(player, "harp", 23)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		wait 6 ticks
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 14)
+		note(player, "harp", 18)
+		note(player, "harp", 18)
+		wait 6 ticks
+		note(player, "harp", 18)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		wait 6 ticks
+		note(player, "harp", 21)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 18)
+		note(player, "harp", 18)
+		note(player, "harp", 18)
+		wait 6 ticks
+		note(player, "harp", 12)
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		wait 6 ticks
+		note(player, "harp", 16)
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 16)
+		wait 6 ticks
+
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19)
+		note(player, "harp", 14)
+		note(player, "harp", 21)
+		note(player, "harp", 14)
+		note(player, "harp", 21)
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+
+		wait 6 ticks
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19)
+		wait 6 ticks
+		note(player, "harp", 16) 
+		note(player, "harp", 24) 
+		note(player, "harp", 24) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23)  #This point at 308
+		note(player, "harp", 23) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "harp", 23) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "snare", 22) # This is yellow
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 3 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		wait 3 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 9) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 14)  
+		note(player, "harp", 18) 
+		note(player, "harp", 14) #This point at 352
+		note(player, "harp", 21) 
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "bass", 2) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 3 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		wait 3 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+
+		note(player, "harp", 21) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 9) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+
+		note(player, "harp", 12) 
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19) 
+		note(player, "bass", 0) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 14)  #This point at 376
+		note(player, "harp", 14) 
+		note(player, "bass", 7) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19) 
+		note(player, "snare", 22) # This is yellow
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 14) 
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "bass", 2) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		wait 6 ticks
+
+		note(player, "harp", 21) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "bass", 9) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+
+		note(player, "harp", 14) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "bass", 2) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+
+		note(player, "harp", 21) 
+		note(player, "harp", 14) 
+		note(player, "harp", 14) 
+		note(player, "bass", 9) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 14) 
+		note(player, "harp", 14) 
+		note(player, "harp", 18) 
+		note(player, "harp", 23) 
+		note(player, "harp", 14) 
+		note(player, "harp", 18) 
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 14) 
+		note(player, "harp", 14) 
+		note(player, "bass", 6) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 16)  # This point at 428
+		note(player, "harp", 16) 
+		wait 6 ticks
+
+		note(player, "harp", 14) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+
+		note(player, "harp", 23) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "bass", 6) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "snare", 22) # This is yellow
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 18) 
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 18) 
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19)
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19)  # THIS POINT AT 500
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "snare", 22)
+		note(player, "snare", 22)
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21)
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) #     THIS POINT AT 544
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 3 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		wait 3 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		wait 3 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 3 ticks
+
+		note(player, "harp", 24) 
+		note(player, "harp", 24) 
+		wait 3 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23)  # THIS POINT AT 564
+		wait 3 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19)
+		wait 3 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "snare", 22) # This is yellow
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16)  # THIS POINT AT 576
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 24) 
+		note(player, "harp", 24) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 21)  # This point at 600
+		note(player, "harp", 21) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 14) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "bass", 2) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+
+		note(player, "harp", 21) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 9) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		wait 6 ticks
+
+		note(player, "harp", 12) 
+		note(player, "harp", 16) 
+		note(player, "harp", 24) 
+		note(player, "harp", 16) 
+		note(player, "harp", 24) 
+		note(player, "bass", 0) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "bass", 7) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19)        # THIS POINT AT 644
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19)  # THIS POINT AT 660
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 14) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "harp", 14) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16)
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 21)  # THIS POINT AT 680
+		note(player, "harp", 21) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23) 
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 24)  # THIS POINT AT 688
+		note(player, "harp", 24) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 23) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 21)
+		note(player, "harp", 21) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 23) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21)  # 700 wooo
+		note(player, "harp", 23) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "snare", 22) # This is yellow
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 16)  
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 3 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		wait 3 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		wait 6 ticks
+
+		note(player, "harp", 23)  # THIS POINT AT 712
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+
+		note(player, "harp", 16) 
+		note(player, "bass", 4) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19)  # 724
+		note(player, "harp", 19) 
+		wait 6 ticks
+
+		note(player, "harp", 23) 
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "bass", 11) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23)  # 732
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+
+		note(player, "harp", 14)  
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21)  # 736
+		note(player, "harp", 18) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "bass", 2) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 3 ticks
+
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		wait 3 ticks
+
+		note(player, "harp", 18) 
+		note(player, "harp", 21) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+		
+		note(player, "harp", 21) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 9) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+		
+		note(player, "harp", 18) 
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		note(player, "harp", 18) 
+		note(player, "harp", 14) 
+		note(player, "harp", 21) 
+		wait 6 ticks
+		
+		
+		note(player, "harp", 12) 
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19) 
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19) 
+		note(player, "bass", 0) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+		
+		note(player, "harp", 16) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "harp", 19) 
+		note(player, "bass", 7) # This is green
+		note(player, "basedrum", 10) # This is red
+		wait 6 ticks
+
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19)  # 732
+		note(player, "harp", 16) 
+		note(player, "harp", 12) 
+		note(player, "harp", 19) 
+		note(player, "snare", 22) # This is yellow
+		note(player, "snare", 22) # This is yellow
+		wait 6 ticks
+		
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "harp", 16) 
+		note(player, "harp", 16) 
+		note(player, "harp", 23) 
+		note(player, "bass", 4) # This is green
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 23) 
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 16) 
+		note(player, "bass", 4)  # 784
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 23) # 792
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 16) #800
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 23) #808
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 16) #816
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) #820
+		wait 6 ticks
+		
+		note(player, "harp", 23)
+		note(player, "harp", 14) #824
+		note(player, "harp", 14)
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		note(player, "harp", 24)
+		note(player, "harp", 24)
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "harp", 23)
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 23) 
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		note(player, "harp", 24)
+		note(player, "harp", 24)
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		wait 6 ticks
+		
+		note(player, "harp", 23)
+		note(player, "harp", 23) 
+		note(player, "harp", 23)
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		note(player, "harp", 21) # 860
+		note(player, "harp", 21)
+		wait 6 ticks
+		
+		note(player, "harp", 14)
+		wait 6 ticks
+		
+		note(player, "harp", 18)
+		note(player, "harp", 23) # 868
+		note(player, "harp", 23)
+		wait 6 ticks
+		
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		note(player, "harp", 21)
+		note(player, "bass", 9) 
+		wait 6 ticks
+		
+		note(player, "harp", 18)
+		note(player, "harp", 18) # 876
+		note(player, "harp", 18)
+		wait 6 ticks
+		
+		note(player, "harp", 12)
+		note(player, "harp", 19)
+		note(player, "harp", 19)
+		note(player, "bass", 0)
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		wait 6 ticks
+		
+		note(player, "harp", 19) 
+		note(player, "bass", 7)
+		wait 6 ticks
+		
+		note(player, "harp", 16) #892
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "harp", 16) 
+		note(player, "harp", 16)
+		note(player, "harp", 23)
+		note(player, "harp", 16)
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 23)
+		note(player, "bass", 11) # 904
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 16) #912
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 23) #920
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 16) #928
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 23) #936
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 23) #952
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 23) #968
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		note(player, "bass", 4) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 23) #984
+		note(player, "bass", 11) 
+		wait 6 ticks
+		
+		note(player, "harp", 19)
+		wait 6 ticks
+		
+		note(player, "harp", 14)
+		note(player, "bass", 2) 
+		wait 6 ticks
+		
+		note(player, "harp", 18)
+		wait 6 ticks
+		
+		note(player, "harp", 21) #1000
+		note(player, "bass", 9) 
+		wait 6 ticks
+		
+		note(player, "harp", 18)
+		wait 6 ticks
+		
+		note(player, "harp", 12) #1008
+		note(player, "bass", 0) 
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		wait 6 ticks
+		
+		note(player, "harp", 19) #10016
+		note(player, "bass", 0) 
+		wait 6 ticks
+		
+		note(player, "harp", 16)
+		wait 6 ticks
+		
+		
+		
+		
+		

@@ -1,0 +1,36 @@
+on load:
+	set {itemlist::*} to all items
+	set {tabcitemlist::*} to {itemlist::*}
+	loop {tabcitemlist::*}:
+		set {_thing} to loop-value
+		replace all " " in {_thing} with "_"
+		set {tabcitemlist::%loop-index%} to {_thing}
+		
+on tab complete:
+	event-string is "/sgive"
+	if tab arg-1 is set:
+		set tab completions for position 2 to {tabcitemlist::*}
+	if tab arg-2 is set:
+		if tab arg-3 is not set:
+			set tab completions for position 3 to "("
+		if tab arg-3 is "(":
+			set tab completions for position 3 to "(name:" and "(lore:" and "(unbreakable:" and "(enchantments:"
+	
+command /sgive <offline player> [<text>] [<text>]:
+	permission: *
+	permission message: &cno
+	usage: &cInvalid usage! Usage: /give (player) (text) (data)
+	trigger:
+		if arg-1 is not online:
+			send "&cThis player is not online!"
+			stop
+		if arg-2 is not set:
+			send "&cYou need to specify an item to give!"
+			stop
+		set {_item} to arg-2
+		loop {tabcitemlist::*}:
+			loop-value is {_item}
+			set {_index} to loop-index
+			stop
+		set {_item} to {itemlist::%{_index}%}
+		send "&3Found item! Id: %{_item}%"

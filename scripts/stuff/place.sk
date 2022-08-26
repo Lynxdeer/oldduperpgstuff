@@ -1,0 +1,14 @@
+command /setplace [<text>]:
+	permission: op
+	permission message: &cno
+	trigger:
+		set {place.%arg-1%} to player's location
+		send "Set %arg-1% at your location."
+
+command /tpplace <text>:
+	usage: &cfor testing purposes only, bud
+	permission: op
+	permission message: &cfor testing purposes only, bud
+	trigger:
+		teleport player to {place.%arg-1%}
+		send "Teleported to {place.%arg-1%}"
